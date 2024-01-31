@@ -1,0 +1,3 @@
+#Carpeta bin y obj se generan automaticamente en la compilacion
+bin/
+obj/

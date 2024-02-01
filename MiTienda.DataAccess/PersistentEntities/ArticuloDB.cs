@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiTienda.DataAccess.Entities
 {
-    public class Articulo
+    public class ArticuloDB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,12 +17,12 @@ namespace MiTienda.DataAccess.Entities
         public double NetoGravado { get; set; }
         public double PorcentajeIVA { get; set; }
         [ForeignKey("Id")]
-        public virtual Marca Marca { get; set; }
+        public virtual MarcaDB Marca { get; set; }
         [ForeignKey("Id")]
-        public virtual Categoria Categoria { get; set; }
+        public virtual CategoriaDB Categoria { get; set; }
 
 
-        private List<Color> GetColores()
+        private List<ColorDB> GetColores()
         {
             throw new NotImplementedException();
         }
@@ -30,11 +30,11 @@ namespace MiTienda.DataAccess.Entities
         {
             throw new NotImplementedException();
         }
-        private Categoria GetCategoria()
+        private CategoriaDB GetCategoria()
         {
             throw new NotImplementedException();
         }
-        private Marca GetMarca()
+        private MarcaDB GetMarca()
         {
             throw new NotImplementedException();
         }
@@ -43,7 +43,7 @@ namespace MiTienda.DataAccess.Entities
             throw new NotImplementedException();
         }
 
-        public Articulo Buscar()
+        public ArticuloDB Buscar()
         {
             throw new NotImplementedException();
         }

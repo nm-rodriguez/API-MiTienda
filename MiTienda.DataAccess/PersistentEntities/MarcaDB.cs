@@ -1,6 +1,6 @@
 ﻿namespace MiTienda.DataAccess.Entities
 {
-    public class Marca
+    public class MarcaDB
     {
         public int Id { get; set; }
         public string Nombre{ get; set; }

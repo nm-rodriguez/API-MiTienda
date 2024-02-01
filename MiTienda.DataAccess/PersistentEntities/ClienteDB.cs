@@ -1,6 +1,6 @@
 ﻿namespace MiTienda.DataAccess.Entities
 {
-    public class Cliente
+    public class ClienteDB
     {
         public int Dni { get; set; }
         public string Cuil { get; set; }

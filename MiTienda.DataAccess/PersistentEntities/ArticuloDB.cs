@@ -13,8 +13,8 @@ namespace MiTienda.DataAccess.Entities
         public string CodigoBarras { get; set; }
         public double Costo { get; set; }
         public double MargenGanancia { get; set; }
-        public double PrecioFinal { get; set; }
-        public double NetoGravado { get; set; }
+        public double? PrecioFinal { get; set; }
+        public double? NetoGravado { get; set; }
         public double PorcentajeIVA { get; set; }
         [ForeignKey("IdMarca")]
         public virtual MarcaDB Marca { get; set; }

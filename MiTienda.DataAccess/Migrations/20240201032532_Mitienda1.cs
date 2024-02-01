@@ -40,12 +40,12 @@ namespace MiTienda.DataAccess.Migrations
                 {
                     IdArticulo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodigoBarras = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(30)", nullable: false),
+                    CodigoBarras = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     Costo = table.Column<double>(type: "float", nullable: false),
                     MargenGanancia = table.Column<double>(type: "float", nullable: false),
-                    PrecioFinal = table.Column<double>(type: "float", nullable: false),
-                    NetoGravado = table.Column<double>(type: "float", nullable: false),
+                    PrecioFinal = table.Column<double>(type: "float", nullable: true),
+                    NetoGravado = table.Column<double>(type: "float", nullable: true),
                     PorcentajeIVA = table.Column<double>(type: "float", nullable: false),
                     IdMarca = table.Column<int>(type: "int", nullable: false),
                     IdCategoria = table.Column<int>(type: "int", nullable: false)

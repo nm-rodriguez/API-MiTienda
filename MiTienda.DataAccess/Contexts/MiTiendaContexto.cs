@@ -17,7 +17,13 @@ namespace MiTienda.DataAccess.Contexts
         public DbSet<ArticuloDB> Articulos { get; set; }
         public DbSet<MarcaDB> Marcas { get; set; }
         public DbSet<CategoriaDB> Categorias { get; set; }
-        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArticuloDB>().ToTable("Articulo");
+            modelBuilder.Entity<MarcaDB>().ToTable("Marca");
+            modelBuilder.Entity<CategoriaDB>().ToTable("Categoria");
+        }
 
     }
 }

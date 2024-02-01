@@ -8,7 +8,7 @@ namespace MiTienda.DataAccess.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int IdArticulo { get; set; }
         public string Descripcion { get; set; }
         public string CodigoBarras { get; set; }
         public double Costo { get; set; }
@@ -16,9 +16,9 @@ namespace MiTienda.DataAccess.Entities
         public double PrecioFinal { get; set; }
         public double NetoGravado { get; set; }
         public double PorcentajeIVA { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("IdMarca")]
         public virtual MarcaDB Marca { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("IdCategoria")]
         public virtual CategoriaDB Categoria { get; set; }
 
 

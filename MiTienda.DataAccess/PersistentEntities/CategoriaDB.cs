@@ -1,8 +1,13 @@
-﻿namespace MiTienda.DataAccess.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace MiTienda.DataAccess.Entities
 {
     public class CategoriaDB
     {
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdCategoria { get; set; }
         public string Descripcion { get; set; }
     }
 }

@@ -1,8 +1,13 @@
-﻿namespace MiTienda.DataAccess.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace MiTienda.DataAccess.Entities
 {
     public class MarcaDB
     {
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdMarca { get; set; }
         public string Nombre{ get; set; }
     }
 }

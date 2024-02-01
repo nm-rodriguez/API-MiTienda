@@ -51,30 +51,35 @@ namespace API_MiTienda.Controllers
 
 
         [HttpPost]
-        //public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
-        public ActionResult<ArticuloDB> PostArticulo([FromBody] ArticuloDB articulo)
+        public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
         {
-            if (_context.Articulos == null)
+            if (!ModelState.IsValid)
             {
-                return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
+                return BadRequest(ModelState);
             }
-            _context.Articulos.Add(new ArticuloDB()
-            {
-                Descripcion = articulo.Descripcion,
-                CodigoBarras = articulo.CodigoBarras,
-                Costo = articulo.Costo,
-                MargenGanancia = articulo.MargenGanancia,
-                PrecioFinal = articulo.PrecioFinal,
-                NetoGravado = articulo.NetoGravado,
-                PorcentajeIVA = articulo.PorcentajeIVA,
-                Categoria = new CategoriaDB() { IdCategoria = articulo.Categoria.IdCategoria },
-                Marca = new MarcaDB() { IdMarca = articulo.Marca.IdMarca }
-            });
-            //_context.Articulos.Add(articulo);
-            _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticulo", articulo.IdArticulo, articulo);
+            try
+            {
+                if (_context.Articulos == null)
+                {
+                    return Problem("Entity set 'MiTiendaContexto.Articulos' is null.");
+                }
+
+                // Asigna las claves foráneas al artículo
+                articulo.Marca = await _context.Marcas.FindAsync(articulo.Marca.IdMarca);
+                articulo.Categoria = await _context.Categorias.FindAsync(articulo.Categoria.IdCategoria);
+
+                _context.Articulos.Add(articulo);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Se produjo un error interno: {ex.Message}");
+            }
         }
+
 
         //[HttpPost]
         ////public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)

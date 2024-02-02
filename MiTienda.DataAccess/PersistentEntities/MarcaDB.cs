@@ -8,6 +8,6 @@ namespace MiTienda.DataAccess.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdMarca { get; set; }
-        public string Nombre{ get; set; }
+        public string? Nombre { get; set; }
     }
 }

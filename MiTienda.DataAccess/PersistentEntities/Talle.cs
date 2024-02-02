@@ -1,10 +1,13 @@
-﻿using MiTienda.Domain.Enums;
+﻿using MiTienda.Domain.Entities;
+using MiTienda.Domain.Enums;
 
 namespace MiTienda.DataAccess.Entities
 {
-    public class Talle
+    public class TalleDTO : Talle
     {
-        public string Medida { get; set; }
-        public TipoTalle TipoTalle { get; set; }
+        public int Id { get; set; }
+
+        
+
     }
 }

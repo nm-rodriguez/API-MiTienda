@@ -17,16 +17,16 @@ namespace MiTienda.DataAccess.Entities
         public double? NetoGravado { get; set; }
         public double PorcentajeIVA { get; set; }
         [ForeignKey("IdMarca")]
-        public virtual MarcaDB Marca { get; set; }
+        public MarcaDB Marca { get; set; }
         [ForeignKey("IdCategoria")]
-        public virtual CategoriaDB Categoria { get; set; }
+        public CategoriaDB Categoria { get; set; }
 
 
         private List<ColorDB> GetColores()
         {
             throw new NotImplementedException();
         }
-        private List<Talle> GetTalles()
+        private List<TalleDTO> GetTalles()
         {
             throw new NotImplementedException();
         }

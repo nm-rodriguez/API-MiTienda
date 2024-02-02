@@ -23,12 +23,7 @@ namespace API_MiTienda
 
             var app = builder.Build();
 
-            //using(var scope = app.Services.CreateScope())
-            //{
-            //    var DataConext = scope.ServiceProvider.GetRequiredService<MiTiendaContexto>();
-            //    DataConext.Database.Migrate();
-            //}
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

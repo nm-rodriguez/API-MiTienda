@@ -18,6 +18,16 @@ namespace MiTienda.DataAccess.Contexts
         public DbSet<MarcaDB> Marcas { get; set; }
         public DbSet<CategoriaDB> Categorias { get; set; }
 
+        //public DbSet<T> CreateSet<T>() where T : class
+        //{
+        //    return Set<T>();
+        //}
+        ////se puede declarar aqui el string connection en vez de la clase program
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (optionsBuilder.IsConfigured) return;
+        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ControlDeCalidad;Integrated Security=True;");
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArticuloDB>().ToTable("Articulo");

@@ -28,6 +28,21 @@ namespace API_MiTienda.Controllers
                 .ToListAsync();
             return articulos;
         }
+        [HttpGet("Marcas")]
+        public async Task<ActionResult<IEnumerable>> GetMarcas()
+        {
+            var marcas = await _context.Marcas
+                .ToListAsync();
+            return marcas;
+        }
+        [HttpGet("Categorias")]
+        public async Task<ActionResult<IEnumerable>> GetCategorias()
+        {
+            var categorias = await _context.Categorias
+                .ToListAsync();
+            return categorias;
+        }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ArticuloDB>> GetArticulo(int id)
@@ -52,53 +67,35 @@ namespace API_MiTienda.Controllers
 
         [HttpPost]
         //public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
-        public ActionResult<ArticuloDB> PostArticulo([FromBody] ArticuloDB articulo)
+        public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
         {
-            if (_context.Articulos == null)
-            {
-                return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
-            }
-            _context.Articulos.Add(new ArticuloDB()
-            {
-                Descripcion = articulo.Descripcion,
-                CodigoBarras = articulo.CodigoBarras,
-                Costo = articulo.Costo,
-                MargenGanancia = articulo.MargenGanancia,
-                PrecioFinal = articulo.PrecioFinal,
-                NetoGravado = articulo.NetoGravado,
-                PorcentajeIVA = articulo.PorcentajeIVA,
-                Categoria = new CategoriaDB() { IdCategoria = articulo.Categoria.IdCategoria },
-                Marca = new MarcaDB() { IdMarca = articulo.Marca.IdMarca }
-            });
-            //_context.Articulos.Add(articulo);
-            _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticulo", articulo.IdArticulo, articulo);
+            try
+            {
+                if (_context.Articulos == null)
+                {
+                    return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
+                }
+               
+                //buscar la manera de que muestre error cuando se carga un id incorrecto 
+                articulo.Marca = await _context.Marcas.FindAsync(articulo.Marca.IdMarca);
+                articulo.Categoria = await _context.Categorias.FindAsync(articulo.Categoria.IdCategoria);
+                articulo.PrecioFinal = articulo.Costo * (1+articulo.MargenGanancia);
+                articulo.NetoGravado = articulo.Costo * (articulo.MargenGanancia);
+
+
+                await _context.Articulos.AddAsync(articulo);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetArticulo", new { id = articulo.IdArticulo }, articulo);
+                //return Ok($"Articulo registrado: {articulo.Descripcion}");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,$"Se produjo un error interno: {e.Message}");
+            }
         }
 
-        //[HttpPost]
-        ////public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
-        //public ActionResult<MarcaDB> PostMarca([FromBody] MarcaDB marca)
-        //{
-        //    if (_context.Marcas == null)
-        //    {
-        //        return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
-        //    }
-        //    //_context.Articulos.Add(new ArticuloDB() { 
-        //    //    Descripcion = articulo.Descripcion,
-        //    //    CodigoBarras = articulo.CodigoBarras,
-        //    //    Costo = articulo.Costo,
-        //    //    MargenGanancia = articulo.MargenGanancia,
-        //    //    PrecioFinal = articulo.PrecioFinal,
-        //    //    NetoGravado = articulo.NetoGravado,
-        //    //    PorcentajeIVA = articulo.PorcentajeIVA,
-        //    //    Categoria = new CategoriaDB() { IdCategoria = articulo.Categoria.IdCategoria },
-        //    //    Marca = new MarcaDB() { IdMarca = articulo.Marca.IdMarca } 
-        //    //});
-        //    _context.Articulos.Add(marca);
-        //    _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetArticulo", marca.IdArticulo, articulo);
-        //}
+       
     }
 }

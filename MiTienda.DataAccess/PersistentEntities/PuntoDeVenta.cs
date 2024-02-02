@@ -1,4 +1,4 @@
-﻿namespace MiTienda.DataAccess.Entities
+﻿namespace MiTienda.DataAccess.PersistenceEntities
 {
     public class PuntoDeVenta
     {

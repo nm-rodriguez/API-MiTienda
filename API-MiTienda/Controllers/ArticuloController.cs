@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contexts;
-using MiTienda.DataAccess.Entities;
+using MiTienda.DataAccess.PersistenceEntities;
 using MiTienda.Domain.Entities;
 using System.Collections;
 

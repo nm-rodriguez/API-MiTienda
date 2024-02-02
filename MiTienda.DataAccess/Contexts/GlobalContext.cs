@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiTienda.DataAccess.Entities;
+using MiTienda.DataAccess.PersistenceEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

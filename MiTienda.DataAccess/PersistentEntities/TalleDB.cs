@@ -3,11 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MiTienda.DataAccess.PersistenceEntities
 {
-    public class CategoriaDB
+    public class TalleDB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdCategoria { get; set; }
-        public string? Descripcion { get; set; }
+        public int IdTalle { get; set; }
+        [ForeignKey("IdTipoTalle")]
+        public TipoTalleDB TipoTalle { get; set; }
     }
+
+
+
+
 }

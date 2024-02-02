@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace MiTienda.DataAccess.Entities
+namespace MiTienda.DataAccess.PersistenceEntities
 {
     public class MarcaDB
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiTienda.DataAccess.Entities
+namespace MiTienda.DataAccess.PersistenceEntities
 {
     public class ArticuloDB
     {
@@ -26,7 +26,7 @@ namespace MiTienda.DataAccess.Entities
         {
             throw new NotImplementedException();
         }
-        private List<TalleDTO> GetTalles()
+        private List<TalleDB> GetTalles()
         {
             throw new NotImplementedException();
         }
@@ -38,7 +38,7 @@ namespace MiTienda.DataAccess.Entities
         {
             throw new NotImplementedException();
         }
-        private Stock GetStock()
+        private StockDB GetStock()
         {
             throw new NotImplementedException();
         }

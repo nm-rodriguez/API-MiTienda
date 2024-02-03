@@ -8,15 +8,12 @@ namespace MiTienda.DataAccess.PersistenceEntities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdStock { get; set; }
-        public int Cantidad { get; set; }
         [ForeignKey("IdTalle")]
         public TalleDB Talle { get; set; }
         [ForeignKey("IdColor")]
         public ColorDB Color { get; set; }
         [ForeignKey("IdArticulo")]
         public ArticuloDB Articulo { get; set; }
-        [ForeignKey("IdSucursal")]
-        public SucursalDB? Sucursal { get; set; }
 
 
     }

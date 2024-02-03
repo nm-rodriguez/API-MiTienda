@@ -76,6 +76,7 @@ namespace MiTienda.DataAccess.Migrations
                 {
                     IdCondicionTributaria = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Abreviatura = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -130,6 +131,7 @@ namespace MiTienda.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Dni = table.Column<int>(type: "int", nullable: false),
                     Cuil = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdCondicionTributaria = table.Column<int>(type: "int", nullable: true)
                 },
@@ -224,6 +226,39 @@ namespace MiTienda.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Stock",
+                columns: table => new
+                {
+                    IdStock = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdTalle = table.Column<int>(type: "int", nullable: false),
+                    IdColor = table.Column<int>(type: "int", nullable: false),
+                    IdArticulo = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stock", x => x.IdStock);
+                    table.ForeignKey(
+                        name: "FK_Stock_Articulo_IdArticulo",
+                        column: x => x.IdArticulo,
+                        principalTable: "Articulo",
+                        principalColumn: "IdArticulo",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Stock_Color_IdColor",
+                        column: x => x.IdColor,
+                        principalTable: "Color",
+                        principalColumn: "IdColor",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Stock_Talle_IdTalle",
+                        column: x => x.IdTalle,
+                        principalTable: "Talle",
+                        principalColumn: "IdTalle",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PuntoDeVenta",
                 columns: table => new
                 {
@@ -250,6 +285,7 @@ namespace MiTienda.DataAccess.Migrations
                     IdVendedor = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Legajo = table.Column<int>(type: "int", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Usuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Contrasenia = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -266,6 +302,33 @@ namespace MiTienda.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Inventario",
+                columns: table => new
+                {
+                    IdInventario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    IdStock = table.Column<int>(type: "int", nullable: false),
+                    IdSucursal = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventario", x => x.IdInventario);
+                    table.ForeignKey(
+                        name: "FK_Inventario_Stock_IdStock",
+                        column: x => x.IdStock,
+                        principalTable: "Stock",
+                        principalColumn: "IdStock",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Inventario_Sucursal_IdSucursal",
+                        column: x => x.IdSucursal,
+                        principalTable: "Sucursal",
+                        principalColumn: "IdSucursal",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Venta",
                 columns: table => new
                 {
@@ -276,7 +339,8 @@ namespace MiTienda.DataAccess.Migrations
                     IdVendedor = table.Column<int>(type: "int", nullable: true),
                     IdPago = table.Column<int>(type: "int", nullable: true),
                     IdCliente = table.Column<int>(type: "int", nullable: true),
-                    IdTipoComprobante = table.Column<int>(type: "int", nullable: true)
+                    IdTipoComprobante = table.Column<int>(type: "int", nullable: true),
+                    IdPuntoDeVenta = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,6 +355,12 @@ namespace MiTienda.DataAccess.Migrations
                         column: x => x.IdPago,
                         principalTable: "Pago",
                         principalColumn: "IdPago");
+                    table.ForeignKey(
+                        name: "FK_Venta_PuntoDeVenta_IdPuntoDeVenta",
+                        column: x => x.IdPuntoDeVenta,
+                        principalTable: "PuntoDeVenta",
+                        principalColumn: "IdPuntoDeVenta",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Venta_TipoComprobante_IdTipoComprobante",
                         column: x => x.IdTipoComprobante,
@@ -310,11 +380,18 @@ namespace MiTienda.DataAccess.Migrations
                     IdLineaDeVenta = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
+                    IdStock = table.Column<int>(type: "int", nullable: false),
                     IdVenta = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LineaDeVenta", x => x.IdLineaDeVenta);
+                    table.ForeignKey(
+                        name: "FK_LineaDeVenta_Stock_IdStock",
+                        column: x => x.IdStock,
+                        principalTable: "Stock",
+                        principalColumn: "IdStock",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LineaDeVenta_Venta_IdVenta",
                         column: x => x.IdVenta,
@@ -323,55 +400,25 @@ namespace MiTienda.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Stock",
-                columns: table => new
-                {
-                    IdStock = table.Column<int>(type: "int", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    IdTalle = table.Column<int>(type: "int", nullable: false),
-                    IdColor = table.Column<int>(type: "int", nullable: false),
-                    IdArticulo = table.Column<int>(type: "int", nullable: false),
-                    IdSucursal = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stock", x => x.IdStock);
-                    table.ForeignKey(
-                        name: "FK_Stock_Articulo_IdArticulo",
-                        column: x => x.IdArticulo,
-                        principalTable: "Articulo",
-                        principalColumn: "IdArticulo",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stock_Color_IdColor",
-                        column: x => x.IdColor,
-                        principalTable: "Color",
-                        principalColumn: "IdColor",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stock_LineaDeVenta_IdStock",
-                        column: x => x.IdStock,
-                        principalTable: "LineaDeVenta",
-                        principalColumn: "IdLineaDeVenta",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stock_Sucursal_IdSucursal",
-                        column: x => x.IdSucursal,
-                        principalTable: "Sucursal",
-                        principalColumn: "IdSucursal");
-                    table.ForeignKey(
-                        name: "FK_Stock_Talle_IdTalle",
-                        column: x => x.IdTalle,
-                        principalTable: "Talle",
-                        principalColumn: "IdTalle",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Cliente_IdCondicionTributaria",
                 table: "Cliente",
                 column: "IdCondicionTributaria");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventario_IdStock",
+                table: "Inventario",
+                column: "IdStock");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventario_IdSucursal",
+                table: "Inventario",
+                column: "IdSucursal");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LineaDeVenta_IdStock",
+                table: "LineaDeVenta",
+                column: "IdStock");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LineaDeVenta_IdVenta",
@@ -397,11 +444,6 @@ namespace MiTienda.DataAccess.Migrations
                 name: "IX_Stock_IdColor",
                 table: "Stock",
                 column: "IdColor");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stock_IdSucursal",
-                table: "Stock",
-                column: "IdSucursal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stock_IdTalle",
@@ -439,6 +481,11 @@ namespace MiTienda.DataAccess.Migrations
                 column: "IdPago");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Venta_IdPuntoDeVenta",
+                table: "Venta",
+                column: "IdPuntoDeVenta");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Venta_IdTipoComprobante",
                 table: "Venta",
                 column: "IdTipoComprobante");
@@ -452,25 +499,22 @@ namespace MiTienda.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PuntoDeVenta");
-
-            migrationBuilder.DropTable(
-                name: "Stock");
-
-            migrationBuilder.DropTable(
-                name: "Color");
+                name: "Inventario");
 
             migrationBuilder.DropTable(
                 name: "LineaDeVenta");
 
             migrationBuilder.DropTable(
-                name: "Talle");
+                name: "Stock");
 
             migrationBuilder.DropTable(
                 name: "Venta");
 
             migrationBuilder.DropTable(
-                name: "TipoTalle");
+                name: "Color");
+
+            migrationBuilder.DropTable(
+                name: "Talle");
 
             migrationBuilder.DropTable(
                 name: "Cliente");
@@ -479,10 +523,16 @@ namespace MiTienda.DataAccess.Migrations
                 name: "Pago");
 
             migrationBuilder.DropTable(
+                name: "PuntoDeVenta");
+
+            migrationBuilder.DropTable(
                 name: "TipoComprobante");
 
             migrationBuilder.DropTable(
                 name: "Vendedor");
+
+            migrationBuilder.DropTable(
+                name: "TipoTalle");
 
             migrationBuilder.DropTable(
                 name: "TipoPago");

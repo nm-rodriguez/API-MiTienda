@@ -33,6 +33,7 @@ namespace MiTienda.DataAccess.Contexts
         public DbSet<TipoPagoDB> TipoPago {get;set; }
         public DbSet<VendedorDB> Vendedor {get;set; }
         public DbSet<VentaDB> Venta {get;set; }
+        public DbSet<InventarioDB> Inventario {get;set; }
 
 
         //public DbSet<T> CreateSet<T>() where T : class
@@ -58,7 +59,7 @@ namespace MiTienda.DataAccess.Contexts
 
             modelBuilder.Entity<ClienteDB>().ToTable("Cliente");
             modelBuilder.Entity<CondicionTributariaDB>().ToTable("CondicionTributaria");
-            modelBuilder.Entity<LineaDeVentaDB>().ToTable("LineaDeVenta").HasMany(p => p.Stock);
+            modelBuilder.Entity<LineaDeVentaDB>().ToTable("LineaDeVenta");
             modelBuilder.Entity<PagoDB>().ToTable("Pago");                                     
             modelBuilder.Entity<PuntoDeVentaDB>().ToTable("PuntoDeVenta");
             modelBuilder.Entity<SucursalDB>().ToTable("Sucursal");
@@ -67,6 +68,7 @@ namespace MiTienda.DataAccess.Contexts
             modelBuilder.Entity<TipoPagoDB>().ToTable("TipoPago");
             modelBuilder.Entity<VendedorDB>().ToTable("Vendedor");
             modelBuilder.Entity<VentaDB>().ToTable("Venta");
+            modelBuilder.Entity<InventarioDB>().ToTable("Inventario");
 
 
         }

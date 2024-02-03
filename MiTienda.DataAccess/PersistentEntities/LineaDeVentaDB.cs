@@ -10,9 +10,11 @@ namespace MiTienda.DataAccess.PersistenceEntities
         public int IdLineaDeVenta { get; set; }
         public int Cantidad { get; set; }
         [ForeignKey("IdStock")]
-        public List<StockDB>? Stock { get; set; }
+        public StockDB Stock { get; set; }
         [ForeignKey("IdVenta")]
         public VentaDB Venta { get; set; }
+       
+        
         private void Crear()
         {
             throw new NotImplementedException();

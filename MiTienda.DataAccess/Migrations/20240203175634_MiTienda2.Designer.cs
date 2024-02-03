@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiTienda.DataAccess.Migrations
 {
     [DbContext(typeof(MiTiendaContexto))]
-    [Migration("20240203043202_MiTienda2")]
+    [Migration("20240203175634_MiTienda2")]
     partial class MiTienda2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,10 @@ namespace MiTienda.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCliente"), 1L, 1);
 
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Cuil")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -140,6 +144,11 @@ namespace MiTienda.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCondicionTributaria"), 1L, 1);
 
+                    b.Property<string>("Abreviatura")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -147,6 +156,32 @@ namespace MiTienda.DataAccess.Migrations
                     b.HasKey("IdCondicionTributaria");
 
                     b.ToTable("CondicionTributaria", (string)null);
+                });
+
+            modelBuilder.Entity("MiTienda.DataAccess.PersistenceEntities.InventarioDB", b =>
+                {
+                    b.Property<int>("IdInventario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdInventario"), 1L, 1);
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdStock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdSucursal")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdInventario");
+
+                    b.HasIndex("IdStock");
+
+                    b.HasIndex("IdSucursal");
+
+                    b.ToTable("Inventario", (string)null);
                 });
 
             modelBuilder.Entity("MiTienda.DataAccess.PersistenceEntities.LineaDeVentaDB", b =>
@@ -160,10 +195,15 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdStock")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdVenta")
                         .HasColumnType("int");
 
                     b.HasKey("IdLineaDeVenta");
+
+                    b.HasIndex("IdStock");
 
                     b.HasIndex("IdVenta");
 
@@ -237,16 +277,12 @@ namespace MiTienda.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStock"), 1L, 1);
 
                     b.Property<int>("IdArticulo")
                         .HasColumnType("int");
 
                     b.Property<int>("IdColor")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdSucursal")
                         .HasColumnType("int");
 
                     b.Property<int>("IdTalle")
@@ -257,8 +293,6 @@ namespace MiTienda.DataAccess.Migrations
                     b.HasIndex("IdArticulo");
 
                     b.HasIndex("IdColor");
-
-                    b.HasIndex("IdSucursal");
 
                     b.HasIndex("IdTalle");
 
@@ -393,6 +427,10 @@ namespace MiTienda.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVendedor"), 1L, 1);
 
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Contrasenia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -435,6 +473,9 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int?>("IdPago")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdPuntoDeVenta")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdSucursal")
                         .HasColumnType("int");
 
@@ -449,6 +490,8 @@ namespace MiTienda.DataAccess.Migrations
                     b.HasIndex("IdCliente");
 
                     b.HasIndex("IdPago");
+
+                    b.HasIndex("IdPuntoDeVenta");
 
                     b.HasIndex("IdTipoComprobante");
 
@@ -485,13 +528,40 @@ namespace MiTienda.DataAccess.Migrations
                     b.Navigation("ConTributaria");
                 });
 
+            modelBuilder.Entity("MiTienda.DataAccess.PersistenceEntities.InventarioDB", b =>
+                {
+                    b.HasOne("MiTienda.DataAccess.PersistenceEntities.StockDB", "Stock")
+                        .WithMany()
+                        .HasForeignKey("IdStock")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MiTienda.DataAccess.PersistenceEntities.SucursalDB", "Sucursal")
+                        .WithMany()
+                        .HasForeignKey("IdSucursal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("Sucursal");
+                });
+
             modelBuilder.Entity("MiTienda.DataAccess.PersistenceEntities.LineaDeVentaDB", b =>
                 {
+                    b.HasOne("MiTienda.DataAccess.PersistenceEntities.StockDB", "Stock")
+                        .WithMany()
+                        .HasForeignKey("IdStock")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MiTienda.DataAccess.PersistenceEntities.VentaDB", "Venta")
                         .WithMany()
                         .HasForeignKey("IdVenta")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Stock");
 
                     b.Navigation("Venta");
                 });
@@ -530,16 +600,6 @@ namespace MiTienda.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MiTienda.DataAccess.PersistenceEntities.LineaDeVentaDB", null)
-                        .WithMany("Stock")
-                        .HasForeignKey("IdStock")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MiTienda.DataAccess.PersistenceEntities.SucursalDB", "Sucursal")
-                        .WithMany()
-                        .HasForeignKey("IdSucursal");
-
                     b.HasOne("MiTienda.DataAccess.PersistenceEntities.TalleDB", "Talle")
                         .WithMany()
                         .HasForeignKey("IdTalle")
@@ -549,8 +609,6 @@ namespace MiTienda.DataAccess.Migrations
                     b.Navigation("Articulo");
 
                     b.Navigation("Color");
-
-                    b.Navigation("Sucursal");
 
                     b.Navigation("Talle");
                 });
@@ -605,6 +663,12 @@ namespace MiTienda.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("IdPago");
 
+                    b.HasOne("MiTienda.DataAccess.PersistenceEntities.PuntoDeVentaDB", "PuntoDeVenta")
+                        .WithMany()
+                        .HasForeignKey("IdPuntoDeVenta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MiTienda.DataAccess.PersistenceEntities.TipoComprobanteDB", "TipoComprobante")
                         .WithMany()
                         .HasForeignKey("IdTipoComprobante");
@@ -617,14 +681,11 @@ namespace MiTienda.DataAccess.Migrations
 
                     b.Navigation("Pago");
 
+                    b.Navigation("PuntoDeVenta");
+
                     b.Navigation("TipoComprobante");
 
                     b.Navigation("Vendedor");
-                });
-
-            modelBuilder.Entity("MiTienda.DataAccess.PersistenceEntities.LineaDeVentaDB", b =>
-                {
-                    b.Navigation("Stock");
                 });
 #pragma warning restore 612, 618
         }

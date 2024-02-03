@@ -10,6 +10,7 @@ namespace MiTienda.DataAccess.PersistenceEntities
         public int IdCliente { get; set; }
         public int Dni { get; set; }
         public string Cuil { get; set; }
+        public string Apellido{ get; set; }
         public string Nombre{ get; set; }
         [ForeignKey("IdCondicionTributaria")]
         public CondicionTributariaDB? ConTributaria { get; set; }

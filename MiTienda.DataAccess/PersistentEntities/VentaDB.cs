@@ -18,6 +18,8 @@ namespace MiTienda.DataAccess.PersistenceEntities
         public ClienteDB? Cliente { get; set; }
         [ForeignKey("IdTipoComprobante")]
         public TipoComprobanteDB? TipoComprobante { get; set; }
+        [ForeignKey("IdPuntoDeVenta")]
+        public PuntoDeVentaDB PuntoDeVenta { get; set; }
 
         private double GetTotal()
         {

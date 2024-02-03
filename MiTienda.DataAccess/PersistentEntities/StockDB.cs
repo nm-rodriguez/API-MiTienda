@@ -15,7 +15,9 @@ namespace MiTienda.DataAccess.PersistenceEntities
         public ColorDB Color { get; set; }
         [ForeignKey("IdArticulo")]
         public ArticuloDB Articulo { get; set; }
+        [ForeignKey("IdSucursal")]
+        public SucursalDB? Sucursal { get; set; }
 
-       
+
     }
 }

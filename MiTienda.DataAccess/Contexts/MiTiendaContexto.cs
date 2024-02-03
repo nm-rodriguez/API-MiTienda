@@ -18,6 +18,22 @@ namespace MiTienda.DataAccess.Contexts
         public DbSet<MarcaDB> Marcas { get; set; }
         public DbSet<CategoriaDB> Categorias { get; set; }
         public DbSet<StockDB> Stocks { get; set; }
+        public DbSet<TipoTalleDB> TipoTalles { get; set; }
+        public DbSet<TalleDB> Talles { get; set; }
+        public DbSet<ColorDB> Colores { get; set; }
+
+        public DbSet<ClienteDB> Cliente {get;set; }
+        public DbSet<CondicionTributariaDB> CondicionTributaria {get;set; }
+        public DbSet<LineaDeVentaDB> LineaDeVenta {get;set; }
+        public DbSet<PagoDB> Pago {get;set; }
+        public DbSet<PuntoDeVentaDB> PuntoDeVenta {get;set; }
+        public DbSet<SucursalDB> Sucursal {get;set; }
+        public DbSet<TiendaDB> Tienda {get;set; }
+        public DbSet<TipoComprobanteDB> TipoComprobante {get;set; }
+        public DbSet<TipoPagoDB> TipoPago {get;set; }
+        public DbSet<VendedorDB> Vendedor {get;set; }
+        public DbSet<VentaDB> Venta {get;set; }
+
 
         //public DbSet<T> CreateSet<T>() where T : class
         //{
@@ -36,6 +52,23 @@ namespace MiTienda.DataAccess.Contexts
             modelBuilder.Entity<CategoriaDB>().ToTable("Categoria");
 
             modelBuilder.Entity<StockDB>().ToTable("Stock");
+            modelBuilder.Entity<TipoTalleDB>().ToTable("TipoTalle");
+            modelBuilder.Entity<TalleDB>().ToTable("Talle");
+            modelBuilder.Entity<ColorDB>().ToTable("Color");
+
+            modelBuilder.Entity<ClienteDB>().ToTable("Cliente");
+            modelBuilder.Entity<CondicionTributariaDB>().ToTable("CondicionTributaria");
+            modelBuilder.Entity<LineaDeVentaDB>().ToTable("LineaDeVenta").HasMany(p => p.Stock);
+            modelBuilder.Entity<PagoDB>().ToTable("Pago");                                     
+            modelBuilder.Entity<PuntoDeVentaDB>().ToTable("PuntoDeVenta");
+            modelBuilder.Entity<SucursalDB>().ToTable("Sucursal");
+            modelBuilder.Entity<TiendaDB>().ToTable("Tienda");
+            modelBuilder.Entity<TipoComprobanteDB>().ToTable("TipoComprobante");
+            modelBuilder.Entity<TipoPagoDB>().ToTable("TipoPago");
+            modelBuilder.Entity<VendedorDB>().ToTable("Vendedor");
+            modelBuilder.Entity<VentaDB>().ToTable("Venta");
+
+
         }
 
     }

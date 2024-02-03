@@ -1,13 +1,23 @@
-﻿namespace MiTienda.DataAccess.PersistenceEntities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace MiTienda.DataAccess.PersistenceEntities
 {
-    public class Venta
+    public class VentaDB
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdVenta { get; set; }
+        public int IdSucursal { get; set; }
         public DateTime FechaVenta { get; set; }
-        public PuntoDeVenta PuntoDeVenta { get; set; }
-        public List<LineaDeVenta> LineaDeVenta { get; set; }
-        public Vendedor Vendedor { get; set; }
-        public Pago Pago { get; set; }
-        public ClienteDB Cliente { get; set; }
+        [ForeignKey("IdVendedor")]
+        public VendedorDB? Vendedor { get; set; }
+        [ForeignKey("IdPago")]
+        public PagoDB? Pago { get; set; }
+        [ForeignKey("IdCliente")]
+        public ClienteDB? Cliente { get; set; }
+        [ForeignKey("IdTipoComprobante")]
+        public TipoComprobanteDB? TipoComprobante { get; set; }
 
         private double GetTotal()
         {

@@ -33,14 +33,14 @@ namespace MiTienda.DataAccess.Migrations
 
                     b.Property<string>("CodigoBarras")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(35)");
 
                     b.Property<double>("Costo")
                         .HasColumnType("float");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(35)");
 
                     b.Property<int>("IdCategoria")
                         .HasColumnType("int");
@@ -79,7 +79,7 @@ namespace MiTienda.DataAccess.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(35)");
 
                     b.HasKey("IdCategoria");
 
@@ -96,7 +96,7 @@ namespace MiTienda.DataAccess.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(35)");
 
                     b.HasKey("IdMarca");
 

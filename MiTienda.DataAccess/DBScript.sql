@@ -96,8 +96,11 @@ INSERT INTO Vendedor values
 (1113,'Sischi','Facundo','fsischi','admin123',1),
 (1114,'Llebeili','Agustin','allebeili','admin123',3)
 
---INSERT INTO PuntoDeVenta values
---(1,2),
+INSERT INTO PuntoDeVenta values
+(1,2),
+(2,2),
+(1,1),
+(2,1)
 
 
 

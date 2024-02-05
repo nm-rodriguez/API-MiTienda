@@ -36,16 +36,29 @@ namespace MiTienda.DataAccess.Contexts
         public DbSet<InventarioDB> Inventario {get;set; }
 
 
-        //public DbSet<T> CreateSet<T>() where T : class
-        //{
-        //    return Set<T>();
-        //}
-        ////se puede declarar aqui el string connection en vez de la clase program
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (optionsBuilder.IsConfigured) return;
-        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ControlDeCalidad;Integrated Security=True;");
-        //}
+        public void Confirm()
+        {
+            SaveChanges();
+        }
+
+        public DbSet<T> CrearSet<T>() where T : class
+        {
+            return Set<T>();
+        }
+
+        public void Refresh<T>(T item) where T : class
+        {
+            if (Entry(item).State != EntityState.Detached)
+            {
+                Attach(item);
+            }
+            base.Update(item);
+        }
+
+        public void SetModificado<T>(T item) where T : class
+        {
+            Entry(item).State = EntityState.Modified;
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArticuloDB>().ToTable("Articulo");

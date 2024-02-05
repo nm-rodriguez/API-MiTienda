@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace MiTienda.Domain.Contracts
 {
-    internal interface IRepositorio<T> 
+    public interface IRepository<T> 
     {
-        IEnumerable<T> ObtenerTodos();
-        IEnumerable<T> BuscarPor(Expression<Func<T, bool>> filtro);
-        T BuscarPorId(int id);
-        void Agregar(T item);
-        void Eliminar(T item);
-        void Eliminar(int id);
-        void Modificar(T item);
-        void DescartarCambios();
-        void Refrescar(T item);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro);
+        T GetByID(int id);
+        void AddObject(T item);
+        void DeleteObject(T item);
+        void DeleteByID(int id);
+        void Update(T item);
+        void DropChanges();
+        void Refresh(T item);
         //void Refrescar(EntidadPersistible item);
 
         //void ComponerReferencia<T, E>(T item, Expression<Func<T, E>> entidad)

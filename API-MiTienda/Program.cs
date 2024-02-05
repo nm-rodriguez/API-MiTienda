@@ -1,3 +1,4 @@
+using API_MiTienda.InitialSetup;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contexts;
 
@@ -10,6 +11,7 @@ namespace API_MiTienda
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.InitialIjections();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

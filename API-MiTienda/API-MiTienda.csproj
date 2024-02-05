@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MiTienda.Application\MiTienda.Application.csproj" />
     <ProjectReference Include="..\MiTienda.DataAccess\MiTienda.DataAccess.csproj" />
   </ItemGroup>
 

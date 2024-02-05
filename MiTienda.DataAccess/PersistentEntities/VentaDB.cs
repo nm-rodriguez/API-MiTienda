@@ -8,7 +8,8 @@ namespace MiTienda.DataAccess.PersistenceEntities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdVenta { get; set; }
-        public int IdSucursal { get; set; }
+        [ForeignKey("IdSucursal")]
+        public SucursalDB Sucursal { get; set; }
         public DateTime FechaVenta { get; set; }
         [ForeignKey("IdVendedor")]
         public VendedorDB? Vendedor { get; set; }

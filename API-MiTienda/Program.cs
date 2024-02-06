@@ -11,18 +11,9 @@ namespace API_MiTienda
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.InitialIjections();
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.Services.AddDbContext<MiTiendaContexto>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("StringConnection"));
-            });
-
+            string connectionString = builder.Configuration.GetConnectionString("StringConnection");
+            builder.Services.Configurar(connectionString);
+            
             var app = builder.Build();
 
             
@@ -34,6 +25,8 @@ namespace API_MiTienda
             }
 
             app.UseHttpsRedirection();
+
+            app.UseRouting();
 
             app.UseAuthorization();
 

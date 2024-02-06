@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MiTienda.DataAccess.Contracts;
 using MiTienda.DataAccess.PersistenceEntities;
 using System;
 using System.Collections.Generic;
@@ -8,57 +9,23 @@ using System.Threading.Tasks;
 
 namespace MiTienda.DataAccess.Contexts
 {
-    public class MiTiendaContexto : DbContext
+    public class MiTiendaContexto : DbContext, IVentaEF
     {
+        public MiTiendaContexto()
+        {
+            
+        }
         public MiTiendaContexto(DbContextOptions <MiTiendaContexto> options): base(options)
         {
 
         }
-        public DbSet<ArticuloDB> Articulos { get; set; }
-        public DbSet<MarcaDB> Marcas { get; set; }
-        public DbSet<CategoriaDB> Categorias { get; set; }
-        public DbSet<StockDB> Stocks { get; set; }
-        public DbSet<TipoTalleDB> TipoTalles { get; set; }
-        public DbSet<TalleDB> Talles { get; set; }
-        public DbSet<ColorDB> Colores { get; set; }
 
-        public DbSet<ClienteDB> Cliente {get;set; }
-        public DbSet<CondicionTributariaDB> CondicionTributaria {get;set; }
-        public DbSet<LineaDeVentaDB> LineaDeVenta {get;set; }
-        public DbSet<PagoDB> Pago {get;set; }
-        public DbSet<PuntoDeVentaDB> PuntoDeVenta {get;set; }
-        public DbSet<SucursalDB> Sucursal {get;set; }
-        public DbSet<TiendaDB> Tienda {get;set; }
-        public DbSet<TipoComprobanteDB> TipoComprobante {get;set; }
-        public DbSet<TipoPagoDB> TipoPago {get;set; }
-        public DbSet<VendedorDB> Vendedor {get;set; }
-        public DbSet<VentaDB> Venta {get;set; }
-        public DbSet<InventarioDB> Inventario {get;set; }
-
-
-        public void Confirm()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            SaveChanges();
+            if (optionsBuilder.IsConfigured) return;
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-17VUHHS;Database=MiTienda;Trusted_Connection=True");
         }
 
-        public DbSet<T> CrearSet<T>() where T : class
-        {
-            return Set<T>();
-        }
-
-        public void Refresh<T>(T item) where T : class
-        {
-            if (Entry(item).State != EntityState.Detached)
-            {
-                Attach(item);
-            }
-            base.Update(item);
-        }
-
-        public void SetModificado<T>(T item) where T : class
-        {
-            Entry(item).State = EntityState.Modified;
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArticuloDB>().ToTable("Articulo");
@@ -86,5 +53,28 @@ namespace MiTienda.DataAccess.Contexts
 
         }
 
+        public void Confirm()
+        {
+            SaveChanges();
+        }
+
+        public DbSet<T> CrearSet<T>() where T : class
+        {
+            return Set<T>();
+        }
+
+        public void Refrescar<T>(T item) where T : class
+        {
+            if (Entry(item).State != EntityState.Detached)
+            {
+                Attach(item);
+            }
+            base.Update(item);
+        }
+
+        public void SetModificado<T>(T item) where T : class
+        {
+            Entry(item).State = EntityState.Modified;
+        }
     }
 }

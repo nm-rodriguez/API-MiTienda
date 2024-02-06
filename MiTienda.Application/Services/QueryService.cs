@@ -1,4 +1,5 @@
 ﻿using MiTienda.Application.Contracts;
+using MiTienda.DataAccess.PersistenceEntities;
 using MiTienda.Domain.Contracts;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace MiTienda.Application.Services
         public  IEnumerable<T> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public IQueryable<T> GetAllWithRelatedData()
+        {
+            return _repository.GetAll().AsQueryable();
         }
 
         public IEnumerable<T> GetBy(Expression<Func<T, bool>> filter)

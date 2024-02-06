@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
 using MiTienda.DataAccess.Contexts;
 using MiTienda.DataAccess.PersistenceEntities;
+using MiTienda.Domain.Contracts;
+using MiTienda.Domain.Entities;
 using System.Collections;
 
 namespace API_MiTienda.Controllers
@@ -12,28 +14,25 @@ namespace API_MiTienda.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
-        private IQueryService<StockDB> _querysService;
-        private IManageStockService _manageService;
 
-        public StockController(IQueryService<StockDB> querysService, IManageStockService manageService)
+        private readonly IQueryService<StockDB> _queryService;
+        private readonly IManageStockService _manageService;
+
+        public StockController(IQueryService<StockDB> queryService, IManageStockService manageService)
         {
-            _querysService = querysService;
+            _queryService = queryService;
             _manageService = manageService;
         }
 
         [HttpGet]
-        //public async Task<ActionResult<IEnumerable>> Get()
-        public IEnumerable<StockDB> Get()
+        public ActionResult<IEnumerable<StockDB>> GetAllStocks()
         {
-            var stocks = /*await*/ _querysService.GetAll();
+            var stocks = _queryService.GetAllWithRelatedData()
+                .Include(s => s.Color)
+                .Include(s => s.Articulo)
+                .Include(s => s.Talle);
 
-            //.Include(a => a.Talle)
-            //.Include(a => a.Color)
-            //.Include(a => a.Articulo).ThenInclude(s => s.Marca)
-            //.Include(a => a.Articulo).ThenInclude(s => s.Categoria)
-            //.ToListAsync();
-            return stocks;
-            //return Ok();
+            return Ok(stocks);
         }
     }
 }

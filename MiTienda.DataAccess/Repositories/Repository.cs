@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MiTienda.DataAccess.Contexts;
 using MiTienda.DataAccess.PersistenceEntities;
 using MiTienda.Domain.Contracts;
 
@@ -12,14 +13,20 @@ namespace MiTienda.DataAccess.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected DbSet<T> CreateSet { get; set; }
-        
-        //public DbSet<StockDB> Stocks { get; set; }
+        private readonly MiTiendaContexto _context;
+        protected DbSet<T> DbSet { get; }
+
+        public Repository(MiTiendaContexto context)
+        {
+            _context = context;
+            DbSet = _context.Set<T>();
+        }
+
         public IEnumerable<T> GetAll()
         {
-            return CreateSet;//faltan includes
+            return DbSet;
         }
-        
+
         public void AddObject(T item)
         {
             throw new NotImplementedException();
@@ -40,7 +47,7 @@ namespace MiTienda.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-      
+
 
         public IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro)
         {
@@ -61,5 +68,6 @@ namespace MiTienda.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
+
     }
 }

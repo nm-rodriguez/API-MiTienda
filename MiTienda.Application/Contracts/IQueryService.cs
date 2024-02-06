@@ -10,6 +10,8 @@ namespace MiTienda.Application.Contracts
     public interface IQueryService<T>
     {
         IEnumerable<T> GetAll();
+        IQueryable<T> GetAllWithRelatedData();
         IEnumerable<T> GetBy(Expression<Func<T,bool>> filter);
+
     }
 }

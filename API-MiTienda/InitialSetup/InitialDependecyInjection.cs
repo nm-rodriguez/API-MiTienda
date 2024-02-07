@@ -50,6 +50,7 @@ namespace API_MiTienda.InitialSetup
             servicios.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
 
             //Managers
+            servicios.AddScoped<IManageArticuloService, ArticuloManageService>();
             servicios.AddScoped<IManageStockService, StockManageService>();
 
             return servicios;

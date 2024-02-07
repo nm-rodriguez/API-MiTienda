@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiTienda.DataAccess.Migrations
 {
     [DbContext(typeof(MiTiendaContexto))]
-    [Migration("20240207205400_MiTienda")]
-    partial class MiTienda
+    [Migration("20240207223955_MiTienda1")]
+    partial class MiTienda1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -460,7 +460,6 @@ namespace MiTienda.DataAccess.Migrations
             modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaVenta")

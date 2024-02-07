@@ -10,9 +10,9 @@ namespace API_MiTienda.Controllers
     {
 
         private readonly IQueryService<TipoPago> _queryService;
-        private readonly IManageStockService _manageService;
+        private readonly IManageArticuloService _manageService;
 
-        public TipoPagoController(IQueryService<TipoPago> queryService, IManageStockService manageService)
+        public TipoPagoController(IQueryService<TipoPago> queryService, IManageArticuloService manageService)
         {
             _queryService = queryService;
             _manageService = manageService;

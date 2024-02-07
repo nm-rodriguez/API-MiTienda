@@ -14,7 +14,7 @@ namespace MiTienda.DataAccess.Repositories
     public class Repository<T> : IRepository<T> where T : EntidadPersistible
     {
         private readonly MiTiendaContexto _context;
-        protected DbSet<T> DbSet { get; }
+        protected DbSet<T> DbSet { get; set; }
 
         public Repository(MiTiendaContexto context)
         {
@@ -29,7 +29,7 @@ namespace MiTienda.DataAccess.Repositories
 
         public void AddObject(T item)
         {
-            throw new NotImplementedException();
+            DbSet.Add(item);
         }
 
         public void DeleteByID(int id)

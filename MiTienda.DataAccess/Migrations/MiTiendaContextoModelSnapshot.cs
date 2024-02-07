@@ -458,7 +458,6 @@ namespace MiTienda.DataAccess.Migrations
             modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaVenta")

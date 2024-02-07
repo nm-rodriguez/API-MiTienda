@@ -10,8 +10,8 @@ namespace MiTienda.Domain.Utilidades
 {
     public class EntidadPersistible
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
     }
 }

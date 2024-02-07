@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MiTienda.DataAccess.Migrations
 {
-    public partial class MiTienda : Migration
+    public partial class MiTienda1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

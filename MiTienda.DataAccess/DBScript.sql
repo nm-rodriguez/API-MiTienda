@@ -1,27 +1,31 @@
-create database MiTienda
-go
-use MiTienda
-go
+--create database MiTienda
+--go
+--use MiTienda
+--go
+
 
 --INSERTS---------------------------------------------------------------
 INSERT INTO Categoria values
 ('Remeras'),
 ('Pantalon'),
-('Accesorios')
+('Accesorios'),
+('Camisas'),
+('Ropa Interior')
 
 INSERT INTO Marca values
 ('Adidas'),
 ('Levis'),
 ('Penguin'),
+('Nike'),
 ('UnderArmor')
 
 INSERT INTO Articulo values
-('Medias','1211-1111',500,0.5,750,500					,0.21,1,3),
+--('Medias'			  ,'1211-1111',500  ,0.5,null ,null,0.21,1,3)
 ('Remera manga cortas','1211-1222',15000,0.5,null,null	,0.21,1,1),
 ('Pantalon jean','1211-4566',22000,0.5,null,null		,0.21,2,2),
 ('Remera manga cortas','1211-1333',12000,0.5,null,null	,0.21,3,1),
 ('Remera deportiva','1211-3322',8000,0.5,null,null		,0.21,4,1)
-GO
+
 INSERT INTO Color values
 ('Rojo'),
 ('Azul'),
@@ -54,7 +58,6 @@ INSERT INTO Sucursal values
 (3,'Tafi Viejo',1),
 (2,'Yerba Buena',1)
 
-GO
 INSERT INTO Stock values
 (1,1,2),
 (2,2,1),
@@ -84,8 +87,6 @@ INSERT INTO Pago values
 
 
 
-
-
 INSERT INTO Cliente values
 (45000222,'20-45000222-5','Tomas','Wolf',2),
 (40555111,'20-40555111-7','Florencio','Chavez',1)
@@ -102,20 +103,10 @@ INSERT INTO PuntoDeVenta values
 (1,1),
 (2,1)
 
-
+rollback
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --CONSULTAS----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-select cantidad,ar.CodigoBarras,cat.Descripcion,mar.Nombre nombreMarca,t.Descripcion,c.Nombre color,sl.Nombre from inventario i
-inner join Stock s on s.IdStock = i.idStock
-inner join sucursal sl on sl.IdSucursal = i.idsucursal
-inner join Articulo ar on ar.IdArticulo = s.IdArticulo
-inner join talle t on t.IdTalle = s.IdTalle
-inner join color c on c.IdColor = s.IdColor
-inner join Categoria cat on cat.IdCategoria = ar.IdCategoria
-inner join Marca mar on mar.IdMarca = ar.IdMarca
-
-
 select * from Articulo
 select * from Marca
 select * from Categoria
@@ -125,7 +116,22 @@ select * from TipoTalle
 select * from Color
 select * from Articulo
 select * from Sucursal
-select * from Stock
+
+select a.*,c.*,t.* from Stock s
+inner join Talle t on t.id = s.talleid
+inner join Color c on c.id = s.colorid
+inner join Articulo a on a.id = s.articuloid
+
+--select cantidad,ar.CodigoBarras,cat.Descripcion,mar.Nombre nombreMarca,t.Descripcion,c.Nombre color,sl.Nombre from inventario i
+--inner join Stock s on s.IdStock = i.idStock
+--inner join sucursal sl on sl.IdSucursal = i.idsucursal
+--inner join Articulo ar on ar.IdArticulo = s.IdArticulo
+--inner join talle t on t.IdTalle = s.IdTalle
+--inner join color c on c.IdColor = s.IdColor
+--inner join Categoria cat on cat.IdCategoria = ar.IdCategoria
+--inner join Marca mar on mar.IdMarca = ar.IdMarca
+
+
 
 
 --DELETES

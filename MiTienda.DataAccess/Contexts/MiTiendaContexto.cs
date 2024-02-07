@@ -11,14 +11,8 @@ namespace MiTienda.DataAccess.Contexts
 {
     public class MiTiendaContexto : DbContext, IVentaEF
     {
-        public MiTiendaContexto()
-        {
-            
-        }
-        public MiTiendaContexto(DbContextOptions <MiTiendaContexto> options): base(options)
-        {
-
-        }
+        public MiTiendaContexto(){}
+        public MiTiendaContexto(DbContextOptions <MiTiendaContexto> options): base(options){}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,31 +31,27 @@ namespace MiTienda.DataAccess.Contexts
             modelBuilder.Entity<TalleDB>().ToTable("Talle");
             modelBuilder.Entity<ColorDB>().ToTable("Color");
 
-            modelBuilder.Entity<ClienteDB>().ToTable("Cliente");
             modelBuilder.Entity<CondicionTributariaDB>().ToTable("CondicionTributaria");
-            modelBuilder.Entity<LineaDeVentaDB>().ToTable("LineaDeVenta");
-            modelBuilder.Entity<PagoDB>().ToTable("Pago");                                     
-            modelBuilder.Entity<PuntoDeVentaDB>().ToTable("PuntoDeVenta");
             modelBuilder.Entity<SucursalDB>().ToTable("Sucursal");
             modelBuilder.Entity<TiendaDB>().ToTable("Tienda");
-            modelBuilder.Entity<TipoComprobanteDB>().ToTable("TipoComprobante");
             modelBuilder.Entity<TipoPagoDB>().ToTable("TipoPago");
+
+            modelBuilder.Entity<PuntoDeVentaDB>().ToTable("PuntoDeVenta");
+            modelBuilder.Entity<TipoComprobanteDB>().ToTable("TipoComprobante");
+            modelBuilder.Entity<PagoDB>().ToTable("Pago");                                     
             modelBuilder.Entity<VendedorDB>().ToTable("Vendedor");
+            modelBuilder.Entity<ClienteDB>().ToTable("Cliente");
             modelBuilder.Entity<VentaDB>().ToTable("Venta");
+
             modelBuilder.Entity<InventarioDB>().ToTable("Inventario");
-
-
+            modelBuilder.Entity<LineaDeVentaDB>().ToTable("LineaDeVenta");
         }
 
         public void Confirm()
-        {
-            SaveChanges();
-        }
+        {   SaveChanges();  }
 
         public DbSet<T> CrearSet<T>() where T : class
-        {
-            return Set<T>();
-        }
+        {   return Set<T>();    }
 
         public void Refrescar<T>(T item) where T : class
         {
@@ -73,8 +63,6 @@ namespace MiTienda.DataAccess.Contexts
         }
 
         public void SetModificado<T>(T item) where T : class
-        {
-            Entry(item).State = EntityState.Modified;
-        }
+        {   Entry(item).State = EntityState.Modified;   }
     }
 }

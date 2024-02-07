@@ -12,7 +12,7 @@ namespace API_MiTienda
 
             // Add services to the container.
             string connectionString = builder.Configuration.GetConnectionString("StringConnection");
-            builder.Services.Configurar(connectionString);
+            builder.Services.InitialCharges(connectionString);
             
             var app = builder.Build();
 

@@ -33,7 +33,7 @@ namespace API_MiTienda.InitialSetup
 
         //    return services;
         //}
-        public static IServiceCollection Configurar(this IServiceCollection servicios, string conectionString)
+        public static IServiceCollection InitialCharges(this IServiceCollection servicios, string conectionString)
         {
             servicios.AddControllers();
 
@@ -44,9 +44,6 @@ namespace API_MiTienda.InitialSetup
                 options => options.UseSqlServer(conectionString),
                 ServiceLifetime.Scoped
                 );
-
-
-
 
             servicios.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             //Generic queries

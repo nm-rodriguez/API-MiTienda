@@ -1,43 +1,38 @@
 ﻿
+using MiTienda.Domain.Utilidades;
+
 namespace MiTienda.Domain.Entities
 {
-    public class Articulo
+    public class Articulo : EntidadPersistible
     {
-        public string Descripcion{ get; set; }
+        public string Descripcion { get; set; }
         public string CodigoBarras { get; set; }
         public double Costo { get; set; }
         public double MargenGanancia { get; set; }
-        public double PrecioFinal { get; set; }
-        public double NetoGravado { get; set; }
+        public double? PrecioFinal { get; set; }
+        public double? NetoGravado { get; set; }
         public double PorcentajeIVA { get; set; }
-        public Marca  Marca { get; set; }
+        public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }
-        
 
-        private List<Color> GetColores()
+        public Articulo()
         {
-            throw new NotImplementedException();
-        }
-        private List<Talle> GetTalles()
-        {
-            throw new NotImplementedException();
-        }
-        private Categoria GetCategoria()
-        {
-            throw new NotImplementedException();
-        }
-        private Marca GetMarca()
-        {
-            throw new NotImplementedException();
-        }
-        private Stock GetStock()
-        {
-            throw new NotImplementedException();
+
         }
 
-        public Articulo Buscar()
+        public Articulo(string descripcion, string codigoBarras, double costo, double margenGanancia, double? precioFinal, double? netoGravado, double porcentajeIVA, Marca marca, Categoria categoria)
         {
-            throw new NotImplementedException();
+            Descripcion = descripcion;
+            CodigoBarras = codigoBarras;
+            Costo = costo;
+            MargenGanancia = margenGanancia;
+            PrecioFinal = precioFinal;
+            NetoGravado = netoGravado;
+            PorcentajeIVA = porcentajeIVA;
+            Marca = marca;
+            Categoria = categoria;
         }
+
+
     }
 }

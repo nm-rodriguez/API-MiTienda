@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiTienda.Domain.Utilidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MiTienda.Application.Contracts
 {
-    public interface IQueryService<T>
+    public interface IQueryService<T> where T : EntidadPersistible
     {
         IEnumerable<T> GetAll();
         IQueryable<T> GetAllWithRelatedData();

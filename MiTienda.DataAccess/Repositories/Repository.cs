@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contexts;
-using MiTienda.DataAccess.PersistenceEntities;
 using MiTienda.Domain.Contracts;
+using MiTienda.Domain.Utilidades;
 
 namespace MiTienda.DataAccess.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : EntidadPersistible
     {
         private readonly MiTiendaContexto _context;
         protected DbSet<T> DbSet { get; }

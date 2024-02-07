@@ -1,10 +1,13 @@
-﻿namespace MiTienda.Domain.Entities
+﻿using MiTienda.Domain.Utilidades;
+
+namespace MiTienda.Domain.Entities
 {
-    public class Pago
+    public class Pago : EntidadPersistible
     {
 
         public DateTime FechaPago { get; set; }
         public double Monto { get; set; }
+        public TipoPago TipoPago { get; set; }
 
 
         private void RealizarPago()

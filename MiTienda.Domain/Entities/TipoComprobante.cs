@@ -2,8 +2,8 @@
 
 namespace MiTienda.Domain.Entities
 {
-    public class Categoria : EntidadPersistible
+    public class TipoComprobante : EntidadPersistible
     {
         public string Descripcion { get; set; }
-    }
+}
 }

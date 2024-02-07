@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiTienda.Application.Contracts;
-using MiTienda.DataAccess.PersistenceEntities;
+using MiTienda.Domain.Entities;
 
 namespace API_MiTienda.Controllers
 {
@@ -9,17 +9,17 @@ namespace API_MiTienda.Controllers
     public class TipoPagoController: ControllerBase
     {
 
-        private readonly IQueryService<TipoPagoDB> _queryService;
+        private readonly IQueryService<TipoPago> _queryService;
         private readonly IManageStockService _manageService;
 
-        public TipoPagoController(IQueryService<TipoPagoDB> queryService, IManageStockService manageService)
+        public TipoPagoController(IQueryService<TipoPago> queryService, IManageStockService manageService)
         {
             _queryService = queryService;
             _manageService = manageService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<TipoPagoDB>> Get()
+        public ActionResult<IEnumerable<TipoPago>> Get()
         {
             var tipoPagos = _queryService.GetAll();
             return Ok(tipoPagos);

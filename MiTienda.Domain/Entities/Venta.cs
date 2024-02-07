@@ -1,31 +1,22 @@
-﻿using MiTienda.Domain.Enums;
-using MiTienda.Domain.Utilidades;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using MiTienda.Domain.Utilidades;
 
 namespace MiTienda.Domain.Entities
 {
     public class Venta : EntidadPersistible
     {
-        [ForeignKey("IdSucursal")]
         public Sucursal Sucursal { get; set; }
         
         public DateTime FechaVenta { get; set; }
         
-        [ForeignKey("IdVendedor")]
-        public Vendedor? Vendedor { get; set; }
+        public Vendedor Vendedor { get; set; }
         
-        [ForeignKey("IdPago")]
-        public Pago? Pago { get; set; }
+        public Pago Pago { get; set; }
+       
+        public Cliente Cliente { get; set; }
         
-        [ForeignKey("IdCliente")]
-        public Cliente? Cliente { get; set; }
+        public TipoComprobante TipoComprobante { get; set; }
         
-        [ForeignKey("IdTipoComprobante")]
-        public TipoComprobante? TipoComprobante { get; set; }
-        
-        [ForeignKey("IdPuntoDeVenta")]
         public PuntoDeVenta PuntoDeVenta { get; set; }
-
 
         private double GetTotal()
         {

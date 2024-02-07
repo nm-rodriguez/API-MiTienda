@@ -1,8 +1,9 @@
-﻿namespace MiTienda.Domain.Entities
+﻿using MiTienda.Domain.Utilidades;
+
+namespace MiTienda.Domain.Entities
 {
-    public class Stock
+    public class Stock : EntidadPersistible
     {
-        public int Cantidad { get; set; }
         public Talle Talle { get; set; }
         public Color Color { get; set; }
         public Articulo Articulo { get; set; }

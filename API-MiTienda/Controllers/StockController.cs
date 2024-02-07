@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
 using MiTienda.DataAccess.Contexts;
-using MiTienda.DataAccess.PersistenceEntities;
+
 using MiTienda.Domain.Contracts;
 using MiTienda.Domain.Entities;
 using System.Collections;
@@ -15,17 +15,17 @@ namespace API_MiTienda.Controllers
     public class StockController : ControllerBase
     {
 
-        private readonly IQueryService<StockDB> _queryService;
+        private readonly IQueryService<Stock> _queryService;
         private readonly IManageStockService _manageService;
 
-        public StockController(IQueryService<StockDB> queryService, IManageStockService manageService)
+        public StockController(IQueryService<Stock> queryService, IManageStockService manageService)
         {
             _queryService = queryService;
             _manageService = manageService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<StockDB>> GetAllStocks()
+        public ActionResult<IEnumerable<Stock>> GetAllStocks()
         {
             var stocks = _queryService.GetAllWithRelatedData()
                 .Include(s => s.Color)

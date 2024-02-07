@@ -2,8 +2,10 @@
 
 namespace MiTienda.Domain.Entities
 {
-    public class Categoria : EntidadPersistible
+    public class CondicionTributaria : EntidadPersistible
     {
+        public string Abreviatura { get; set; }
         public string Descripcion { get; set; }
+
     }
 }

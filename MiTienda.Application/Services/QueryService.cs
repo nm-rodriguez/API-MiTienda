@@ -1,6 +1,7 @@
 ﻿using MiTienda.Application.Contracts;
-using MiTienda.DataAccess.PersistenceEntities;
+
 using MiTienda.Domain.Contracts;
+using MiTienda.Domain.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MiTienda.Application.Services
 {
-    public class QueryService<T> : IQueryService<T>
+    public class QueryService<T> : IQueryService<T> where T : EntidadPersistible
     {
         private IRepository<T> _repository;
 

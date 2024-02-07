@@ -10,7 +10,6 @@ namespace MiTienda.Domain.Entities
         public string Nombre { get; set; }
         public string Usuario { get; set; }
         public string Contrasenia { get; set; }
-        [ForeignKey("IdSucursal")]
-        public Sucursal? Sucursal { get; set; }
+        public Sucursal Sucursal { get; set; }
     }
 }

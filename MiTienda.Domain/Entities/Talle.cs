@@ -1,10 +1,10 @@
-﻿using MiTienda.Domain.Enums;
+﻿using MiTienda.Domain.Utilidades;
 
 namespace MiTienda.Domain.Entities
 {
-    public class Talle
+    public class Talle : EntidadPersistible
     {
-        public string Medida { get; set; }
+        public string TalleArticulo { get; set; }
         public TipoTalle TipoTalle { get; set; }
     }
 }

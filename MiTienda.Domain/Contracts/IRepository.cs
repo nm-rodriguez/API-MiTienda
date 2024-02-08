@@ -12,12 +12,13 @@ namespace MiTienda.Domain.Contracts
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro);
-        T GetByID(int id);
+        IEnumerable<T> GetByID(int id);
         void AddObject(T item);
         void DeleteObject(T item);
         void DeleteByID(int id);
         void Update(T item);
         void DropChanges();
+        void SaveChanges();
         void Refresh(T item);
         //void Refrescar(EntidadPersistible item);
 

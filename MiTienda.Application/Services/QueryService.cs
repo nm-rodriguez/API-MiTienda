@@ -17,13 +17,13 @@ namespace MiTienda.Application.Services
         {
             return _repository.GetAll().AsQueryable();
         }
-        public  IEnumerable<T> GetAll()
+        public  IQueryable<T> GetAll()
         {
-            return _repository.GetAll();
+            return _repository.GetAll().AsQueryable();
         }
-        public IEnumerable<T> GetBy(Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetBy(Expression<Func<T, bool>> filter)
         {
-            return _repository.GetBy(filter);
+            return _repository.GetBy(filter).AsQueryable();
         }
 
     }

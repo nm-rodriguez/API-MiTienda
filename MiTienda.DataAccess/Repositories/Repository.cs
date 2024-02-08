@@ -9,29 +9,32 @@ namespace MiTienda.DataAccess.Repositories
     public class Repository<T> : IRepository<T> where T : EntidadPersistible
     {
         private readonly MiTiendaContexto _context;
-        //protected DbSet<T> DbSet { get; set; }
         
         public Repository(MiTiendaContexto context)
         {
             _context = context;
-            //DbSet = _context.Set<T>();
         }
         public IEnumerable<T> GetAll()
         {
             //return DbSet;
             return _context.DbSet<T>();
         }
+        //puede devolver varios tambien //EJ: traeme todas los articulos con este idMARCA o idCategoria
+        public IEnumerable<T> GetByID(int id)
+        {
+            return _context.DbSet<T>().Where(x => x.Id == id);
+        }
         public void AddObject(T item)
         {
             _context.DbSet<T>().Add(item);
         }
-        public void DeleteByID(int id)
-        {
-            throw new NotImplementedException();
-        }
         public void DeleteObject(T item)
         {
-            throw new NotImplementedException();
+            _context.DbSet<T>().Remove(item);
+        }
+        public void DeleteByID(int id)
+        {
+            DeleteObject(_context.DbSet<T>().Where<T>(x => x.Id == id).SingleOrDefault());
         }
         public void DropChanges()
         {
@@ -39,13 +42,7 @@ namespace MiTienda.DataAccess.Repositories
         }
         public IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro)
         {
-            //return (T)DbSet.FirstOrDefault(filtro);
-            //return (IEnumerable<T>)DbSet.Where(filtro);
             return _context.DbSet<T>().Where(filtro);
-        }
-        public T GetByID(int id)
-        {
-            throw new NotImplementedException();
         }
         public void Refresh(T item)
         {
@@ -53,8 +50,12 @@ namespace MiTienda.DataAccess.Repositories
         }
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            _context.DbSet<T>().Update(item);
         }
 
+        public void SaveChanges()
+        {
+            _context.SaveChangesDB();
+        }
     }
 }

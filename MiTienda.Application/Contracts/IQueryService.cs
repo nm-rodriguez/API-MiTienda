@@ -10,9 +10,9 @@ namespace MiTienda.Application.Contracts
 {
     public interface IQueryService<T> where T : EntidadPersistible
     {
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
         IQueryable<T> GetAllWithRelatedData();
-        IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro);
+        IQueryable<T> GetBy(Expression<Func<T, bool>> filtro);
 
     }
 }

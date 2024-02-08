@@ -13,19 +13,23 @@ namespace MiTienda.Application.Services
         {
             _articuloRepo = articuloRepo;
         }
-        public void CreateArticulo(ArticuloDTO newArticulo)
+
+        public void CreateArticulo(Articulo articulo)
+        {
+            _articuloRepo.AddObject(articulo);
+        }
+        public void UpdateArticulo(Articulo articulo)
         {
             throw new NotImplementedException();
         }
         public void DeleteArticulo(int idArticulo)
         {
-            throw new NotImplementedException();
-        }
-        public void UpdateArticulo(ArticuloDTO articulo)
-        {
-            throw new NotImplementedException();
+            _articuloRepo.DeleteByID(idArticulo);
         }
 
-        
+        public void SaveArticulo()
+        {
+            _articuloRepo.SaveChanges();
+        }
     }
 }

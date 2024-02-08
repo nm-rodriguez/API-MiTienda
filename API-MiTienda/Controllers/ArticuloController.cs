@@ -11,116 +11,126 @@ namespace API_MiTienda.Controllers
     [ApiController]
     public class ArticuloController : ControllerBase
     {
-        private readonly IQueryService<Articulo> _queryService;
-        private readonly IManageArticuloService _manageService;
+        private readonly IQueryService<Articulo> _queryServiceArticulo;
+        private readonly IQueryService<Marca> _queryServiceMarca;
+        private readonly IQueryService<Categoria> _queryServiceCategoria;
+        private  IManageArticuloService _manageService;
 
-        public ArticuloController(IQueryService<Articulo> queryService, IManageArticuloService manageService)
+        public ArticuloController(IQueryService<Articulo> queryServiceArticulo, IQueryService<Marca> queryServiceMarca, IQueryService<Categoria> queryServiceCategoria, IManageArticuloService manageService)
         {
-            _queryService = queryService;
+            _queryServiceArticulo = queryServiceArticulo;
+            _queryServiceMarca = queryServiceMarca;
+            _queryServiceCategoria = queryServiceCategoria;
             _manageService = manageService;
         }
 
+
+
+        #region GETS
         [HttpGet]
         public ActionResult<IEnumerable<Articulo>> GetAllArticulos()
         {
-            var articulos = _queryService.GetAllWithRelatedData()
+            var articulos = _queryServiceArticulo.GetAllWithRelatedData()
                 .Include(a => a.Marca)
                 .Include(a => a.Categoria);
             
                 return Ok(articulos);
         }
 
-        [HttpGet("Marcas")]
-        public ActionResult<IEnumerable<Articulo>> GetMarcas()
-        {
-            var marcas = _queryService.GetAllWithRelatedData();
-
-            return Ok(marcas);
-        }
-        [HttpGet("Categorias")]
-        public async Task<ActionResult<IEnumerable>> GetCategorias()
-        {
-            var categorias = _queryService.GetAllWithRelatedData();
-            return Ok(categorias);
-        }
-
-
         [HttpGet("{id}")]
-        public  ActionResult<Articulo> GetArticulo(int id)
+        public ActionResult<Articulo> GetArticuloById(int id)
         {
-            if (_queryService.GetAll() == null)
-            {
+            if (_queryServiceArticulo.GetAll() == null)
                 return NotFound();
-            }
-            Articulo? articulo =  _queryService.GetBy(a => a.Id == id).SingleOrDefault();
-
-            //var articulo = await _queryService.GetAllWithRelatedData()
-            //    .Include(a => a.Marca)
-            //    .Include(a => a.Categoria)
-            //    .FirstOrDefaultAsync<Articulo>(x => x.Id == id);
+            
+            var articulo = _queryServiceArticulo
+                    .GetBy(a => a.Id == id)
+                    .Include(a => a.Marca)
+                    .Include(a => a.Categoria)
+                    .SingleOrDefault();
 
             if (articulo == null)
-            {
                 return NotFound();
-            }
 
             return Ok(articulo);
         }
 
-        [HttpGet("articulos/{idCat}")]
-        public  ActionResult<Articulo> GetArticulobByCategoria(int idCat)
+        //0..n articulos con ese idCategoria
+        [HttpGet("articulos/{idCategoria}")]
+        public ActionResult<Articulo> GetArticulobByCategoria(int idCategoria)
         {
-            if (_queryService.GetAll() == null)
-            {
+            if (_queryServiceArticulo.GetAll() == null) 
                 return NotFound();
-            }
-            List<Articulo> articulo =  _queryService.GetBy(a => a.Categoria.Id == idCat).ToList();
 
-            //var articulo = await _queryService.GetAllWithRelatedData()
-            //    .Include(a => a.Marca)
-            //    .Include(a => a.Categoria)
-            //    .FirstOrDefaultAsync<Articulo>(x => x.Id == id);
+            List<Articulo> articulo = _queryServiceArticulo
+                .GetBy(a => a.Categoria.Id == idCategoria)
+                .Include(a => a.Marca)
+                .Include(a => a.Categoria)
+                .ToList();
 
-            if (articulo == null)
-            {
+            if (articulo == null) 
                 return NotFound();
-            }
 
             return Ok(articulo);
         }
 
+        #endregion
 
-        //[HttpPost]
-        ////public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
-        //public async Task<ActionResult<Articulo>> PostArticulo([FromBody] Articulo articulo)
+
+        [HttpPost]
+        //public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
+        public ActionResult<Articulo> PostArticulo([FromBody] Articulo articulo)
+        {
+
+            try
+            {
+                if (_queryServiceArticulo.GetBy(x => x.Id == articulo.Id) == null)
+                    return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
+
+                if (articulo == null)
+                    return StatusCode(400, "Falta articulo");
+
+
+                //buscar la manera de que muestre error cuando se carga un id incorrecto 
+                articulo.Marca = (Marca)_queryServiceMarca.GetBy(x => x.Id == articulo.Marca.Id).SingleOrDefault();
+                articulo.Categoria = (Categoria)_queryServiceCategoria.GetBy(x => x.Id == articulo.Categoria.Id).SingleOrDefault();
+                articulo.PrecioFinal = articulo.Costo * (1 + articulo.MargenGanancia);
+                articulo.NetoGravado = articulo.Costo * (articulo.MargenGanancia);
+
+
+                _manageService.CreateArticulo(articulo);
+                _manageService.SaveArticulo();
+
+                return CreatedAtAction("GetArticuloById", new { id = articulo.Id }, articulo.Id);
+                //return Ok($"Articulo registrado: {articulo.Descripcion}");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Se produjo un error interno: {e.Message}");
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult<Articulo> DeleteArticulo(int idArticulo)
+        {
+            _manageService.DeleteArticulo(idArticulo);
+            return Ok($"Articulo id: {idArticulo} eliminado");
+        }
+
+
+
+        //[HttpGet("Marcas")]
+        //public ActionResult<IEnumerable<Marca>> GetMarcas()
         //{
+        //    var marcas = _queryServiceArticulo.GetAllWithRelatedData();
 
-        //    try
-        //    {
-        //        if (_queryService.GetAllWithRelatedData() == null)
-        //        {
-        //            return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
-        //        }
-
-        //        //buscar la manera de que muestre error cuando se carga un id incorrecto 
-        //        //articulo.Marca = _queryService.GetAll().FirstOrDefault(x => x.Id = articulo.Marca.Id);
-        //        //articulo.Categoria = _queryService.Categorias.FindAsync(articulo.Categoria.IdCategoria);
-        //        //articulo.PrecioFinal = articulo.Costo * (1 + articulo.MargenGanancia);
-        //        //articulo.NetoGravado = articulo.Costo * (articulo.MargenGanancia);
-
-
-        //        _manageService.CreateArticulo(articulo);
-        //        _manageService.SaveChangesAsync();
-
-        //        return CreatedAtAction("GetArticulo", new { id = articulo.IdArticulo }, articulo);
-        //        //return Ok($"Articulo registrado: {articulo.Descripcion}");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(500, $"Se produjo un error interno: {e.Message}");
-        //    }
+        //    return Ok(marcas);
         //}
-
-
+        //[HttpGet("Categorias")]
+        //public ActionResult<IEnumerable<Categoria>> GetCategorias()
+        //{
+        //    var categorias = _queryServiceArticulo.GetAllWithRelatedData();
+        //    return Ok(categorias);
+        //}
     }
 }

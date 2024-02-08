@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MiTienda.Domain.Contracts
 {
-    public interface IRepository<T> 
+    public interface IRepository<T>
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro);

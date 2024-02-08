@@ -12,7 +12,7 @@ namespace MiTienda.Application.Contracts
     {
         IEnumerable<T> GetAll();
         IQueryable<T> GetAllWithRelatedData();
-        IEnumerable<T> GetBy(Expression<Func<T,bool>> filter);
+        IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro);
 
     }
 }

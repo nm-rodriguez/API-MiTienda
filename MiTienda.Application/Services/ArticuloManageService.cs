@@ -1,45 +1,37 @@
 ﻿using MiTienda.Application.Contracts;
+using MiTienda.Application.DTOs;
 using MiTienda.DataAccess.Contexts;
+using MiTienda.Domain.Contracts;
+using MiTienda.Domain.Entities;
 
 namespace MiTienda.Application.Services
 {
     public class ArticuloManageService : IManageArticuloService
     {
-        private readonly MiTiendaContexto _context;
+        private  IRepository<Articulo> _articuloRepo;
 
-        public ArticuloManageService(MiTiendaContexto context)
+        public ArticuloManageService(IRepository<Articulo> articuloRepo)
         {
-            _context = context;
+            _articuloRepo = articuloRepo;
         }
 
-        public void CreateArticulo(string idStock)
+        public void CreateArticulo(ArticuloDTO newArticulo)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public void CreateStock(string idStock)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteArticulo(string idStock)
+        public void DeleteArticulo(int idArticulo)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteStock(string idStock)
+
+
+        public void UpdateArticulo(ArticuloDTO articulo)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateArticulo(string idStock)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateStock(string idStock)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

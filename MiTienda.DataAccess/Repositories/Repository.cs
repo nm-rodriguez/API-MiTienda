@@ -51,7 +51,8 @@ namespace MiTienda.DataAccess.Repositories
 
         public IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro)
         {
-            throw new NotImplementedException();
+            //return (T)DbSet.FirstOrDefault(filtro);
+            return (IEnumerable<T>)DbSet.Where(filtro);
         }
 
         public T GetByID(int id)

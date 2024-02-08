@@ -48,17 +48,40 @@ namespace API_MiTienda.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Articulo>> GetArticulo(int id)
+        public  ActionResult<Articulo> GetArticulo(int id)
         {
-            if (_queryService.GetAllWithRelatedData() == null)
+            if (_queryService.GetAll() == null)
+            {
+                return NotFound();
+            }
+            Articulo? articulo =  _queryService.GetBy(a => a.Id == id).SingleOrDefault();
+
+            //var articulo = await _queryService.GetAllWithRelatedData()
+            //    .Include(a => a.Marca)
+            //    .Include(a => a.Categoria)
+            //    .FirstOrDefaultAsync<Articulo>(x => x.Id == id);
+
+            if (articulo == null)
             {
                 return NotFound();
             }
 
-            var articulo = await _queryService.GetAllWithRelatedData()
-                .Include(a => a.Marca)
-                .Include(a => a.Categoria)
-                .FirstOrDefaultAsync<Articulo>(x => x.Id == id);
+            return Ok(articulo);
+        }
+
+        [HttpGet("articulos/{idCat}")]
+        public  ActionResult<Articulo> GetArticulobByCategoria(int idCat)
+        {
+            if (_queryService.GetAll() == null)
+            {
+                return NotFound();
+            }
+            List<Articulo> articulo =  _queryService.GetBy(a => a.Categoria.Id == idCat).ToList();
+
+            //var articulo = await _queryService.GetAllWithRelatedData()
+            //    .Include(a => a.Marca)
+            //    .Include(a => a.Categoria)
+            //    .FirstOrDefaultAsync<Articulo>(x => x.Id == id);
 
             if (articulo == null)
             {

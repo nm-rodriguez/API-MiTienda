@@ -1,6 +1,5 @@
 ﻿using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
-using MiTienda.DataAccess.Contexts;
 using MiTienda.Domain.Contracts;
 using MiTienda.Domain.Entities;
 
@@ -14,19 +13,14 @@ namespace MiTienda.Application.Services
         {
             _articuloRepo = articuloRepo;
         }
-
         public void CreateArticulo(ArticuloDTO newArticulo)
         {
-            
+            throw new NotImplementedException();
         }
-
         public void DeleteArticulo(int idArticulo)
         {
             throw new NotImplementedException();
         }
-
-
-
         public void UpdateArticulo(ArticuloDTO articulo)
         {
             throw new NotImplementedException();

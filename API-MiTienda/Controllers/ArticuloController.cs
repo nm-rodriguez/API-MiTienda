@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
-using MiTienda.DataAccess.Contexts;
 
 using MiTienda.Domain.Entities;
 using System.Collections;

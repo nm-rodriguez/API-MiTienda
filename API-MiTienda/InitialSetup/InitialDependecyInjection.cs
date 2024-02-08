@@ -40,7 +40,7 @@ namespace API_MiTienda.InitialSetup
             servicios.AddEndpointsApiExplorer();
             servicios.AddSwaggerGen();
 
-            servicios.AddDbContext<IVentaEF,MiTiendaContexto >(
+            servicios.AddDbContext<ITiendaEF,MiTiendaContexto >(
                 options => options.UseSqlServer(conectionString),
                 ServiceLifetime.Scoped
                 );

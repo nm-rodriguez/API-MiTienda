@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contracts;
 using MiTienda.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiTienda.DataAccess.Contexts
 {
-    public class MiTiendaContexto : DbContext, IVentaEF
+    public class MiTiendaContexto : DbContext, ITiendaEF
     {
         public MiTiendaContexto(){}
         public MiTiendaContexto(DbContextOptions <MiTiendaContexto> options): base(options){}
@@ -86,12 +81,14 @@ namespace MiTienda.DataAccess.Contexts
 
 
         }
-
-        public void Confirm()
-        {   SaveChanges();  }
-
-        public DbSet<T> CrearSet<T>() where T : class
+        
+        public DbSet<T> DbSet<T>() where T : class
         {   return Set<T>();    }
+
+        public void SaveChangesDB()
+        {
+            SaveChanges();
+        }
 
         public void Refrescar<T>(T item) where T : class
         {
@@ -104,5 +101,8 @@ namespace MiTienda.DataAccess.Contexts
 
         public void SetModificado<T>(T item) where T : class
         {   Entry(item).State = EntityState.Modified;   }
+
+
+        
     }
 }

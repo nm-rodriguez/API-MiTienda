@@ -24,8 +24,6 @@ namespace API_MiTienda.Controllers
             _manageService = manageService;
         }
 
-
-
         #region GETS
         [HttpGet]
         public ActionResult<IEnumerable<Articulo>> GetAllArticulos()
@@ -99,7 +97,7 @@ namespace API_MiTienda.Controllers
 
 
                 _manageService.CreateArticulo(articulo);
-                _manageService.SaveArticulo();
+                //_manageService.SaveArticulo();
 
                 return CreatedAtAction("GetArticuloById", new { id = articulo.Id }, articulo.Id);
                 //return Ok($"Articulo registrado: {articulo.Descripcion}");
@@ -110,11 +108,18 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{idArticulo}")]
         public ActionResult<Articulo> DeleteArticulo(int idArticulo)
         {
             _manageService.DeleteArticulo(idArticulo);
             return Ok($"Articulo id: {idArticulo} eliminado");
+        }
+
+        [HttpPut]
+        public ActionResult<Articulo> UpdateArticulo([FromBody] Articulo articulo)
+        {
+            _manageService.UpdateArticulo(articulo);
+            return Ok($"Articulo id: {articulo} actualizado");
         }
 
 

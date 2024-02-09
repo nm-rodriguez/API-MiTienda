@@ -24,13 +24,19 @@ namespace MiTienda.DataAccess.Repositories
         {
             return _context.DbSet<T>().Where(x => x.Id == id);
         }
+        public void SaveChanges()
+        {
+            _context.SaveChangesDB();
+        }
         public void AddObject(T item)
         {
             _context.DbSet<T>().Add(item);
+            _context.SaveChanges();
         }
         public void DeleteObject(T item)
         {
             _context.DbSet<T>().Remove(item);
+            _context.SaveChanges();
         }
         public void DeleteByID(int id)
         {
@@ -51,11 +57,8 @@ namespace MiTienda.DataAccess.Repositories
         public void Update(T item)
         {
             _context.DbSet<T>().Update(item);
+            _context.SaveChanges();
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChangesDB();
-        }
     }
 }

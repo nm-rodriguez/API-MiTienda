@@ -14,6 +14,5 @@ namespace MiTienda.Application.Contracts
         void CreateArticulo(Articulo articulo);
         void UpdateArticulo(Articulo articulo);
         void DeleteArticulo(int idArticulo);
-        void SaveArticulo();
     }
 }

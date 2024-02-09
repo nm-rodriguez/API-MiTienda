@@ -10,29 +10,6 @@ namespace API_MiTienda.InitialSetup
 {
     public static class InitialDependecyInjection
     {
-        //public static IServiceCollection InitialIjections(this IServiceCollection services, string configuration)
-        //{
-        //    services.AddControllers();
-
-        //    services.AddEndpointsApiExplorer();
-        //    services.AddSwaggerGen();
-
-        //    services.AddDbContext<MiTiendaContexto>(
-        //        options => options.UseSqlServer(configuration),
-        //        ServiceLifetime.Scoped
-        //        );
-        //    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-        //    //Generic queries
-        //    services.AddScoped(typeof(IQueryService<>), typeof(QueryService<>));
-
-        //    //Managers
-        //    services.AddScoped<IManageStockService, StockManageService>();
-
-
-        //    //servicios.AddSignalR(); VER QUE ES
-
-        //    return services;
-        //}
         public static IServiceCollection InitialCharges(this IServiceCollection servicios, string conectionString)
         {
             servicios.AddControllers();

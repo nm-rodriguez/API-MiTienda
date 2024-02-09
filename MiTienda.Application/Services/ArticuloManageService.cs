@@ -20,7 +20,7 @@ namespace MiTienda.Application.Services
         }
         public void UpdateArticulo(Articulo articulo)
         {
-            throw new NotImplementedException();
+            _articuloRepo.Update(articulo);
         }
         public void DeleteArticulo(int idArticulo)
         {

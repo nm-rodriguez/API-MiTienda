@@ -79,33 +79,8 @@ namespace API_MiTienda.Controllers
         //public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
         public ActionResult<Articulo> PostArticulo([FromBody] Articulo articulo)
         {
-
-            try
-            {
-                if (_queryServiceArticulo.GetBy(x => x.Id == articulo.Id) == null)
-                    return Problem("Entity set 'MiTiendaContexto.Articulos'  is null.");
-
-                if (articulo == null)
-                    return StatusCode(400, "Falta articulo");
-
-
-                //buscar la manera de que muestre error cuando se carga un id incorrecto 
-                articulo.Marca = (Marca)_queryServiceMarca.GetBy(x => x.Id == articulo.Marca.Id).SingleOrDefault();
-                articulo.Categoria = (Categoria)_queryServiceCategoria.GetBy(x => x.Id == articulo.Categoria.Id).SingleOrDefault();
-                articulo.PrecioFinal = articulo.Costo * (1 + articulo.MargenGanancia);
-                articulo.NetoGravado = articulo.Costo * (articulo.MargenGanancia);
-
-
                 _manageService.CreateArticulo(articulo);
-                //_manageService.SaveArticulo();
-
                 return CreatedAtAction("GetArticuloById", new { id = articulo.Id }, articulo.Id);
-                //return Ok($"Articulo registrado: {articulo.Descripcion}");
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, $"Se produjo un error interno: {e.Message}");
-            }
         }
 
         [HttpDelete("{idArticulo}")]
@@ -127,7 +102,7 @@ namespace API_MiTienda.Controllers
         //[HttpGet("Marcas")]
         //public ActionResult<IEnumerable<Marca>> GetMarcas()
         //{
-        //    var marcas = _queryServiceArticulo.GetAllWithRelatedData();
+        //    var marcas = a.GetAllWithRelatedData();
 
         //    return Ok(marcas);
         //}

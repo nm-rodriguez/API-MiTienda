@@ -16,13 +16,16 @@ namespace MiTienda.DataAccess.Repositories
         }
         public IEnumerable<T> GetAll()
         {
-            //return DbSet;
             return _context.DbSet<T>();
         }
         //puede devolver varios tambien //EJ: traeme todas los articulos con este idMARCA o idCategoria
         public IEnumerable<T> GetByID(int id)
         {
             return _context.DbSet<T>().Where(x => x.Id == id);
+        }
+        public IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro)
+        {
+            return _context.DbSet<T>().Where(filtro);
         }
         public void SaveChanges()
         {
@@ -46,10 +49,7 @@ namespace MiTienda.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
-        public IEnumerable<T> GetBy(Expression<Func<T, bool>> filtro)
-        {
-            return _context.DbSet<T>().Where(filtro);
-        }
+        
         public void Refresh(T item)
         {
             throw new NotImplementedException();

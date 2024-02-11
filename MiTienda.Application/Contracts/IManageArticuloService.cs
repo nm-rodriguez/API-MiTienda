@@ -11,8 +11,11 @@ namespace MiTienda.Application.Contracts
 {
     public interface IManageArticuloService
     {
-        void CreateArticulo(Articulo articulo);
-        void UpdateArticulo(Articulo articulo);
+        List<ArticuloDTO> GetArticulos();
+        ArticuloDTO GetArticulo(int id);
         void DeleteArticulo(int idArticulo);
+        void UpdateArticulo(Articulo articulo);
+        void CreateArticulo(Articulo articulo);
+
     }
 }

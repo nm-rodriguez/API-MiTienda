@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
-
+using MiTienda.Application.DTOs;
 using MiTienda.Domain.Entities;
 using System.Collections;
 
@@ -12,27 +12,24 @@ namespace API_MiTienda.Controllers
     public class ArticuloController : ControllerBase
     {
         private readonly IQueryService<Articulo> _queryServiceArticulo;
-        private readonly IQueryService<Marca> _queryServiceMarca;
-        private readonly IQueryService<Categoria> _queryServiceCategoria;
         private  IManageArticuloService _manageService;
 
         public ArticuloController(IQueryService<Articulo> queryServiceArticulo, IQueryService<Marca> queryServiceMarca, IQueryService<Categoria> queryServiceCategoria, IManageArticuloService manageService)
         {
             _queryServiceArticulo = queryServiceArticulo;
-            _queryServiceMarca = queryServiceMarca;
-            _queryServiceCategoria = queryServiceCategoria;
             _manageService = manageService;
         }
 
         #region GETS
         [HttpGet]
-        public ActionResult<IEnumerable<Articulo>> GetAllArticulos()
+        public ActionResult<IEnumerable<ArticuloDTO>> GetAllArticulos()
         {
-            var articulos = _queryServiceArticulo.GetAllWithRelatedData()
-                .Include(a => a.Marca)
-                .Include(a => a.Categoria);
-            
-                return Ok(articulos);
+            //var articulos = _queryServiceArticulo.GetAllWithRelatedData()
+            //    .Include(a => a.Marca)
+            //    .Include(a => a.Categoria);
+            var articulos = _manageService.GetArticulos();
+
+            return Ok(articulos);
         }
 
         [HttpGet("{id}")]

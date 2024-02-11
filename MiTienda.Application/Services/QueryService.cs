@@ -1,4 +1,5 @@
-﻿using MiTienda.Application.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using MiTienda.Application.Contracts;
 
 using MiTienda.Domain.Contracts;
 using MiTienda.Domain.Utilidades;
@@ -15,7 +16,9 @@ namespace MiTienda.Application.Services
         }
         public IQueryable<T> GetAllWithRelatedData()
         {
+
             return _repository.GetAll().AsQueryable();
+            
         }
         public  IQueryable<T> GetAll()
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contracts;
 using MiTienda.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace MiTienda.DataAccess.Contexts
 {
@@ -102,7 +103,20 @@ namespace MiTienda.DataAccess.Contexts
         public void SetModificado<T>(T item) where T : class
         {   Entry(item).State = EntityState.Modified;   }
 
+        public void RelacionarEntidad<T, E>(T item, Expression<Func<T, E>> entidad)
+            where T : class
+            where E : class
+        {
+            Entry<T>(item).Reference(entidad).Load();
+        }
 
-        
+        //public void RelacionarColeccion<T, C>(T item, params string[] colecciones)
+        public void RelacionarColeccion<T, C>(T item, Expression<Func<T, IEnumerable<C>>> coleccion)
+            where T : class
+            where C : class
+        {
+            Entry<T>(item).Collection(coleccion).Load();
+        }
+
     }
 }

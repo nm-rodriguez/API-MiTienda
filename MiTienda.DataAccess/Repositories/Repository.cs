@@ -60,5 +60,13 @@ namespace MiTienda.DataAccess.Repositories
             _context.SaveChanges();
         }
 
+        public void ComponerReferencia<T, E>(T item, Expression<Func<T, E>> entidad)
+            where T : class
+            where E : class
+        {
+            if (item != null)
+                _context.RelacionarEntidad(item, entidad);
+        }
+
     }
 }

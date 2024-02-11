@@ -22,9 +22,9 @@ namespace MiTienda.Domain.Contracts
         void Refresh(T item);
         //void Refrescar(EntidadPersistible item);
 
-        //void ComponerReferencia<T, E>(T item, Expression<Func<T, E>> entidad)
-        //    where T : class
-        //    where E : class;
+        void ComponerReferencia<T, E>(T item, Expression<Func<T, E>> entidad)
+            where T : class
+            where E : class;
 
         //void ComponerColeccion<T, C>(T item, Expression<Func<T, IEnumerable<C>>> coleccion)
         //    where T : class

@@ -12,10 +12,11 @@ namespace MiTienda.Application.Contracts
     public interface IManageArticuloService
     {
         List<ArticuloDTO> GetArticulos();
-        ArticuloDTO GetArticulo(int id);
-        void DeleteArticulo(int idArticulo);
-        void UpdateArticulo(Articulo articulo);
-        void CreateArticulo(Articulo articulo);
+        public ArticuloDTO GetArticuloById(int id);
+        public ArticuloDTO GetArticuloByCodigoBarras(string codigo);
+        string DeleteArticulo(int idArticulo);
+        string UpdateArticulo(ArticuloDTO articulo);
+        string CreateArticulo(ArticuloDTO articulo);
 
     }
 }

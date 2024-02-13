@@ -33,8 +33,16 @@ namespace MiTienda.DataAccess.Repositories
         }
         public void AddObject(T item)
         {
-            _context.DbSet<T>().Add(item);
-            _context.SaveChanges();
+            try
+            {
+                _context.DbSet<T>().Add(item);
+                _context.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
         public void DeleteObject(T item)
         {

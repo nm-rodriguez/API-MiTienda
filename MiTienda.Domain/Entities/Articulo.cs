@@ -33,6 +33,14 @@ namespace MiTienda.Domain.Entities
             Categoria = categoria;
         }
 
+        public void CalcularValores()
+        {
+            PrecioFinal = Costo * (1 + MargenGanancia);
+            NetoGravado = Costo * (MargenGanancia);
+        }
+
+        
+         
 
     }
 }

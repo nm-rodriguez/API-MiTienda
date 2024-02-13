@@ -10,6 +10,10 @@ namespace MiTienda.Application.DTOs
 {
     public class ArticuloDTO
     {
+        public ArticuloDTO()
+        {
+                
+        }
         public ArticuloDTO(Articulo articulo)
         {
             Id = articulo.Id;
@@ -41,7 +45,23 @@ namespace MiTienda.Application.DTOs
 
         public string CategoriaDescripcion { get; set; }
 
+        public Articulo CastearAArticulo(Marca marca, Categoria categoria)
+        {
+            Articulo articulo = new Articulo();
+            articulo.Id = Id;
+            articulo.Descripcion = Descripcion;
+            articulo.CodigoBarras = CodigoBarras;
+            articulo.Costo = Costo;
+            articulo.MargenGanancia = MargenGanancia;
+            articulo.PrecioFinal = PrecioFinal;
+            articulo.NetoGravado = NetoGravado;
+            articulo.PorcentajeIVA = PorcentajeIVA;
+            articulo.Marca = marca;
+            articulo.Categoria = categoria;
+            articulo.CalcularValores();
 
+            return articulo;
+        }
 
     }
 }

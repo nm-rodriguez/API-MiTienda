@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
+using MiTienda.DataAccess.Repositories;
 using MiTienda.Domain.Contracts;
 using MiTienda.Domain.Entities;
 
@@ -9,45 +10,71 @@ namespace MiTienda.Application.Services
     public class ArticuloManageService : IManageArticuloService
     {
         private  IRepository<Articulo> _articuloRepo;
+        private IRepository<Marca> _marcaRepo;
+        private IRepository<Categoria> _categoriaRepo;
 
-        public ArticuloManageService(IRepository<Articulo> articuloRepo, IQueryService<Marca> queryServiceMarca, IQueryService<Categoria> queryServiceCategoria)
+        public ArticuloManageService(IRepository<Articulo> articuloRepo, IRepository<Marca> marcaRepo, IRepository<Categoria> categoriaRepo)
         {
             _articuloRepo = articuloRepo;
+            _marcaRepo = marcaRepo;
+            _categoriaRepo = categoriaRepo;
         }
 
-        public void CreateArticulo(Articulo art)
+        public string CreateArticulo(ArticuloDTO articuloDTO)
         {
-            //try
-            //{
-            //    if (_articuloRepo.GetBy(x => x.Id == art.Id) == null)
-            //        throw new Exception();
+            try
+            {
+                if (articuloDTO == null)
+                    throw new Exception("Articulo nulo.");
 
-            //    if (art == null)
-            //        throw new Exception();
-            //    //Articulo articulo = art;
-            //    //List<Marca> m = _queryServiceMarca.GetAllWithRelatedData().AsQueryable().Include(a => a.Marca).Include(a => a.Categoria);
-            //    //articulo.Marca = _queryServiceMarca.GetAllWithRelatedData().Where(x => x.Id == articulo.Marca.Id).SingleOrDefault();
-            //    //articulo.Marca = (Marca)_queryServiceMarca.GetAllWithRelatedData().Where(x => x.Id == articulo.Marca.Id).FirstOrDefault();
-            //    //articulo.Marca = (Marca)_queryServiceMarca.GetAllWithRelatedData().Where(x => x.Id == articulo.Marca.Id).SingleOrDefault();
-            //    //articulo.Categoria = _queryServiceCategoria.GetBy(x => x.Id == articulo.Categoria.Id).SingleOrDefault();
-            //    //articulo.PrecioFinal = articulo.Costo * (1 + articulo.MargenGanancia);
-            //    //articulo.NetoGravado = articulo.Costo * (articulo.MargenGanancia);
+                if (_articuloRepo.GetBy(x => x.CodigoBarras == articuloDTO.CodigoBarras) == null)
+                    throw new Exception("Ya existe el articulo con ese codigo");
 
-            //    _articuloRepo.AddObject(articulo);
+                Articulo articulo = articuloDTO.CastearAArticulo(
+                    _marcaRepo.GetByID(articuloDTO.MarcaId).SingleOrDefault(),
+                    _categoriaRepo.GetByID(articuloDTO.CategoriaId).SingleOrDefault()
+                    );
 
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.ToString());
-            //}
+                _articuloRepo.AddObject(articulo);
+               
+                return $"Articulo creado correctamente ID: {articulo.Id} , CODIGO: {articulo.CodigoBarras}, DESCRIPCION: {articulo.Descripcion}";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
         }
-        public void UpdateArticulo(Articulo articulo)
+        public string UpdateArticulo(ArticuloDTO articuloDTO)
         {
-            _articuloRepo.Update(articulo);
+            try
+            {
+                Articulo articulo = articuloDTO.CastearAArticulo(
+                    _marcaRepo.GetByID(articuloDTO.MarcaId).SingleOrDefault(),
+                    _categoriaRepo.GetByID(articuloDTO.CategoriaId).SingleOrDefault()
+                    );
+                _articuloRepo.Update(articulo);
+                return $"Articulo id: {articuloDTO.Id} actualizado";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return $"Error al actualizar articulo id: {articuloDTO.Id}";
+            }
         }
-        public void DeleteArticulo(int idArticulo)
+        public string DeleteArticulo(int idArticulo)
         {
-            _articuloRepo.DeleteByID(idArticulo);
+            try
+            {
+                _articuloRepo.DeleteByID(idArticulo);
+                return $"Articulo id: {idArticulo} eliminado";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return $"Error al eliminar articulo id: {idArticulo}";
+            }
+
         }
 
         public void SaveArticulo()
@@ -63,12 +90,18 @@ namespace MiTienda.Application.Services
                 articulos.Add(new ArticuloDTO(item));
             }
             return articulos;
-
         }
-
-        public ArticuloDTO GetArticulo(int id)
+        public ArticuloDTO GetArticuloById(int id)
         {
-            throw new NotImplementedException();
+            ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetByID(id).AsQueryable().Include("Marca").Include("Categoria").SingleOrDefault());
+            return articulo;
         }
+        public ArticuloDTO GetArticuloByCodigoBarras(string codigo)
+        {
+                ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetBy(x => x.CodigoBarras == codigo).AsQueryable().Include("Marca").Include("Categoria").SingleOrDefault());
+            return articulo;
+        }
+
+        
     }
 }

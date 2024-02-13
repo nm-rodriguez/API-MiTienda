@@ -24,74 +24,107 @@ namespace API_MiTienda.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ArticuloDTO>> GetAllArticulos()
         {
-            //var articulos = _queryServiceArticulo.GetAllWithRelatedData()
-            //    .Include(a => a.Marca)
-            //    .Include(a => a.Categoria);
-            var articulos = _manageService.GetArticulos();
-
-            return Ok(articulos);
+            try
+            {
+                var articulos = _manageService.GetArticulos();
+                return Ok(articulos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public ActionResult<Articulo> GetArticuloById(int id)
         {
-            if (_queryServiceArticulo.GetAll() == null)
-                return NotFound();
+            try
+            {
+                var articulo = _manageService.GetArticuloById(id);
             
-            var articulo = _queryServiceArticulo
-                    .GetBy(a => a.Id == id)
-                    .Include(a => a.Marca)
-                    .Include(a => a.Categoria)
-                    .SingleOrDefault();
+                if (articulo == null)
+                    return NotFound($"No existe el articulo con el id: {id}. Por favor ingrese un id valido.");
 
-            if (articulo == null)
-                return NotFound();
+                return Ok(articulo);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el id.");
+            }
 
-            return Ok(articulo);
         }
+
+        [HttpGet("codigo/{codigo}")]
+        public ActionResult<Articulo> GetArticuloByCodigo(string codigo)
+        {
+            try
+            {
+                var articulo = _manageService.GetArticuloByCodigoBarras(codigo);
+
+                if (articulo == null)
+                    return NotFound($"No existe el articulo con el codigo: {codigo}. Por favor ingrese un codigo de barras valido.");
+
+                return Ok(articulo);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(400,"Algo salió mal. Verifica el código.");
+            }
+        }
+
 
         //0..n articulos con ese idCategoria
-        [HttpGet("articulos/{idCategoria}")]
-        public ActionResult<Articulo> GetArticulobByCategoria(int idCategoria)
-        {
-            if (_queryServiceArticulo.GetAll() == null) 
-                return NotFound();
+        //[HttpGet("articulos/{idCategoria}")]
+        //public ActionResult<Articulo> GetArticulobByCategoria(int idCategoria)
+        //{
+        //    if (_queryServiceArticulo.GetAll() == null) 
+        //        return NotFound();
 
-            List<Articulo> articulo = _queryServiceArticulo
-                .GetBy(a => a.Categoria.Id == idCategoria)
-                .Include(a => a.Marca)
-                .Include(a => a.Categoria)
-                .ToList();
+        //    List<Articulo> articulo = _queryServiceArticulo
+        //        .GetBy(a => a.Categoria.Id == idCategoria)
+        //        .Include(a => a.Marca)
+        //        .Include(a => a.Categoria)
+        //        .ToList();
 
-            if (articulo == null) 
-                return NotFound();
+        //    if (articulo == null) 
+        //        return NotFound();
 
-            return Ok(articulo);
-        }
+        //    return Ok(articulo);
+        //}
 
         #endregion
 
 
         [HttpPost]
         //public async Task<ActionResult<ArticuloDB>> PostArticulo([FromBody] ArticuloDB articulo)
-        public ActionResult<Articulo> PostArticulo([FromBody] Articulo articulo)
+        public ActionResult<ArticuloDTO> PostArticulo([FromBody] ArticuloDTO articulo)
         {
-                _manageService.CreateArticulo(articulo);
-                return CreatedAtAction("GetArticuloById", new { id = articulo.Id }, articulo.Id);
+            try
+            {
+                var message = _manageService.CreateArticulo(articulo);
+                return Ok(message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
+
         }
 
+
         [HttpDelete("{idArticulo}")]
-        public ActionResult<Articulo> DeleteArticulo(int idArticulo)
+        public ActionResult<ArticuloDTO> DeleteArticulo(int idArticulo)
         {
-            _manageService.DeleteArticulo(idArticulo);
-            return Ok($"Articulo id: {idArticulo} eliminado");
+            var message = _manageService.DeleteArticulo(idArticulo);
+            return Ok(message);
         }
 
         [HttpPut]
-        public ActionResult<Articulo> UpdateArticulo([FromBody] Articulo articulo)
+        public ActionResult<ArticuloDTO> UpdateArticulo([FromBody] ArticuloDTO articulo)
         {
-            _manageService.UpdateArticulo(articulo);
-            return Ok($"Articulo id: {articulo} actualizado");
+            var message = _manageService.UpdateArticulo(articulo);
+            return Ok(message);
         }
 
 

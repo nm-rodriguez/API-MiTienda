@@ -11,11 +11,13 @@ namespace MiTienda.Application.DTOs
     public class ArticuloDTO
     {
         public ArticuloDTO()
-        {
-                
-        }
+        {}
+
         public ArticuloDTO(Articulo articulo)
         {
+            if (articulo is null)
+                return;
+
             Id = articulo.Id;
             Descripcion = articulo.Descripcion;
             CodigoBarras = articulo.CodigoBarras;
@@ -32,6 +34,7 @@ namespace MiTienda.Application.DTOs
 
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        [RegularExpression("^\\d{4}-\\d{4}$", ErrorMessage = "El código no cumple con el formato. Debe estar compuesto por: 4 numeros; 1 guion medio; 4 numeros ")]
         public string CodigoBarras { get; set; }
         public double Costo { get; set; }
         public double MargenGanancia { get; set; }
@@ -42,13 +45,12 @@ namespace MiTienda.Application.DTOs
         public int CategoriaId { get; set; }
         public int MarcaId { get; set; }
         public string MarcaNombre { get; set; }
-
         public string CategoriaDescripcion { get; set; }
 
         public Articulo CastearAArticulo(Marca marca, Categoria categoria)
         {
             Articulo articulo = new Articulo();
-            articulo.Id = Id;
+            //articulo.Id = Id;
             articulo.Descripcion = Descripcion;
             articulo.CodigoBarras = CodigoBarras;
             articulo.Costo = Costo;

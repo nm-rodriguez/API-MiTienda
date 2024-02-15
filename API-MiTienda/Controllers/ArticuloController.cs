@@ -35,7 +35,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{id}")]
+        [HttpGet("id/{id:int}")]
         public ActionResult<Articulo> GetArticuloById(int id)
         {
             try
@@ -74,25 +74,7 @@ namespace API_MiTienda.Controllers
         }
 
 
-        //0..n articulos con ese idCategoria
-        //[HttpGet("articulos/{idCategoria}")]
-        //public ActionResult<Articulo> GetArticulobByCategoria(int idCategoria)
-        //{
-        //    if (_queryServiceArticulo.GetAll() == null) 
-        //        return NotFound();
-
-        //    List<Articulo> articulo = _queryServiceArticulo
-        //        .GetBy(a => a.Categoria.Id == idCategoria)
-        //        .Include(a => a.Marca)
-        //        .Include(a => a.Categoria)
-        //        .ToList();
-
-        //    if (articulo == null) 
-        //        return NotFound();
-
-        //    return Ok(articulo);
-        //}
-
+      
         #endregion
 
 
@@ -113,8 +95,8 @@ namespace API_MiTienda.Controllers
         }
 
 
-        [HttpDelete("{idArticulo}")]
-        public ActionResult<ArticuloDTO> DeleteArticulo(int idArticulo)
+        [HttpDelete("{idArticulo:int}")]
+        public ActionResult<int> DeleteArticulo(int idArticulo)
         {
             var message = _manageService.DeleteArticulo(idArticulo);
             return Ok(message);

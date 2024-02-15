@@ -85,7 +85,7 @@ namespace MiTienda.Application.Services
         public List<ArticuloDTO> GetArticulos()
         {
             List<ArticuloDTO> articulos = new List<ArticuloDTO>();
-            foreach (var item in _articuloRepo.GetAll().AsQueryable().Include("Marca").Include("Categoria"))
+            foreach (var item in _articuloRepo.GetAll().AsQueryable().Include(x => x.Marca).Include(x => x.Categoria))
             {
                 articulos.Add(new ArticuloDTO(item));
             }
@@ -93,12 +93,17 @@ namespace MiTienda.Application.Services
         }
         public ArticuloDTO GetArticuloById(int id)
         {
-            ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetByID(id).AsQueryable().Include("Marca").Include("Categoria").SingleOrDefault());
+            var a = _articuloRepo.GetByID(id).AsQueryable().Include(x => x.Marca).Include(x => x.Categoria).SingleOrDefault();//.thenInclude() si tuviese una subclase
+
+            if (a == null)
+                return null;
+
+            ArticuloDTO articulo = new ArticuloDTO(a);
             return articulo;
         }
         public ArticuloDTO GetArticuloByCodigoBarras(string codigo)
         {
-                ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetBy(x => x.CodigoBarras == codigo).AsQueryable().Include("Marca").Include("Categoria").SingleOrDefault());
+                ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetBy(x => x.CodigoBarras == codigo).AsQueryable().Include(x => x.Marca).Include(x => x.Categoria).SingleOrDefault());
             return articulo;
         }
 

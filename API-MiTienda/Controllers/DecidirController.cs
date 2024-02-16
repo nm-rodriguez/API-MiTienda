@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using MiTienda.Application.DTOs;
 
@@ -45,25 +43,23 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        //[HttpPost("PayWithCard")]
-        //public async Task<ActionResult> EfectuarPago([FromBody] TarjetaDTO tarjeta)
-        //{
-        //    HttpResponseMessage response = await _clientWithTokenApi.PostAsJsonAsync("tokens", tarjeta);
+        [HttpPost("PayWithCard")]
+        public async Task<ActionResult> EfectuarPago([FromBody] PagoTarjetaDTO Pago)
+        {
+            HttpResponseMessage response = await _clientWithPaymentsApi.PostAsJsonAsync("payments", Pago);
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string content = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                PagoTarjetaRespuestaDTO pagoTarjetaRespuesta = JsonSerializer.Deserialize<PagoTarjetaRespuestaDTO>(content);
 
-        //        TarjetaWithTokenDTO responseDto = JsonSerializer.Deserialize<TarjetaWithTokenDTO>(content);
 
-        //        string id = responseDto.id;
-
-        //        return Ok(new { id });
-        //    }
-        //    else
-        //    {
-        //        return StatusCode((int)response.StatusCode, "Error al obtener el token");
-        //    }
-        //}
+                return Ok( pagoTarjetaRespuesta );
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode, "Error al realizar el pago");
+            }
+        }
     }
 }

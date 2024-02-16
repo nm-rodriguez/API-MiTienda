@@ -5,9 +5,11 @@ namespace MiTienda.Domain.Entities
     public class Pago : EntidadPersistible
     {
 
-        public DateTime FechaPago { get; set; }
         public double Monto { get; set; }
+        public string Moneda { get; set; }
         public TipoPago TipoPago { get; set; }
+        public DateTime FechaPago { get; set; }
+        public DetallePagoTarjeta? DetallePagoTarjeta { get; set; }
 
 
         private void RealizarPago()

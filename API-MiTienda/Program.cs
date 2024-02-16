@@ -1,6 +1,10 @@
 using API_MiTienda.InitialSetup;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contexts;
+using Servicio_AFIP;
+using System.ComponentModel.Design;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
 
 namespace API_MiTienda
 {
@@ -51,7 +55,14 @@ namespace API_MiTienda
 
             app.MapControllers();
 
+            var servicio = new LoginServiceClient();
+            
+            var autorizacion = servicio.SolicitarAutorizacionAsync("80594BA9-F102-4E0A-8B5D-B3A87383114A").Result;
+
+
+            Console.WriteLine(autorizacion);
             app.Run();
+
         }
     }
 }

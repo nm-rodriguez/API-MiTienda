@@ -4,6 +4,7 @@ obj/
 
 # Visual Studio
 .vs/
+.vs/API-MiTienda/FileContentIndex/
 
 # Build results
 [Dd]ebug/

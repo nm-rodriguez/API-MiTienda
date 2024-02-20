@@ -70,7 +70,7 @@ namespace MiTienda.Application.Services
             try
             {
                 
-                Marca existingMarca = _marcaRepo.GetByID(MarcaDTO.IdMarca).FirstOrDefault(); // Suponiendo que tienes un método GetById en tu repositorio
+                Marca existingMarca = _marcaRepo.GetByID(MarcaDTO.IdMarca).FirstOrDefault(); //
 
                 if (existingMarca == null)
                 {

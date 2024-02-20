@@ -70,7 +70,7 @@ namespace MiTienda.Application.Services
             try
             {
                 
-                Color existingColor = _colorRepo.GetByID(colorDTO.IdColor).FirstOrDefault(); // Suponiendo que tienes un método GetById en tu repositorio
+                Color existingColor = _colorRepo.GetByID(colorDTO.IdColor).FirstOrDefault(); //
 
                 if (existingColor == null)
                 {

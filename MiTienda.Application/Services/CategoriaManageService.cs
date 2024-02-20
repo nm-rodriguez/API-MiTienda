@@ -70,7 +70,7 @@ namespace MiTienda.Application.Services
             try
             {
                 
-                Categoria existingCategoria = _categoriaRepo.GetByID(CategoriaDTO.IdCategoria).FirstOrDefault(); // Suponiendo que tienes un método GetById en tu repositorio
+                Categoria existingCategoria = _categoriaRepo.GetByID(CategoriaDTO.IdCategoria).FirstOrDefault(); //
 
                 if (existingCategoria == null)
                 {

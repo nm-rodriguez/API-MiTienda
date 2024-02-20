@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MiTienda.Application.Contracts;
 using MiTienda.Application.Services;
 using MiTienda.DataAccess.Contexts;
 using MiTienda.DataAccess.Contracts;
 using MiTienda.DataAccess.Repositories;
 using MiTienda.Domain.Contracts;
+using System.Text;
 
 namespace API_MiTienda.InitialSetup
 {
@@ -29,6 +33,9 @@ namespace API_MiTienda.InitialSetup
             //Managers
             servicios.AddScoped<IManageArticuloService, ArticuloManageService>();
             servicios.AddScoped<IManageStockService, StockManageService>();
+
+          
+
 
             return servicios;
         }

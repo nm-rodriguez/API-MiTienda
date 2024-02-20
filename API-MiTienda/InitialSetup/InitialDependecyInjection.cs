@@ -29,6 +29,9 @@ namespace API_MiTienda.InitialSetup
             //Managers
             servicios.AddScoped<IManageArticuloService, ArticuloManageService>();
             servicios.AddScoped<IManageStockService, StockManageService>();
+            servicios.AddScoped<IManageColorService, ColorManageService>();
+            servicios.AddScoped<IManageMarcaService, MarcaManageService>();
+            servicios.AddScoped<IManageCategoriaService, CategoriaManageService>();
 
             return servicios;
         }

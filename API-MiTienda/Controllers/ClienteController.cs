@@ -53,15 +53,34 @@ namespace API_MiTienda.Controllers
 
         }
 
+        [HttpGet("nombreOrcuil/{nombreOrcuil}")]
+        public ActionResult<ClienteDTO> GetClienteByNombreOrCuil(string nombreOrcuil)
+        {
+            try
+            {
+                var cliente = _manageService.GetClientesByNombreOrCuil(nombreOrcuil);
+
+                if (cliente == null)
+                    return NotFound($"No existe el cliente buscado. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(cliente);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el id.");
+            }
+
+        }
+
         #endregion
 
 
         [HttpPost]
-        public ActionResult<ClienteDTO> PostCliente(ClienteDTO cliente)
+        public ActionResult<ClienteDTO> PostCliente(ClienteDTO newCliente)
         {
             try
             {
-                var message = _manageService.CreateCliente(cliente);
+                var message = _manageService.CreateCliente(newCliente);
                 return Ok(message);
             }
             catch (Exception ex)
@@ -83,6 +102,21 @@ namespace API_MiTienda.Controllers
             {
                 return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
             }
+        }
+
+        [HttpDelete("{idCliente:int}")]
+        public ActionResult<int> DeleteArticulo(int idCliente)
+        {
+            try
+            {
+                var message = _manageService.DeleteCliente(idCliente);
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+            }
+            
         }
     }
 }

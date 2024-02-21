@@ -12,11 +12,11 @@ namespace MiTienda.Application.Contracts
     public interface IManageClienteService
     {
         List<ClienteDTO> GetClientes();
-        public ClienteDTO GetClienteByIdOrDni(int IdOrDni);
-        public ClienteDTO GetClientesByNombreOrCuil(string NombreoCuil);
+        ClienteDTO GetClienteByIdOrDni(int IdOrDni);
+        List<ClienteDTO> GetClientesByNombreOrCuil(string NombreoCuil);
         string UpdateCliente(ClienteDTO cliente);
         string CreateCliente(ClienteDTO cliente);
-        string DeleteCliente(ClienteDTO cliente);
+        string DeleteCliente(int Id);
 
     }
 }

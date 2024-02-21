@@ -43,6 +43,7 @@ namespace MiTienda.Application.DTOs
             cliente.Dni = Dni;
             cliente.Apellido = Apellido;
             cliente.Nombre = Nombre;
+            cliente.Cuil = Cuil;
             cliente.CondicionTributaria = ct;
 
             return cliente;

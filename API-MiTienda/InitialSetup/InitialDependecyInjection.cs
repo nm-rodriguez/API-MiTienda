@@ -34,6 +34,7 @@ namespace API_MiTienda.InitialSetup
             servicios.AddScoped<IManageCategoriaService, CategoriaManageService>();
             servicios.AddScoped<IManageTipoTalleService, TipoTalleManageService>();
             servicios.AddScoped<IManageClienteService, ClienteManageService>();
+            servicios.AddScoped<IManageTalleService, TalleManageService>();
 
             return servicios;
         }

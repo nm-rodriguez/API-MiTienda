@@ -33,6 +33,12 @@ namespace API_MiTienda.InitialSetup
             //Managers
             servicios.AddScoped<IManageArticuloService, ArticuloManageService>();
             servicios.AddScoped<IManageStockService, StockManageService>();
+            servicios.AddScoped<IManageColorService, ColorManageService>();
+            servicios.AddScoped<IManageMarcaService, MarcaManageService>();
+            servicios.AddScoped<IManageCategoriaService, CategoriaManageService>();
+            servicios.AddScoped<IManageTipoTalleService, TipoTalleManageService>();
+            servicios.AddScoped<IManageClienteService, ClienteManageService>();
+            servicios.AddScoped<IManageTalleService, TalleManageService>();
 
           
 

@@ -131,8 +131,15 @@ inner join Articulo a on a.id = s.articuloid
 --inner join Categoria cat on cat.IdCategoria = ar.IdCategoria
 --inner join Marca mar on mar.IdMarca = ar.IdMarca
 
-
-
+--SELECT PICANTE ACTUALIZADO 
+--  select cantidad,ar.CodigoBarras,cat.Descripcion,mar.Nombre nombreMarca,t.TalleArticulo,c.Nombre color,sl.Nombre Sucursal from inventario i
+--inner join Stock s on s.Id = i.id
+--inner join sucursal sl on sl.Id = i.id
+--inner join Articulo ar on ar.Id = s.Id
+--inner join talle t on t.Id = s.Id
+--inner join color c on c.Id = s.Id
+--inner join Categoria cat on cat.Id = ar.Id
+--inner join Marca mar on mar.Id = ar.Id
 
 --DELETES
 --ALTER TABLE articulo

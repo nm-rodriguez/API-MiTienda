@@ -89,30 +89,30 @@ namespace MiTienda.Application.Services
 
         }
 
-        public string UpdateTalle(TalleDTO TalleDTO)
-        {
-            try
-            {
-                Talle existingTalle = _talleRepo.GetByID(TalleDTO.IdTalle).SingleOrDefault();
+        //public string UpdateTalle(TalleDTO TalleDTO)
+        //{
+        //    try
+        //    {
+        //        Talle existingTalle = _talleRepo.GetByID(TalleDTO.IdTalle).SingleOrDefault();
 
-                if (existingTalle == null)
-                {
-                    throw new Exception($"No se encontró ningún talle con ID: {TalleDTO.IdTalle}");
-                }
-                existingTalle.Dni = TalleDTO.Dni;
-                existingTalle.Cuil = TalleDTO.Cuil;
-                existingTalle.Apellido = TalleDTO.Apellido;
-                existingTalle.Nombre = TalleDTO.Nombre;
-                existingTalle.TipoTalle = _tipoTalle.GetByID(TalleDTO.IdCondicionTrib).SingleOrDefault();
-                _talleRepo.Update(existingTalle);
+        //        if (existingTalle == null)
+        //        {
+        //            throw new Exception($"No se encontró ningún talle con ID: {TalleDTO.IdTalle}");
+        //        }
+        //        //existingTalle.Dni = TalleDTO.Dni;
+        //        //existingTalle.Cuil = TalleDTO.Cuil;
+        //        //existingTalle.Apellido = TalleDTO.Apellido;
+        //        //existingTalle.Nombre = TalleDTO.Nombre;
+        //        //existingTalle.TipoTalle = _tipoTalle.GetByID(TalleDTO.IdCondicionTrib).SingleOrDefault();
+        //        //_talleRepo.Update(existingTalle);
 
-                return $"Talle ID: {existingTalle.Id} actualizado correctamente";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al actualizar el talle: {ex.Message}");
-            }
-        }
+        //        return $"Talle ID: {existingTalle.Id} actualizado correctamente";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception($"Error al actualizar el talle: {ex.Message}");
+        //    }
+        //}
 
 
         public string DeleteTalle(int idTalle)

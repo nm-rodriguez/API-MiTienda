@@ -4,6 +4,7 @@ using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
 using MiTienda.Domain.Entities;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace API_MiTienda.Controllers
@@ -34,7 +35,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{idordni:int}")]
+        [HttpGet("id/{idTalle:int}")]
         public ActionResult<TalleDTO> GetTalleById(int idTalle)
         {
             try
@@ -53,21 +54,40 @@ namespace API_MiTienda.Controllers
 
         }
 
-        [HttpGet("nombreOrcuil/{nombreOrcuil}")]
-        public ActionResult<TalleDTO> GetTalleByNombreOrCuil(string nombreOrcuil)
+        [HttpGet("idTipoTalle/{idTipoTalle:int}")]
+        public ActionResult<List<TalleDTO>> GetTallesByIdTipoTalle(int idTipoTalle)
         {
             try
             {
-                var talle = _manageService.GetTallesByNombreOrCuil(nombreOrcuil);
+                var talles = _manageService.GetTallesByIdTipoTalle(idTipoTalle);
 
-                if (talle == null)
-                    return NotFound($"No existe el talle buscado. Por favor reintente su busqueda con un valor diferente.");
+                if (talles == null)
+                    return NotFound($"No existe el Id: {idTipoTalle} para ese Tipo de talle buscado. Por favor reintente su busqueda con un valor diferente.");
 
-                return Ok(talle);
+                return Ok(talles);
             }
             catch (Exception)
             {
                 return StatusCode(400, "Algo salió mal. Verifica el id.");
+            }
+
+        }
+
+        [HttpGet("TipoTalle/{TipoTalle}")]
+        public ActionResult<List<TalleDTO>> GetTalleByNombreOrCuil(string TipoTalle)
+        {
+            try
+            {
+                List<TalleDTO> talles = _manageService.GetTallesByTipoTalle(TipoTalle);
+
+                if (talles == null)
+                    return NotFound($"No existen talles para el TipoTalle {TipoTalle}. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(talles);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el TipoTalle.");
             }
 
         }
@@ -90,19 +110,19 @@ namespace API_MiTienda.Controllers
 
         }
 
-        [HttpPut]
-        public ActionResult<TalleDTO> UpdateTalle([FromBody] TalleDTO talle)
-        {
-            try
-            {
-                var message = _manageService.UpdateTalle(talle);
-                return Ok(message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
-            }
-        }
+        //[HttpPut]
+        //public ActionResult<TalleDTO> UpdateTalle([FromBody] TalleDTO talle)
+        //{
+        //    try
+        //    {
+        //        var message = _manageService.(talle);
+        //        return Ok(message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+        //    }
+        //}
 
         [HttpDelete("{idTalle:int}")]
         public ActionResult<int> DeleteArticulo(int idTalle)
@@ -116,7 +136,6 @@ namespace API_MiTienda.Controllers
             {
                 return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
             }
-            
         }
     }
 }

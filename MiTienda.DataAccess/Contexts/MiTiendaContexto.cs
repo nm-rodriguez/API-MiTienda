@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MiTienda.DataAccess.Contracts;
 using MiTienda.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace MiTienda.DataAccess.Contexts
 {
-    public class MiTiendaContexto : DbContext, ITiendaEF
+    public class MiTiendaContexto : IdentityDbContext, ITiendaEF
     {
         public MiTiendaContexto(){}
         public MiTiendaContexto(DbContextOptions <MiTiendaContexto> options): base(options){}
@@ -80,7 +81,7 @@ namespace MiTienda.DataAccess.Contexts
             modelBuilder.Entity<LineaDeVenta>().ToTable("LineaDeVenta");
             modelBuilder.Entity<Inventario>().ToTable("Inventario");
 
-
+            base.OnModelCreating(modelBuilder);
         }
         
         public DbSet<T> DbSet<T>() where T : class

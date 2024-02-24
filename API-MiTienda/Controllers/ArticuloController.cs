@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
@@ -22,6 +24,7 @@ namespace API_MiTienda.Controllers
 
         #region GETS
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsADMIN")]
         public ActionResult<IEnumerable<ArticuloDTO>> GetAllArticulos()
         {
             try
@@ -35,7 +38,9 @@ namespace API_MiTienda.Controllers
             }
         }
 
+
         [HttpGet("id/{id:int}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsVendedor")]
         public ActionResult<Articulo> GetArticuloById(int id)
         {
             try

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MiTienda.Application.DTOs
 {
+    #region TarjetaDTO
     public class TarjetaDTO
     {
         public string card_number { get; set; }
@@ -44,6 +45,39 @@ namespace MiTienda.Application.DTOs
         public TarjetaHolderIdentificationDTO identification { get; set; }
         public string name { get; set; }
     }
+    #endregion
 
-  
+    #region PagoTarjetaDTO
+
+    public class PagoTarjetaDTO
+    {
+        public string site_transaction_id { get; set; }
+        public int payment_method_id { get; set; }
+        public string token { get; set; }
+        public string bin { get; set; }
+        public decimal amount { get; set; }
+        public string currency { get; set; }
+        public int? installments { get; set; }
+        public string description { get; set; }
+        public string payment_type { get; set; }
+        public string establishment_name { get; set; }
+        public List<SubPaymentDTO> sub_payments { get; set; }
+    }
+
+    public class SubPaymentDTO
+    {
+        public string site_id { get; set; }
+        public decimal amount { get; set; }
+        public int? installments { get; set; }
+    }
+
+    public class PagoTarjetaRespuestaDTO
+    {
+        public string card_brand { get; set; }
+        public string status { get; set; }
+    }
+
+    #endregion
+
+
 }

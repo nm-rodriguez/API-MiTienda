@@ -51,7 +51,9 @@ namespace API_MiTienda.Controllers
             var result = await _signIn.PasswordSignInAsync(credentials.Email, credentials.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return await CreateToken(credentials);
+                var token =  await CreateToken(credentials);
+                var user  = await UserByEmail(credentials.Email);
+                return new AuthenticationResponseDTO() { Token = token.Token, Expiracion = token.Expiracion, Role = user.Value.Role, Username = user.Value.Email };
             }
             else
             {
@@ -62,11 +64,24 @@ namespace API_MiTienda.Controllers
         [HttpGet("listadoUsuarios")]
         public async Task<ActionResult<List<UserDTO>>> UsersList()
         {
-            var queryable = _contexto.Users.AsQueryable().Select(x => new UserDTO() { Id = x.Id, Email = x.Email }).ToList();
-           
+            var usersList = _contexto.Users.AsQueryable().Select(user => 
+            new UserDTO() { Id = user.Id,
+                Role = _contexto.UserClaims.AsQueryable().Where(claim => claim.UserId == user.Id).Select(claim => claim.ClaimValue).SingleOrDefault(), 
+                Email = user.Email }).ToList();
 
-            return queryable;
+            return usersList;
         }
+        [HttpGet("user/{email}")]
+        public async Task<ActionResult<UserDTO>> UserByEmail(string email)
+        {
+            var user = _contexto.Users.AsQueryable().Select(user =>new UserDTO(){Id = user.Id,
+                Role = _contexto.UserClaims.AsQueryable().Where(claim => claim.UserId == user.Id).Select(claim => claim.ClaimValue).SingleOrDefault(),
+                Email = user.Email
+            }).Where(user => user.Email == email).SingleOrDefault();
+
+            return user;
+        }
+
 
         [HttpPost("SetRoleAdmin")]
         public async Task<ActionResult> SetRoleAdmin(string userId)

@@ -56,17 +56,11 @@ INSERT INTO TipoComprobante values
 
 
 INSERT INTO Articulo values
---('Medias'			  ,'1211-1111',500  ,0.5,null ,null,0.21,1,3),
-('Remera manga cortas','1211-1222',15000,0.5,null,null	,0.21,1,1),
-('Pantalon jean','1211-4566',22000,0.5,null,null		,0.21,2,2),
-('Remera manga corta','1211-1333',12000,0.5,null,null	,0.21,3,1),
-('Remera deportiva','1211-3322',8000,0.5,null,null		,0.21,4,1)
-
-
-
-
-
-
+('Medias'			  ,'1211-1111',500  ,0.5,null ,null,0.21,1,1,3),
+('Remera manga cortas','1211-1222',15000,0.5,null,null	,0.21,1,1,1),
+('Pantalon jean','1211-4566',22000,0.5,null,null		,0.21,1,2,2),
+('Remera manga corta','1211-1333',12000,0.5,null,null	,0.21,1,3,1),
+('Remera deportiva','1211-3322',8000,0.5,null,null		,0.21,1,4,1)
 
 
 INSERT INTO Tienda values
@@ -101,10 +95,10 @@ INSERT INTO PuntoDeVenta values
 (2,1)
 
 INSERT INTO Vendedor values
-(1111,'Rodriguez',' Nicolas','nrodriguez','admin123',2),
-(1112,'Vigiani','Nicolas','nvigiani','admin123',1),
-(1113,'Sischi','Facundo','fsischi','admin123',1),
-(1114,'Llebeili','Agustin','allebeili','admin123',3)
+(1111,'Rodriguez',' Nicolas','nrodriguez','admin123',1,2),
+(1112,'Vigiani','Nicolas','nvigiani','admin123',1,1),
+(1113,'Sischi','Facundo','fsischi','admin123',1,1),
+(1114,'Llebeili','Agustin','allebeili','admin123',1,3)
 
 --INSERT INTO Pago values
 --('20240101',15000.5,2),

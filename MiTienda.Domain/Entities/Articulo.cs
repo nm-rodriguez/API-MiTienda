@@ -12,6 +12,7 @@ namespace MiTienda.Domain.Entities
         public double? PrecioFinal { get; set; }
         public double? NetoGravado { get; set; }
         public double PorcentajeIVA { get; set; }
+        public bool State { get; set; }
         public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }
 
@@ -20,7 +21,7 @@ namespace MiTienda.Domain.Entities
 
         }
 
-        public Articulo(string descripcion, string codigoBarras, double costo, double margenGanancia, double? precioFinal, double? netoGravado, double porcentajeIVA, Marca marca, Categoria categoria)
+        public Articulo(string descripcion, string codigoBarras, double costo, double margenGanancia, double? precioFinal, double? netoGravado, double porcentajeIVA, bool state, Marca marca, Categoria categoria)
         {
             Descripcion = descripcion;
             CodigoBarras = codigoBarras;
@@ -29,6 +30,7 @@ namespace MiTienda.Domain.Entities
             PrecioFinal = precioFinal;
             NetoGravado = netoGravado;
             PorcentajeIVA = porcentajeIVA;
+            State = state;
             Marca = marca;
             Categoria = categoria;
         }

@@ -13,9 +13,10 @@ namespace MiTienda.Application.DTOs
         public int Cantidad { get; set; }
 
         public int IdStock { get; set; }
+
         public int IdSucursal { get; set; }
 
-        public CrearInventarioDTO(){}
+        public CrearInventarioDTO() { }
         public CrearInventarioDTO(Inventario inventario)
         {
             IdInventario = inventario.Id;
@@ -25,7 +26,7 @@ namespace MiTienda.Application.DTOs
         }
 
 
-        public Inventario CastearAInventario(Stock stock , Sucursal sucursal)
+        public Inventario CastearAInventario(Stock stock, Sucursal sucursal)
         {
             Inventario inventario = new Inventario();
             inventario.Id = IdInventario;
@@ -38,34 +39,52 @@ namespace MiTienda.Application.DTOs
 
     }
 
-    //public class ReturnInventarioDTO
-    //{
-    //    public ReturnInventarioDTO()
-    //    {
+    public class ReturnInventarioDTO
+    {
+        public int IdInventario { get; set; }
+        public int Cantidad { get; set; }
 
-    //    }
-    //    public ReturnInventarioDTO(Inventario inventario)
-    //    {
-    //        IdInventario = inventario.Id;
-    //        Cantidad = inventario.Cantidad;
-
-    //        IdStock = inventario.Stock.Id;
-    //        idSucursal = inventario.Sucursal.Id;
-    //    }
-
-     
+        public int IdStock { get; set; }
+        public string StockColor { get; set; }
+        public string StockTalle { get; set; }
+        public string StockTalleTipoTalle { get; set; }
 
 
-    //    public Inventario CastearAInventario(Stock stock, Sucursal sucursal)
-    //    {
-    //        Inventario inventario = new Inventario();
-    //        inventario.Id = IdInventario;
-    //        inventario.Cantidad = Cantidad;
-    //        inventario.Stock = stock;
-    //        inventario.Sucursal = sucursal;
+        public int IdArticulo { get; set; }
 
-    //        return inventario;
-    //    }
+        public string ArticuloCategoria { get; set; }
+        public string ArticuloMarca { get; set; }
 
-    //}
+
+        public int IdSucursal { get; set; }
+        public string NombreSucursal { get; set; }
+
+        public ReturnInventarioDTO()
+        {
+
+        }
+        public ReturnInventarioDTO(Inventario inventario)
+        {
+            IdInventario = inventario.Id;
+            Cantidad = inventario.Cantidad;
+
+            IdStock = inventario.Stock.Id;
+            IdSucursal = inventario.Sucursal.Id;
+        }
+
+
+
+
+        public Inventario CastearAInventario(Stock stock, Sucursal sucursal)
+        {
+            Inventario inventario = new Inventario();
+            inventario.Id = IdInventario;
+            inventario.Cantidad = Cantidad;
+            inventario.Stock = stock;
+            inventario.Sucursal = sucursal;
+
+            return inventario;
+        }
+
+    }
 }

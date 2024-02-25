@@ -9,26 +9,21 @@ namespace MiTienda.Application.DTOs
 {
     public class CrearInventarioDTO
     {
-        public CrearInventarioDTO()
-        {
-
-        }
-        public CrearInventarioDTO(Inventario inventario)
-        {
-            IdInventario = inventario.Id;
-            Cantidad = inventario.Cantidad;
-
-            IdStock = inventario.Stock.Id;
-            idSucursal = inventario.Sucursal.Id;
-        }
-
         public int IdInventario { get; set; }
         public int Cantidad { get; set; }
 
         public int IdStock { get; set; }
-        public int idSucursal { get; set; }
+        public int IdSucursal { get; set; }
 
-        
+        public CrearInventarioDTO(){}
+        public CrearInventarioDTO(Inventario inventario)
+        {
+            IdInventario = inventario.Id;
+            Cantidad = inventario.Cantidad;
+            IdStock = inventario.Stock.Id;
+            IdSucursal = inventario.Sucursal.Id;
+        }
+
 
         public Inventario CastearAInventario(Stock stock , Sucursal sucursal)
         {
@@ -58,12 +53,7 @@ namespace MiTienda.Application.DTOs
             idSucursal = inventario.Sucursal.Id;
         }
 
-        public int IdInventario { get; set; }
-        public int Cantidad { get; set; }
-
-        public int IdStock { get; set; }
-        public int idSucursal { get; set; }
-
+     
 
 
         public Inventario CastearAInventario(Stock stock, Sucursal sucursal)

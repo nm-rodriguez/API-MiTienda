@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
+using MiTienda.Application.DTOs;
 using MiTienda.DataAccess.Contexts;
 
 using MiTienda.Domain.Contracts;
@@ -33,6 +34,13 @@ namespace API_MiTienda.Controllers
                 .Include(s => s.Talle);
 
             return Ok(stocks);
+        }
+
+        [HttpPost]
+        public ActionResult<StockDTO> PostStock([FromBody] StockDTO stock)
+        {
+            var message = _manageService.CreateStock(stock);
+            return Ok(message);
         }
     }
 }

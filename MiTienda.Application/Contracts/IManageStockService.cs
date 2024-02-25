@@ -1,4 +1,5 @@
 ﻿
+using MiTienda.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace MiTienda.Application.Contracts
 {
     public interface IManageStockService
     {
-        void CreateStock(string idStock);
-        void UpdateStock(string idStock);
-        void DeleteStock(string idStock);
+        string CreateStock(StockDTO stockDTO);
+        void UpdateStock(StockDTO stockDTO);
+        void DeleteStock(StockDTO stockDTO);
     }
 }

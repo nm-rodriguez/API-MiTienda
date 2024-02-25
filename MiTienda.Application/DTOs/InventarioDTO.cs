@@ -38,34 +38,34 @@ namespace MiTienda.Application.DTOs
 
     }
 
-    public class ReturnInventarioDTO
-    {
-        public ReturnInventarioDTO()
-        {
+    //public class ReturnInventarioDTO
+    //{
+    //    public ReturnInventarioDTO()
+    //    {
 
-        }
-        public ReturnInventarioDTO(Inventario inventario)
-        {
-            IdInventario = inventario.Id;
-            Cantidad = inventario.Cantidad;
+    //    }
+    //    public ReturnInventarioDTO(Inventario inventario)
+    //    {
+    //        IdInventario = inventario.Id;
+    //        Cantidad = inventario.Cantidad;
 
-            IdStock = inventario.Stock.Id;
-            idSucursal = inventario.Sucursal.Id;
-        }
+    //        IdStock = inventario.Stock.Id;
+    //        idSucursal = inventario.Sucursal.Id;
+    //    }
 
      
 
 
-        public Inventario CastearAInventario(Stock stock, Sucursal sucursal)
-        {
-            Inventario inventario = new Inventario();
-            inventario.Id = IdInventario;
-            inventario.Cantidad = Cantidad;
-            inventario.Stock = stock;
-            inventario.Sucursal = sucursal;
+    //    public Inventario CastearAInventario(Stock stock, Sucursal sucursal)
+    //    {
+    //        Inventario inventario = new Inventario();
+    //        inventario.Id = IdInventario;
+    //        inventario.Cantidad = Cantidad;
+    //        inventario.Stock = stock;
+    //        inventario.Sucursal = sucursal;
 
-            return inventario;
-        }
+    //        return inventario;
+    //    }
 
-    }
+    //}
 }

@@ -34,7 +34,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{id:int}")]
+        [HttpGet("getMarcaById")]
         public ActionResult<MarcaDTO> GetMarcaById(int id)
         {
             try

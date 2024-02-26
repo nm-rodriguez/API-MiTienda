@@ -95,10 +95,10 @@ INSERT INTO PuntoDeVenta values
 (2,1)
 
 INSERT INTO Vendedor values
-(1111,'Rodriguez',' Nicolas','nrodriguez','admin123',1,2),
-(1112,'Vigiani','Nicolas','nvigiani','admin123',1,1),
-(1113,'Sischi','Facundo','fsischi','admin123',1,1),
-(1114,'Llebeili','Agustin','allebeili','admin123',1,3)
+(1111,'Ramirez',' Nicolas','nramirez','admin123',1,2),
+(1112,'Villa','Nicolas','nvilla','admin123',1,1),
+(1113,'Chisi','Facundo','fchisi','admin123',1,1),
+(1114,'Yeyi','Agustin','ayeyi','admin123',1,3)
 
 --INSERT INTO Pago values
 --('20240101',15000.5,2),

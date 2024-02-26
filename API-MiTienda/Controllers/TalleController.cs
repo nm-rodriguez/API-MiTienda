@@ -35,7 +35,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{idTalle:int}")]
+        [HttpGet("getTalleById")]
         public ActionResult<TalleDTO> GetTalleById(int idTalle)
         {
             try
@@ -54,7 +54,7 @@ namespace API_MiTienda.Controllers
 
         }
 
-        [HttpGet("idTipoTalle/{idTipoTalle:int}")]
+        [HttpGet("getTallesByIdTipoTalle")]
         public ActionResult<List<TalleDTO>> GetTallesByIdTipoTalle(int idTipoTalle)
         {
             try
@@ -73,8 +73,8 @@ namespace API_MiTienda.Controllers
 
         }
 
-        [HttpGet("TipoTalle/{TipoTalle}")]
-        public ActionResult<List<TalleDTO>> GetTalleByNombreOrCuil(string TipoTalle)
+        [HttpGet("getTallesByNombreTipoTalle")]
+        public ActionResult<List<TalleDTO>> GetTalleByNombreTipoTalle(string TipoTalle)
         {
             try
             {

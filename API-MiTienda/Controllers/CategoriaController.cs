@@ -34,7 +34,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{id:int}")]
+        [HttpGet("getCategoriaById")]
         public ActionResult<CategoriaDTO> GetCategoriaById(int id)
         {
             try

@@ -34,7 +34,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{idordni:int}")]
+        [HttpGet("getClienteByIdOrDni")]
         public ActionResult<ClienteDTO> GetClienteByIdorDni(int idordni)
         {
             try
@@ -53,7 +53,7 @@ namespace API_MiTienda.Controllers
 
         }
 
-        [HttpGet("nombreOrcuil/{nombreOrcuil}")]
+        [HttpGet("getClienteByNombreOrCuil")]
         public ActionResult<ClienteDTO> GetClienteByNombreOrCuil(string nombreOrcuil)
         {
             try

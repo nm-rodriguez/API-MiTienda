@@ -34,7 +34,7 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        [HttpGet("id/{id:int}")]
+        [HttpGet("getColorById")]
         public ActionResult<ColorDTO> GetColorById(int id)
         {
             try

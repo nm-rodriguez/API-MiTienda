@@ -39,7 +39,7 @@ namespace API_MiTienda.Controllers
         }
 
 
-        [HttpGet("id/{id:int}")]
+        [HttpGet("getArticuloById")]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsVendedor")]
         public ActionResult<Articulo> GetArticuloById(int id)
         {
@@ -59,7 +59,7 @@ namespace API_MiTienda.Controllers
 
         }
 
-        [HttpGet("codigo/{codigo}")]
+        [HttpGet("getArticuloByCodigoBarra")]
         public ActionResult<Articulo> GetArticuloByCodigo(string codigo)
         {
             try
@@ -100,7 +100,7 @@ namespace API_MiTienda.Controllers
         }
 
 
-        [HttpDelete("{idArticulo:int}")]
+        [HttpDelete("DeleteArticulo")]
         public ActionResult<int> DeleteArticulo(int idArticulo)
         {
             var message = _manageService.DeleteArticulo(idArticulo);

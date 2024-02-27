@@ -25,40 +25,55 @@ namespace API_MiTienda.Controllers
         [HttpPost("token")]
         public async Task<ActionResult<TarjetaDTO>> ObtenerToken([FromBody] TarjetaDTO tarjeta)
         {
-            HttpResponseMessage response = await _clientWithTokenApi.PostAsJsonAsync("tokens", tarjeta);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await _clientWithTokenApi.PostAsJsonAsync("tokens", tarjeta);
 
-                TarjetaWithTokenDTO responseDto = JsonSerializer.Deserialize<TarjetaWithTokenDTO>(content);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
 
-                string id = responseDto.id;
+                    TarjetaWithTokenDTO responseDto = JsonSerializer.Deserialize<TarjetaWithTokenDTO>(content);
 
-                return Ok(new { id });
+                    string id = responseDto.id;
+
+                    return Ok(new { id });
+                }
+                else
+                {
+                    throw new Exception("Error Al obtener el Token");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return StatusCode((int)response.StatusCode, "Error al obtener el token");
+                return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
+
             }
         }
 
         [HttpPost("PayWithCard")]
         public async Task<ActionResult> EfectuarPago([FromBody] PagoTarjetaDTO Pago)
         {
-            HttpResponseMessage response = await _clientWithPaymentsApi.PostAsJsonAsync("payments", Pago);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
-                PagoTarjetaRespuestaDTO pagoTarjetaRespuesta = JsonSerializer.Deserialize<PagoTarjetaRespuestaDTO>(content);
+                HttpResponseMessage response = await _clientWithPaymentsApi.PostAsJsonAsync("payments", Pago);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    PagoTarjetaRespuestaDTO pagoTarjetaRespuesta = JsonSerializer.Deserialize<PagoTarjetaRespuestaDTO>(content);
 
 
-                return Ok( pagoTarjetaRespuesta );
+                    return Ok(pagoTarjetaRespuesta);
+                }
+                else
+                {
+                    return StatusCode((int)response.StatusCode, $"Error al realizar el pago. Detalles: {response.ReasonPhrase}");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return StatusCode((int)response.StatusCode, "Error al realizar el pago");
+                return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
             }
         }
     }

@@ -124,8 +124,8 @@ namespace API_MiTienda.Controllers
         //    }
         //}
 
-        [HttpDelete("{idTalle:int}")]
-        public ActionResult<int> DeleteArticulo(int idTalle)
+        [HttpDelete("deleteTalle")]
+        public ActionResult<int> DeleteTalle(int idTalle)
         {
             try
             {

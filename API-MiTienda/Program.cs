@@ -75,6 +75,13 @@ namespace API_MiTienda
 
             app.UseRouting();
 
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
+
             app.UseAuthorization();
 
 

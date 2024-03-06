@@ -52,9 +52,7 @@ namespace MiTienda.Application.DTOs
 
         public int IdArticulo { get; set; }
 
-        public string CodigoBarra { get; set; }
         public string ArticuloCategoria { get; set; }
-        public string ArticuloDescripcion { get; set; }
         public string ArticuloMarca { get; set; }
 
 
@@ -65,36 +63,24 @@ namespace MiTienda.Application.DTOs
         {
 
         }
-    
-       
-
         public ReturnInventarioDTO(Inventario inventario)
         {
             IdInventario = inventario.Id;
             Cantidad = inventario.Cantidad;
+
             IdStock = inventario.Stock.Id;
-            StockColor = inventario.Stock.Color.Nombre;
-            StockTalle = inventario.Stock.Talle.TalleArticulo;
-            StockTalleTipoTalle = inventario.Stock.Talle.TipoTalle.Descripcion;
-            IdArticulo = inventario.Stock.Articulo.Id;
-            CodigoBarra = inventario.Stock.Articulo.CodigoBarras;
-            ArticuloCategoria = inventario.Stock.Articulo.Categoria.Descripcion;
-            ArticuloDescripcion = inventario.Stock.Articulo.Descripcion;
-            ArticuloMarca = inventario.Stock.Articulo.Marca.Nombre;
             IdSucursal = inventario.Sucursal.Id;
-            NombreSucursal = inventario.Sucursal.Nombre;
         }
 
-        public Inventario CastearAInventario(Stock stock, Sucursal sucursal )
+
+
+
+        public Inventario CastearAInventario(Stock stock, Sucursal sucursal)
         {
             Inventario inventario = new Inventario();
             inventario.Id = IdInventario;
             inventario.Cantidad = Cantidad;
-            inventario.Stock.Id = stock.Id;
-            inventario.Stock.Color.Nombre = stock.Color.Nombre;
-            inventario.Stock.Talle = stock.Talle;
-            
-
+            inventario.Stock = stock;
             inventario.Sucursal = sucursal;
 
             return inventario;

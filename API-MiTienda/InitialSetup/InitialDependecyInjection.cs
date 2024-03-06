@@ -21,7 +21,7 @@ namespace API_MiTienda.InitialSetup
             servicios.AddEndpointsApiExplorer();
             servicios.AddSwaggerGen();
 
-            servicios.AddDbContext<ITiendaEF,MiTiendaContexto >(
+            servicios.AddDbContext<ITiendaEF, MiTiendaContexto>(
                 options => options.UseSqlServer(conectionString),
                 ServiceLifetime.Scoped
                 );
@@ -39,8 +39,9 @@ namespace API_MiTienda.InitialSetup
             servicios.AddScoped<IManageTipoTalleService, TipoTalleManageService>();
             servicios.AddScoped<IManageClienteService, ClienteManageService>();
             servicios.AddScoped<IManageTalleService, TalleManageService>();
+            servicios.AddScoped<IManageInventarioService, InventarioManageService>();
 
-          
+
 
 
             return servicios;

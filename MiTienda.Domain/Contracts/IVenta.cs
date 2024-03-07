@@ -9,7 +9,7 @@ namespace MiTienda.Domain.Contracts
 {
     public interface IVenta
     {
-        public double GetTotal(List<LineaDeVenta> detallesVenta);
+        public void GetTotal(List<LineaDeVenta> detallesVenta);
         public void AgregarArticulos(Articulo articulo);
         public void asociarCliente(Cliente cliente);
         public void AgregarMetodoDePago(TipoPago metodoPago);

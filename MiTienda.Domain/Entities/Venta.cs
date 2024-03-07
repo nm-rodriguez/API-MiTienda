@@ -3,7 +3,7 @@ using MiTienda.Domain.Utilidades;
 
 namespace MiTienda.Domain.Entities
 {
-    public class Venta : EntidadPersistible
+    public class Venta : EntidadPersistible, IVenta
     {
         public Sucursal Sucursal { get; set; }
 

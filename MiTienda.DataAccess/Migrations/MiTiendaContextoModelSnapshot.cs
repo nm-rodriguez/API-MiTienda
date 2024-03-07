@@ -418,7 +418,7 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VentaId")
+                    b.Property<int?>("VentaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -692,14 +692,50 @@ namespace MiTienda.DataAccess.Migrations
             modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaVenta")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("Importe")
+                        .HasColumnType("float");
+
+                    b.Property<int>("PagoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PuntoDeVentaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SucursalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TipoComprobanteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VendedorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Venta");
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("PagoId");
+
+                    b.HasIndex("PuntoDeVentaId");
+
+                    b.HasIndex("SucursalId");
+
+                    b.HasIndex("TipoComprobanteId");
+
+                    b.HasIndex("VendedorId");
+
+                    b.ToTable("Venta", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -810,15 +846,11 @@ namespace MiTienda.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MiTienda.Domain.Entities.Venta", "Venta")
-                        .WithMany()
-                        .HasForeignKey("VentaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("MiTienda.Domain.Entities.Venta", null)
+                        .WithMany("LineaDeVenta")
+                        .HasForeignKey("VentaId");
 
                     b.Navigation("Stock");
-
-                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("MiTienda.Domain.Entities.Pago", b =>
@@ -924,38 +956,38 @@ namespace MiTienda.DataAccess.Migrations
                 {
                     b.HasOne("MiTienda.Domain.Entities.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiTienda.Domain.Entities.Pago", "Pago")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("PagoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiTienda.Domain.Entities.PuntoDeVenta", "PuntoDeVenta")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("PuntoDeVentaId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiTienda.Domain.Entities.Sucursal", "Sucursal")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiTienda.Domain.Entities.TipoComprobante", "TipoComprobante")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("TipoComprobanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiTienda.Domain.Entities.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("VendedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
@@ -969,6 +1001,11 @@ namespace MiTienda.DataAccess.Migrations
                     b.Navigation("TipoComprobante");
 
                     b.Navigation("Vendedor");
+                });
+
+            modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
+                {
+                    b.Navigation("LineaDeVenta");
                 });
 #pragma warning restore 612, 618
         }

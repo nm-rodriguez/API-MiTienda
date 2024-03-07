@@ -6,7 +6,7 @@ namespace MiTienda.Domain.Entities
     {
         public int Cantidad { get; set; }
         public Stock Stock { get; set; }
-        public Venta Venta { get; set; }
+        //public Venta Venta { get; set; }
         private void Crear()
         {
             throw new NotImplementedException();

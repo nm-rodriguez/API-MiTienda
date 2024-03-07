@@ -78,10 +78,10 @@ INSERT INTO Stock values
 GO
 
 INSERT INTO Inventario values
-(50,6,2),
-(10,7,1),
-(15,8,2),
-(25,6,3)
+(50,1,2),
+(10,2,1),
+(15,3,2),
+(25,1,2)
 GO
 
 INSERT INTO Cliente values

@@ -90,24 +90,24 @@ namespace API_MiTienda
 
 
             //afip
-            var servicio = new LoginServiceClient();
-            var autorizacion = servicio.SolicitarAutorizacionAsync("80594BA9-F102-4E0A-8B5D-B3A87383114A").Result;//llamar cuando iniciamos la venta
-            var comprobante = servicio.SolicitarUltimosComprobantesAsync(autorizacion.Token).Result;
+            //var servicio = new LoginServiceClient();
+            //var autorizacion = servicio.SolicitarAutorizacionAsync("80594BA9-F102-4E0A-8B5D-B3A87383114A").Result;//llamar cuando iniciamos la venta
+            //var comprobante = servicio.SolicitarUltimosComprobantesAsync(autorizacion.Token).Result;
 
-            var solicitudAutorizacion = new SolicitudAutorizacion();
-            solicitudAutorizacion.Fecha = DateTime.Now;
-            solicitudAutorizacion.ImporteIva = 21;
-            solicitudAutorizacion.ImporteNeto = 100;
-            solicitudAutorizacion.ImporteTotal = 121;
-            solicitudAutorizacion.NumeroDocumento = 0;//23406669999;
-            solicitudAutorizacion.TipoComprobante = TipoComprobante.FacturaB;
-            solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
-            solicitudAutorizacion.Numero = solicitudAutorizacion.TipoComprobante == TipoComprobante.FacturaA ? comprobante.Comprobantes[0].Numero + 1 : comprobante.Comprobantes[1].Numero + 1;
-            var cae = servicio.SolicitarCaeAsync(autorizacion.Token, solicitudAutorizacion).Result;
+            //var solicitudAutorizacion = new SolicitudAutorizacion();
+            //solicitudAutorizacion.Fecha = DateTime.Now;
+            //solicitudAutorizacion.ImporteIva = 21;
+            //solicitudAutorizacion.ImporteNeto = 100;
+            //solicitudAutorizacion.ImporteTotal = 121;
+            //solicitudAutorizacion.NumeroDocumento = 0;//23406669999;
+            //solicitudAutorizacion.TipoComprobante = TipoComprobante.FacturaB;
+            //solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
+            //solicitudAutorizacion.Numero = solicitudAutorizacion.TipoComprobante == TipoComprobante.FacturaA ? comprobante.Comprobantes[0].Numero + 1 : comprobante.Comprobantes[1].Numero + 1;
+            //var cae = servicio.SolicitarCaeAsync(autorizacion.Token, solicitudAutorizacion).Result;
 
-            Console.WriteLine(autorizacion);
-            Console.WriteLine(comprobante);
-            Console.WriteLine(cae);
+            //Console.WriteLine(autorizacion);
+            //Console.WriteLine(comprobante);
+            //Console.WriteLine(cae);
 
             app.Run();
 

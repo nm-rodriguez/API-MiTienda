@@ -37,49 +37,6 @@ namespace MiTienda.DataAccess.Contexts
             modelBuilder.Entity<Cliente>().ToTable("Cliente");
             modelBuilder.Entity<LineaDeVenta>().ToTable("LineaDeVenta");
             modelBuilder.Entity<Venta>().ToTable("Venta");
-
-
-            //modelBuilder.Entity<Venta>()
-            //.HasOne(v => v.Sucursal)
-            //.WithMany()
-            //.HasForeignKey(v => v.Id)
-            //.OnDelete(DeleteBehavior.Restrict); // Evita la eliminación en cascada
-
-            //// Configuración de la relación con Vendedor
-            //modelBuilder.Entity<Venta>()
-            //    .HasOne(v => v.Vendedor)
-            //    .WithMany()
-            //    .HasForeignKey(v => v.Vendedor.Id)
-            //    .OnDelete(DeleteBehavior.Restrict); // Permite la eliminación en cascada
-
-            //// Configuración de la relación con Pago
-            //modelBuilder.Entity<Venta>()
-            //    .HasOne(v => v.Pago)
-            //    .WithMany()
-            //    .HasForeignKey(v => v.Pago.Id)
-            //    .OnDelete(DeleteBehavior.Restrict); // Permite la eliminación en cascada
-
-            //// Configuración de la relación con Cliente
-            //modelBuilder.Entity<Venta>()
-            //    .HasOne(v => v.Cliente)
-            //    .WithMany()
-            //    .HasForeignKey(v => v.Cliente.Id)
-            //    .OnDelete(DeleteBehavior.Restrict); // Permite la eliminación en cascada
-
-            //// Configuración de la relación con TipoComprobante
-            //modelBuilder.Entity<Venta>()
-            //    .HasOne(v => v.TipoComprobante)
-            //    .WithMany()
-            //    .HasForeignKey(v => v.TipoComprobante.Id)
-            //    .OnDelete(DeleteBehavior.Restrict); // Evita la eliminación en cascada
-
-            //// Configuración de la relación con PuntoDeVenta
-            //modelBuilder.Entity<Venta>()
-            //    .HasOne(v => v.PuntoDeVenta)
-            //    .WithMany()
-            //    .HasForeignKey(v => v.PuntoDeVenta.Id)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Inventario>().ToTable("Inventario");
 
             base.OnModelCreating(modelBuilder);

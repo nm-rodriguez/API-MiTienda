@@ -18,6 +18,7 @@ namespace MiTienda.Domain.Entities
         
         public PuntoDeVenta PuntoDeVenta { get; set; }
 
+        #region Methods
         private double GetTotal()
         {
             throw new NotImplementedException();
@@ -52,7 +53,7 @@ namespace MiTienda.Domain.Entities
         }
 
 
-
+        #endregion
 
 
     }

@@ -40,6 +40,7 @@ namespace API_MiTienda.InitialSetup
             servicios.AddScoped<IManageClienteService, ClienteManageService>();
             servicios.AddScoped<IManageTalleService, TalleManageService>();
             servicios.AddScoped<IManageInventarioService, InventarioManageService>();
+            servicios.AddScoped<IManageVentaService, VentaManageService>();
 
 
 

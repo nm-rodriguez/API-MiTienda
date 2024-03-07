@@ -28,6 +28,8 @@ namespace MiTienda.Application.DTOs
 
         public int PuntoDeVenta { get; set; }
 
+        public List <LineaVentaDTO> DetallesVenta { get; set; }
+
         public VentaDTO(int sucursalID, string sucursalNombre, string fechaVenta, int vendedorID, string vendedorNombre, double pagoMonto, string pagoMoneda, string pagoTipoPagoDescripcion, int clienteDNI, string clienteNombre, string tipoComprobante, int puntoDeVenta)
         {
             SucursalID = sucursalID;
@@ -50,5 +52,21 @@ namespace MiTienda.Application.DTOs
 
             return venta;
         }
+
+
+    }
+
+    public class LineaVentaDTO
+    {
+        public LineaVentaDTO(int cantidad, int idStock)
+        {
+            Cantidad = cantidad;
+            this.idStock = idStock;
+        }
+
+        public int Cantidad { get; set; }
+        public int idStock { get; set; }
+
+
     }
 }

@@ -1,7 +1,7 @@
 --create database MiTienda
 --go
---use MiTienda
---go
+use MiTienda
+go
 
 
 --INSERTS---------------------------------------------------------------
@@ -100,11 +100,46 @@ INSERT INTO Vendedor values
 (1113,'Chisi','Facundo','fchisi','admin123',1,1),
 (1114,'Yeyi','Agustin','ayeyi','admin123',1,3)
 
---INSERT INTO Pago values
---('20240101',15000.5,2),
---('20240115',55000,1)
+
+INSERT INTO DetallePagoTarjeta VALUES ('Debito','5165165')
+INSERT INTO Pago VALUES (15000.5,'ARS',1,'20240305',1)
+INSERT INTO Venta(SucursalId,FechaVenta,VendedorId,PagoId,ClienteId,TipoComprobanteId,PuntoDeVentaId,Importe)
+VALUES(1,'20240305',1,2,1,1,1,15000.5)
+GO
 
 
+
+	select * from Inventario i
+	inner join Stock s on s.Id = i.StockId
+	inner join Color col on col.Id = s.ColorId
+	inner join Talle t on t.Id = s.TalleId
+	inner join Sucursal sc on sc.Id = i.SucursalId 
+	inner join Articulo ar on ar.Id = s.ArticuloId
+	inner join Categoria ct on ct.Id = ar.CategoriaId
+	inner join Marca mar on mar.Id = ar.MarcaId
+
+
+	--Consulta a Inventario
+select i.Id, ct.Descripcion as categoria,mar.Nombre as Marca,ar.Descripcion,ar.CodigoBarras,t.TalleArticulo,col.Nombre as Color, i.Cantidad,sc.Nombre as Sucursal 
+from Inventario i
+inner join Stock s on s.Id = i.StockId 
+inner join Color col on col.Id = s.ColorId
+inner join Talle t on t.Id = s.TalleId
+inner join Sucursal sc on sc.Id = i.SucursalId 
+inner join Articulo ar on ar.Id = s.ArticuloId
+inner join Categoria ct on ct.Id = ar.CategoriaId
+inner join Marca mar on mar.Id = ar.MarcaId
+
+select * from Pago
+select * from DetallePagoTarjeta
+
+select * from venta v
+inner join Sucursal s on s.Id = v.SucursalId
+inner join Vendedor vdor on vdor.Id = v.VendedorId
+inner join Pago p on p.Id = v.PagoId
+inner join Cliente c on c.Id = v.ClienteId
+inner join TipoComprobante tc on tc.Id = v.TipoComprobanteId
+inner join PuntoDeVenta pv on pv.Id = v.PuntoDeVentaId
 
 
 

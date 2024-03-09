@@ -35,17 +35,17 @@ namespace API_MiTienda.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ClienteDTO>> GetAllVentas()
+        public ActionResult<IEnumerable<VentaDTO>> GetAllVentas()
         {
-            //try
-            //{
-            //    var clientes = _manageService.GetClientes();
-            //    return Ok(clientes);
-            //}
-            //catch (Exception)
-            //{
-            return StatusCode(400, "Algo salió mal.");
-            //}
+            try
+            {
+                var ventas = _manageService.GetVentas();
+                return Ok(ventas);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
         }
 
         [HttpGet("ventaID")]

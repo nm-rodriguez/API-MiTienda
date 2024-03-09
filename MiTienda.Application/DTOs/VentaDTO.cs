@@ -30,20 +30,20 @@ namespace MiTienda.Application.DTOs
 
         public List <LineaVentaDTO> DetallesVenta { get; set; }
 
-        public VentaDTO(int sucursalID, string sucursalNombre, string fechaVenta, int vendedorID, string vendedorNombre, double pagoMonto, string pagoMoneda, string pagoTipoPagoDescripcion, int clienteDNI, string clienteNombre, string tipoComprobante, int puntoDeVenta)
+        public VentaDTO(Venta venta)
         {
-            SucursalID = sucursalID;
-            SucursalNombre = sucursalNombre;
-            FechaVenta = fechaVenta;
-            VendedorID = vendedorID;
-            VendedorNombre = vendedorNombre;
-            PagoMonto = pagoMonto;
-            PagoMoneda = pagoMoneda;
-            PagoTipoPagoDescripcion = pagoTipoPagoDescripcion;
-            ClienteDNI = clienteDNI;
-            ClienteNombre = clienteNombre;
-            TipoComprobante = tipoComprobante;
-            PuntoDeVenta = puntoDeVenta;
+            SucursalID = venta.Sucursal.Id;
+            SucursalNombre = venta.Sucursal.Nombre;
+            FechaVenta = venta.FechaVenta.ToString();
+            VendedorID = venta.Vendedor.Id;
+            VendedorNombre = venta.Vendedor.Nombre;
+            PagoMonto = venta.Pago.Monto;
+            PagoMoneda = venta.Pago.Moneda;
+            PagoTipoPagoDescripcion = venta.Pago.TipoPago.Descripcion;
+            ClienteDNI = venta.Cliente.Dni;
+            ClienteNombre = venta.Cliente.Nombre;
+            TipoComprobante = venta.TipoComprobante.Descripcion;
+            PuntoDeVenta = venta.PuntoDeVenta.Numero;
         }
 
         public Venta CastearAVenta(DateTime fechaVenta,Vendedor vendedor,Pago pago,Cliente cliente,TipoComprobante tipoComprobante,PuntoDeVenta puntoVenta, Sucursal sucursal)

@@ -1,4 +1,5 @@
-﻿using MiTienda.Application.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
 using MiTienda.Domain.Contracts;
 using MiTienda.Domain.Entities;
@@ -43,23 +44,23 @@ namespace MiTienda.Application.Services
         }
 
 
-        public List<VentaDTO> GetVentas(int idSucursal)
+        public List<VentaDTO> GetVentas()
         {
             List<VentaDTO> ventas = new List<VentaDTO>();
 
-            //foreach (Inventario inventario in _inventarioRepo.GetBy(i => i.Sucursal.Id == idSucursal)
-            //    .AsQueryable()
-            //    .Include(x => x.Stock)
-            //    .Include(x => x.Sucursal)
-            //    .Include(x => x.Stock.Color)
-            //    .Include(x => x.Stock.Talle)
-            //    .Include(x => x.Stock.Articulo)
-            //    .Include(x => x.Stock.Articulo.Marca)
-            //    .Include(x => x.Stock.Articulo.Categoria)
-            //    .Include(x => x.Stock.Talle.TipoTalle))
-            //{
-            //    inventarios.Add(new ReturnInventarioDTO(inventario));
-            //}
+            foreach (var item in _ventaRepo.GetAll()
+                .AsQueryable()
+                .Include(x => x.Sucursal)
+                .Include(x => x.Vendedor)
+                .Include(x => x.Pago)
+                .Include(x => x.Pago.TipoPago)
+                .Include(x => x.Cliente)
+                .Include(x => x.TipoComprobante)
+                .Include(x => x.PuntoDeVenta)
+                )
+            {
+                ventas.Add(new VentaDTO(item));
+            }
 
             return ventas;
         }

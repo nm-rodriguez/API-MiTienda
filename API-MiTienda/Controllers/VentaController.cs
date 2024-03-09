@@ -20,7 +20,7 @@ namespace API_MiTienda.Controllers
         }
 
         [HttpPost]
-        public ActionResult<VentaDTO> PostVenta(VentaDTO venta)
+        public ActionResult<VentaPostDTO> PostVenta(VentaPostDTO venta)
         {
             try
             {
@@ -47,6 +47,8 @@ namespace API_MiTienda.Controllers
                 return StatusCode(400, "Algo salió mal.");
             }
         }
+
+
 
         [HttpGet("ventaID")]
         public ActionResult<ClienteDTO> GetVentaById(int id)

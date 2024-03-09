@@ -12,7 +12,7 @@ namespace MiTienda.Application.Contracts
         List<VentaDTO> GetVentas();
         List<VentaDTO> GetVentasBySucursal(int idSucursal);
         List<VentaDTO> GetVentasByEmpleado(int idEmpleado);
-        string CrearVenta(VentaDTO venta);
+        string CrearVenta(VentaPostDTO venta);
         
     }
 }

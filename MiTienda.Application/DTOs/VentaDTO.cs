@@ -16,16 +16,16 @@ namespace MiTienda.Application.DTOs
 
         public int VendedorID { get; set; }
         public string VendedorNombre { get; set; }
-
+        public int PagoID { get; set; }
         public double PagoMonto { get; set; }
         public string PagoMoneda { get; set; }
         public string PagoTipoPagoDescripcion { get; set; }
-
+        public int ClienteID { get; set; }
         public int ClienteDNI { get; set; }
         public string ClienteNombre { get; set; }
-
+        public int TipoComprobanteID { get; set; }
         public string TipoComprobante { get; set; }
-
+        public int PuntoDeVentaID { get; set; }
         public int PuntoDeVenta { get; set; }
 
         public List <LineaVentaDTO> DetallesVenta { get; set; }

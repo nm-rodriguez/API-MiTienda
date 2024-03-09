@@ -21,26 +21,43 @@ namespace MiTienda.Application.Services
         private IRepository<TipoComprobante> _tipoComprobanteRepo;
         private IRepository<PuntoDeVenta> _puntoDeVentaRepo;
 
-        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<LineaDeVenta> lineaVentaRepo)
+        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo)
         {
             _ventaRepo = ventaRepo;
+            _sucursalRepo = sucursalRepo;
+            _vendedorRepo = vendedorRepo;
+            _pagoRepo = pagoRepo;
+            _clienteRepo = clienteRepo;
+            _tipoComprobanteRepo = tipoComprobanteRepo;
+            _puntoDeVentaRepo = puntoDeVentaRepo;
         }
 
-        public string CrearVenta(VentaDTO ventaDTO)
+        public string CrearVenta(VentaPostDTO ventaPostDTO)
         {
-            if (ventaDTO == null)
+            if (ventaPostDTO == null)
                 throw new Exception("Venta nula.");
-            Venta venta = new Venta() { };//ventaDTO.CastearAVenta();
-            venta.Sucursal = new Sucursal(){};
-            venta.FechaVenta = new DateTime(){};
-            venta.Vendedor = new Vendedor(){};
-            venta.Pago = new Pago(){};
-            venta.Cliente = new Cliente(){};
-            venta.TipoComprobante = new TipoComprobante(){};
-            venta.PuntoDeVenta = new PuntoDeVenta() { };
+
+            Vendedor vendedor = _vendedorRepo.GetByID(ventaPostDTO.VendedorID).SingleOrDefault();
+            Pago pago = _pagoRepo.GetByID(ventaPostDTO.PagoID).SingleOrDefault();
+            Cliente cliente= _clienteRepo.GetByID(ventaPostDTO.ClienteID).SingleOrDefault();
+            TipoComprobante tComprobante = _tipoComprobanteRepo.GetByID(ventaPostDTO.TipoComprobanteID).SingleOrDefault();
+            PuntoDeVenta ptoVenta = _puntoDeVentaRepo.GetByID(ventaPostDTO.PuntoDeVentaID).SingleOrDefault();
+            Sucursal sucursal = _sucursalRepo.GetByID(ventaPostDTO.SucursalID).SingleOrDefault();
 
 
-            return $"Venta creada correctamente ID: {venta.Id} , FECHA: {venta.FechaVenta}, SUCURSAL: {venta.Sucursal.Nombre},TOTAL: {venta.Pago.Monto}";
+            Venta venta = ventaPostDTO.CastearAVenta(
+                DateTime.Parse(ventaPostDTO.FechaVenta),
+                vendedor,
+                pago,
+                cliente,
+                tComprobante,
+                ptoVenta,
+                sucursal
+                );
+
+            _ventaRepo.AddObject(venta);
+
+            return $"Venta creada correctamente ID: {venta.Id}";
         }
 
 

@@ -19,8 +19,8 @@ namespace MiTienda.Domain.Entities
 
         public PuntoDeVenta PuntoDeVenta { get; set; }
 
-        public List<LineaDeVenta> LineaDeVenta { get; set; }
-        public double Importe { get; set; }
+        public List<LineaDeVenta>? LineaDeVenta { get; set; }//sacar el nulleable despues que cree lineas de venta para probar
+        public double? Importe { get; set; }
 
 
         public void GetTotal(List<LineaDeVenta> detallesVenta)

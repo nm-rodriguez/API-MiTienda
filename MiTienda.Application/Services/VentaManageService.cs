@@ -45,15 +45,19 @@ namespace MiTienda.Application.Services
             Sucursal sucursal = _sucursalRepo.GetByID(ventaPostDTO.SucursalID).SingleOrDefault();
 
 
-            Venta venta = ventaPostDTO.CastearAVenta(
-                DateTime.Parse(ventaPostDTO.FechaVenta),
-                vendedor,
-                pago,
-                cliente,
-                tComprobante,
-                ptoVenta,
-                sucursal
-                );
+            Venta venta = new Venta()
+            {
+                FechaVenta = DateTime.Parse(ventaPostDTO.FechaVenta),
+                Vendedor = vendedor,
+                Pago = pago,
+                Cliente = cliente,
+                TipoComprobante = tComprobante,
+                PuntoDeVenta = ptoVenta,
+                Sucursal = sucursal,
+                Importe = pago.Monto
+            };
+                
+                
 
             _ventaRepo.AddObject(venta);
 

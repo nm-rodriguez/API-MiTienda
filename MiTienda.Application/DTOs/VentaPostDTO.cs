@@ -23,12 +23,12 @@ namespace MiTienda.Application.DTOs
             FechaVenta = DateTime.UtcNow.ToString();
         }
 
-        public Venta CastearAVenta(DateTime fechaVenta,Vendedor vendedor,Pago pago,Cliente cliente,TipoComprobante tipoComprobante,PuntoDeVenta puntoVenta, Sucursal sucursal)
-        {
-            Venta venta = new Venta() { };
+        //public Venta CastearAVenta(DateTime fechaVenta,Vendedor vendedor,Pago pago,Cliente cliente,TipoComprobante tipoComprobante,PuntoDeVenta puntoVenta, Sucursal sucursal)
+        //{
+        //    Venta venta = new Venta() { };
 
-            return venta;
-        }
+        //    return venta;
+        //}
 
 
     }

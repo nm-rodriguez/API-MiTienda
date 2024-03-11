@@ -28,10 +28,17 @@ namespace MiTienda.Application.Services
 
         }
 
+        public Stock GetStockByID(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteStock(StockDTO stockDTO)
         {
             throw new NotImplementedException();
         }
+
+      
 
         public void UpdateStock(StockDTO stockDTO)
         {

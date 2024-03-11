@@ -4,9 +4,11 @@ namespace MiTienda.Domain.Entities
 {
     public class LineaDeVenta : EntidadPersistible
     {
+    
+
         public int Cantidad { get; set; }
         public Stock Stock { get; set; }
-        //public Venta Venta { get; set; }
+        public int? VentaID { get; set; }
         private void Crear()
         {
             throw new NotImplementedException();

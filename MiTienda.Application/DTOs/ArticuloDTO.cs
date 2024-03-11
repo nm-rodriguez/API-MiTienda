@@ -37,10 +37,10 @@ namespace MiTienda.Application.DTOs
         [RegularExpression("^\\d{4}-\\d{4}$", ErrorMessage = "El código no cumple con el formato. Debe estar compuesto por: 4 numeros; 1 guion medio; 4 numeros ")]
         public string CodigoBarras { get; set; }
         public double Costo { get; set; }
-        public double MargenGanancia { get; set; }
+        public double? MargenGanancia { get; set; }
         public double? PrecioFinal { get; set; }
         public double? NetoGravado { get; set; }
-        public double PorcentajeIVA { get; set; }
+        public double? PorcentajeIVA { get; set; }
 
         public int CategoriaId { get; set; }
         public int MarcaId { get; set; }

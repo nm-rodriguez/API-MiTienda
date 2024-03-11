@@ -10,13 +10,16 @@ namespace MiTienda.Domain.Contracts
     public interface IVenta
     {
         public void GetTotal(List<LineaDeVenta> detallesVenta);
-        public void AgregarArticulos(Articulo articulo);
+        public List<LineaDeVenta> GetLineas();
+        public void AgregarArticulos(List<LineaDeVenta> lineas);
         public void asociarCliente(Cliente cliente);
         public void AgregarMetodoDePago(TipoPago metodoPago);
         public void RealizarPagoEfectivo(Pago pagoEfectivo);
         public void RealizarPagoTarjeta(Pago pagoTarjeta);
         public void ConfirmarVenta(Venta venta); // ver 
         public void AsociarTipoComprobante(TipoComprobante comprobante);
+        public void SetID(int id);
+        public int GetID();
 
     }
 }

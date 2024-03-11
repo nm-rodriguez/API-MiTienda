@@ -8,6 +8,7 @@ using MiTienda.DataAccess.Contexts;
 using MiTienda.DataAccess.Contracts;
 using MiTienda.DataAccess.Repositories;
 using MiTienda.Domain.Contracts;
+using MiTienda.Domain.Entities;
 using System.Text;
 
 namespace API_MiTienda.InitialSetup
@@ -41,6 +42,8 @@ namespace API_MiTienda.InitialSetup
             servicios.AddScoped<IManageTalleService, TalleManageService>();
             servicios.AddScoped<IManageInventarioService, InventarioManageService>();
             servicios.AddScoped<IManageVentaService, VentaManageService>();
+            servicios.AddScoped<IManageLineasVentaService, LineaVentaManageService>();
+            servicios.AddSingleton <IVenta,Venta>();
 
 
 

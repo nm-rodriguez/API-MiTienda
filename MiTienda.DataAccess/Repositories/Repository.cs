@@ -41,7 +41,7 @@ namespace MiTienda.DataAccess.Repositories
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                throw new Exception(e.ToString());
             }
         }
         public void DeleteObject(T item)

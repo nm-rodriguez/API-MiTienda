@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace MiTienda.Application.Contracts
 {
-    public interface IManageVentaService
+    public interface IManageLineasVentaService
     {
-        List<VentaDTO> GetVentas();
-        List<VentaDTO> GetVentasBySucursal(int idSucursal);
-        List<VentaDTO> GetVentasByEmpleado(int idEmpleado);
-        int CrearVenta(VentaPostDTO venta);
+        List<LineaDeVenta> GetLineas();
+        string CrearLineasVenta(List<LineaDeVenta> lineasDeVenta);
+        void CrearLineaVenta(LineaDeVenta lineaDeVenta);
         
     }
 }

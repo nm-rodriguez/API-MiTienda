@@ -16,7 +16,7 @@ namespace MiTienda.Application.DTOs
         public int ClienteID { get; set; }
         public int TipoComprobanteID { get; set; }
         public int PuntoDeVentaID { get; set; }
-
+        public List<LineaVentaDTO>? LineasVenta{ get; set; }
 
         public VentaPostDTO()
         {

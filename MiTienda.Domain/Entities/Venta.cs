@@ -19,7 +19,7 @@ namespace MiTienda.Domain.Entities
 
         public PuntoDeVenta PuntoDeVenta { get; set; }
 
-        public List<LineaDeVenta>? LineaDeVenta { get; set; }//sacar el nulleable despues que cree lineas de venta para probar
+        public List<LineaDeVenta> LineasDeVenta { get; set; }//sacar el nulleable despues que cree lineas de venta para probar
         public double? Importe { get; set; }
 
 
@@ -38,9 +38,9 @@ namespace MiTienda.Domain.Entities
 
         }
 
-        public void AgregarArticulos(Articulo articulo)
+        public void AgregarArticulos(List<LineaDeVenta> lineas)
         {
-            throw new NotImplementedException();
+            LineasDeVenta = lineas;
         }
 
         public void AgregarMetodoDePago(TipoPago metodoPago)
@@ -73,5 +73,19 @@ namespace MiTienda.Domain.Entities
             throw new NotImplementedException();
         }
 
+        public List<LineaDeVenta> GetLineas()
+        {
+            return LineasDeVenta;
+        }
+
+        public void SetID(int id)
+        {
+            Id = id;
+        }
+
+        public int GetID()
+        {
+            return Id;
+        }
     }
 }

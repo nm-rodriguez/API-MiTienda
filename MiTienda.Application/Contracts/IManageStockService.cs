@@ -1,5 +1,6 @@
 ﻿
 using MiTienda.Application.DTOs;
+using MiTienda.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace MiTienda.Application.Contracts
         string CreateStock(StockDTO stockDTO);
         void UpdateStock(StockDTO stockDTO);
         void DeleteStock(StockDTO stockDTO);
+        Stock GetStockByID(int ID);
     }
 }

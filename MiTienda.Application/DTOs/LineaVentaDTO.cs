@@ -8,15 +8,17 @@ namespace MiTienda.Application.DTOs
 {
     public class LineaVentaDTO
     {
-        public LineaVentaDTO(int cantidad, int idStock)
-        {
-            Cantidad = cantidad;
-            this.idStock = idStock;
-        }
 
+ 
         public int Cantidad { get; set; }
-        public int idStock { get; set; }
+        public int StockID { get; set; }
+        public int VentaID { get; set; }
 
-
+        public LineaVentaDTO(int cantidad, int StockID, int VentaID)
+        {
+            this.Cantidad = cantidad;
+            this.StockID = StockID;
+            this.VentaID = VentaID;
+        }
     }
 }

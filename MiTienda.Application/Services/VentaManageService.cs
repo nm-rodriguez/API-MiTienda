@@ -21,7 +21,11 @@ namespace MiTienda.Application.Services
         private IRepository<TipoComprobante> _tipoComprobanteRepo;
         private IRepository<PuntoDeVenta> _puntoDeVentaRepo;
 
-        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo)
+        private IRepository<LineaDeVenta> _lineaVentaRepo;//ver si es correcto que se cree aquí
+        //private IRepository<Stock> _stockRepo;
+        private IQueryService<Stock> _stockQuery;
+
+        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IQueryService<Stock> stockQuery)
         {
             _ventaRepo = ventaRepo;
             _sucursalRepo = sucursalRepo;
@@ -30,9 +34,11 @@ namespace MiTienda.Application.Services
             _clienteRepo = clienteRepo;
             _tipoComprobanteRepo = tipoComprobanteRepo;
             _puntoDeVentaRepo = puntoDeVentaRepo;
+            _lineaVentaRepo = lineaVentaRepo;
+            _stockQuery = stockQuery;
         }
 
-        public string CrearVenta(VentaPostDTO ventaPostDTO)
+        public int CrearVenta(VentaPostDTO ventaPostDTO)
         {
             if (ventaPostDTO == null)
                 throw new Exception("Venta nula.");
@@ -44,6 +50,7 @@ namespace MiTienda.Application.Services
             PuntoDeVenta ptoVenta = _puntoDeVentaRepo.GetByID(ventaPostDTO.PuntoDeVentaID).SingleOrDefault();
             Sucursal sucursal = _sucursalRepo.GetByID(ventaPostDTO.SucursalID).SingleOrDefault();
 
+           
 
             Venta venta = new Venta()
             {
@@ -61,7 +68,8 @@ namespace MiTienda.Application.Services
 
             _ventaRepo.AddObject(venta);
 
-            return $"Venta creada correctamente ID: {venta.Id}";
+            return (venta.Id);
+            //return $"Venta creada correctamente ID: {venta.Id}";
         }
 
 

@@ -8,13 +8,13 @@ namespace MiTienda.Domain.Entities
         public string Descripcion { get; set; }
         public string CodigoBarras { get; set; }
         public double Costo { get; set; }
-        public double MargenGanancia { get; set; }
+        public double? MargenGanancia { get; set; }
         public double? PrecioFinal { get; set; }
         public double? NetoGravado { get; set; }
-        public double PorcentajeIVA { get; set; }
-        public bool State { get; set; }
-        public Marca Marca { get; set; }
-        public Categoria Categoria { get; set; }
+        public double? PorcentajeIVA { get; set; }
+        public bool? State { get; set; }
+        public Marca? Marca { get; set; }
+        public Categoria? Categoria { get; set; }
 
         public Articulo()
         {

@@ -104,7 +104,7 @@ INSERT INTO Vendedor values
 INSERT INTO DetallePagoTarjeta VALUES ('Debito','5165165')
 INSERT INTO Pago VALUES (15000.5,'ARS',1,'20240305',1)
 INSERT INTO Venta(SucursalId,FechaVenta,VendedorId,PagoId,ClienteId,TipoComprobanteId,PuntoDeVentaId,Importe)
-VALUES(1,'20240305',1,2,1,1,1,15000.5)
+VALUES(1,'20240305',1,1,1,1,1,15000.5)
 GO
 
 

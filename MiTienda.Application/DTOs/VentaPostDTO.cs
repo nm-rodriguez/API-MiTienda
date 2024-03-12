@@ -33,5 +33,11 @@ namespace MiTienda.Application.DTOs
 
     }
 
-    
+    public class VentaYLineasPostDTO
+    {
+        public VentaPostDTO Venta { get; set; }
+        public List<LineaVentaDTO> LineasVenta { get; set; }
+    }
+
+
 }

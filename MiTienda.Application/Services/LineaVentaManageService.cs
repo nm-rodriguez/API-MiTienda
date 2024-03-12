@@ -39,6 +39,7 @@ namespace MiTienda.Application.Services
 
         }
 
+
         public void CrearLineaVenta(LineaDeVenta lineaDeVenta)
         {
             _lineaVentaRepo.AddObject(lineaDeVenta);
@@ -48,5 +49,7 @@ namespace MiTienda.Application.Services
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

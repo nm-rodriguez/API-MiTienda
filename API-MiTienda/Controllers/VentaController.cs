@@ -68,6 +68,40 @@ namespace API_MiTienda.Controllers
             }
         }
 
+        [HttpPost("postVentaYLineas")]
+        public ActionResult PostVentaYLineas([FromBody] VentaYLineasPostDTO ventayLineasDTO)
+        {
+            try
+            {
+                // Crear la venta y obtener su ID
+                int ventaId = _manageService.CrearVenta(ventayLineasDTO.Venta);
+
+                // Asignar el ID de la venta a las líneas de venta y guardarlas
+                foreach (var linea in ventayLineasDTO.LineasVenta)
+                {
+                    Stock? stock = _stockQuery.GetBy(s => s.Id == linea.StockID)
+                        .Include(c => c.Color)
+                        .Include(a => a.Articulo)
+                        .Include(t => t.Talle)
+                        .Include(tt => tt.Talle.TipoTalle)
+                        .Include(x => x.Articulo.Marca)
+                        .Include(x => x.Articulo.Categoria)
+                        .SingleOrDefault();
+
+                    // Crear la línea de venta y asociarla con la venta recién creada
+                    LineaDeVenta lineaVenta = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock, VentaID = ventaId };
+                    _manageServiceLinea.CrearLineaVenta(lineaVenta);
+                }
+
+                return Ok("Venta y líneas de venta agregadas correctamente en la base de datos.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+            }
+        }
+
+
         #endregion
 
         #region Parte 2 - VENTA
@@ -105,6 +139,44 @@ namespace API_MiTienda.Controllers
                 return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
             }
         }
+
+        //[HttpPost("postLineasManual")]
+        //public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasManual(List<LineaVentaDTO> lineasVentaDTO)
+        //{
+        //    try
+        //    {
+        //        LineaDeVenta lineaV;
+        //        Stock stock;
+        //        List<LineaDeVenta> lineaDeVenta = new List<LineaDeVenta>();
+
+        //        foreach (var linea in lineasVentaDTO)
+        //        {
+        //            stock = _stockQuery.GetBy(s => s.Id == linea.StockID)
+        //            .Include(c => c.Color)
+        //            .Include(a => a.Articulo)
+        //            .Include(t => t.Talle)
+        //            .Include(tt => tt.Talle.TipoTalle)
+        //            .Include(x => x.Articulo.Marca)
+        //            .Include(x => x.Articulo.Categoria)
+        //            .SingleOrDefault();
+
+        //            lineaV = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock };
+        //            // no puedo agregar la linea porque no tiene venta creada para darle el id
+        //            //_manageServiceLinea.CrearLineaVenta(lineaV);
+
+        //            lineaDeVenta.Add(lineaV);
+        //        }
+        //        _ventaEnMemoria.AgregarArticulos(lineaDeVenta);
+
+        //        return Ok("Lineas de venta agregadas correctamente en memoria local.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+        //    }
+        //}
+
+
         #endregion
 
 
@@ -167,9 +239,9 @@ namespace API_MiTienda.Controllers
 
         }
 
-      
 
-        
+
+
 
         [HttpPut]
         public ActionResult<ClienteDTO> UpdateVenta([FromBody] VentaDTO venta)

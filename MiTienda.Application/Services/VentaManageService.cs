@@ -63,11 +63,12 @@ namespace MiTienda.Application.Services
                 Sucursal = sucursal,
                 Importe = pago.Monto
             };
-                
-                
 
             _ventaRepo.AddObject(venta);
+            //if(venta.Id != 0)
+            //{
 
+            //}
             return (venta.Id);
             //return $"Venta creada correctamente ID: {venta.Id}";
         }

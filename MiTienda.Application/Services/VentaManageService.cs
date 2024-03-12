@@ -44,24 +44,24 @@ namespace MiTienda.Application.Services
                 throw new Exception("Venta nula.");
 
             Vendedor vendedor = _vendedorRepo.GetByID(ventaPostDTO.VendedorID).SingleOrDefault();
-            Pago pago = _pagoRepo.GetByID(ventaPostDTO.PagoID).SingleOrDefault();
-            Cliente cliente= _clienteRepo.GetByID(ventaPostDTO.ClienteID).SingleOrDefault();
-            TipoComprobante tComprobante = _tipoComprobanteRepo.GetByID(ventaPostDTO.TipoComprobanteID).SingleOrDefault();
+            //Pago pago = _pagoRepo.GetByID(ventaPostDTO.PagoID).SingleOrDefault();
+            //Cliente cliente = _clienteRepo.GetByID(ventaPostDTO.ClienteID).SingleOrDefault();
+            //TipoComprobante tComprobante = _tipoComprobanteRepo.GetByID(ventaPostDTO.TipoComprobanteID).SingleOrDefault();
             PuntoDeVenta ptoVenta = _puntoDeVentaRepo.GetByID(ventaPostDTO.PuntoDeVentaID).SingleOrDefault();
             Sucursal sucursal = _sucursalRepo.GetByID(ventaPostDTO.SucursalID).SingleOrDefault();
 
-           
+
 
             Venta venta = new Venta()
             {
                 FechaVenta = DateTime.Parse(ventaPostDTO.FechaVenta),
                 Vendedor = vendedor,
-                Pago = pago,
-                Cliente = cliente,
-                TipoComprobante = tComprobante,
+                Pago = null,
+                Cliente = null,
+                TipoComprobante = null,
                 PuntoDeVenta = ptoVenta,
                 Sucursal = sucursal,
-                Importe = pago.Monto
+                Importe = 0
             };
 
             _ventaRepo.AddObject(venta);
@@ -73,6 +73,11 @@ namespace MiTienda.Application.Services
             //return $"Venta creada correctamente ID: {venta.Id}";
         }
 
+        public VentaDTO GetVentaById(int id)
+        {
+            VentaDTO venta = new VentaDTO(_ventaRepo.GetBy(v => v.Id == id).AsQueryable().SingleOrDefault());
+            return (venta != null) ? venta : null;
+        }
 
         public List<VentaDTO> GetVentas()
         {
@@ -113,6 +118,6 @@ namespace MiTienda.Application.Services
             throw new NotImplementedException();
         }
 
-        
+
     }
 }

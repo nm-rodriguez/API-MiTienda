@@ -11,11 +11,11 @@ namespace MiTienda.Domain.Entities
 
         public Vendedor Vendedor { get; set; }
 
-        public Pago Pago { get; set; }
+        public Pago? Pago { get; set; }
 
-        public Cliente Cliente { get; set; }
+        public Cliente? Cliente { get; set; }
 
-        public TipoComprobante TipoComprobante { get; set; }
+        public TipoComprobante? TipoComprobante { get; set; }
 
         public PuntoDeVenta PuntoDeVenta { get; set; }
 

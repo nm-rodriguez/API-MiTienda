@@ -10,6 +10,7 @@ namespace MiTienda.Application.Contracts
 {
     public interface IManageVentaService
     {
+        VentaDTO GetVentaById(int id);
         List<VentaDTO> GetVentas();
         List<VentaDTO> GetVentasBySucursal(int idSucursal);
         List<VentaDTO> GetVentasByEmpleado(int idEmpleado);

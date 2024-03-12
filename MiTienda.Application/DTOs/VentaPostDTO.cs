@@ -12,9 +12,9 @@ namespace MiTienda.Application.DTOs
         public int SucursalID { get; set; }
         public string FechaVenta { get; set; }
         public int VendedorID { get; set; }
-        public int PagoID { get; set; }
-        public int ClienteID { get; set; }
-        public int TipoComprobanteID { get; set; }
+        //public int PagoID { get; set; }
+        //public int ClienteID { get; set; }
+        //public int TipoComprobanteID { get; set; }
         public int PuntoDeVentaID { get; set; }
         public List<LineaVentaDTO>? LineasVenta{ get; set; }
 
@@ -39,5 +39,11 @@ namespace MiTienda.Application.DTOs
         public List<LineaVentaDTO> LineasVenta { get; set; }
     }
 
+    public class VentaWithPagoAndClientDTO
+    {
+        public int VentaID { get; set; }
+        public int PagoID { get; set; }
+        public int ClienteID { get; set; }
+    }
 
 }

@@ -29,7 +29,23 @@ namespace API_MiTienda.Controllers
             _lineaQuery = lineaQuery;
         }
 
+        [HttpGet("getVentaById")]
+        public ActionResult<ClienteDTO> GetVentaById(int id)
+        {
+            try
+            {
+                var venta = _manageService.GetVentaById(id);
+                if (venta == null)
+                    return NotFound($"No existe la venta buscada. Por favor reintente su busqueda con un valor diferente.");
 
+                return Ok(venta);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el id.");
+            }
+
+        }
 
         #region Parte 1 - VENTA
         [HttpPost("postLineasLocal")]
@@ -73,10 +89,8 @@ namespace API_MiTienda.Controllers
         {
             try
             {
-                // Crear la venta y obtener su ID
                 int ventaId = _manageService.CrearVenta(ventayLineasDTO.Venta);
 
-                // Asignar el ID de la venta a las líneas de venta y guardarlas
                 foreach (var linea in ventayLineasDTO.LineasVenta)
                 {
                     Stock? stock = _stockQuery.GetBy(s => s.Id == linea.StockID)
@@ -88,7 +102,6 @@ namespace API_MiTienda.Controllers
                         .Include(x => x.Articulo.Categoria)
                         .SingleOrDefault();
 
-                    // Crear la línea de venta y asociarla con la venta recién creada
                     LineaDeVenta lineaVenta = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock, VentaID = ventaId };
                     _manageServiceLinea.CrearLineaVenta(lineaVenta);
                 }
@@ -220,24 +233,7 @@ namespace API_MiTienda.Controllers
 
 
 
-        [HttpGet("ventaID")]
-        public ActionResult<ClienteDTO> GetVentaById(int id)
-        {
-            //try
-            //{
-            //    var cliente = _manageService.GetClienteByIdOrDni(idordni);
-
-            //    if (cliente == null)
-            //        return NotFound($"No existe el cliente buscado. Por favor reintente su busqueda con un valor diferente.");
-
-            //    return Ok(cliente);
-            //}
-            //catch (Exception)
-            //{
-            return StatusCode(400, "Algo salió mal. Verifica el id.");
-            //}
-
-        }
+        
 
 
 

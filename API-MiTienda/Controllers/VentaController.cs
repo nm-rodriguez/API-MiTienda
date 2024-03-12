@@ -80,11 +80,25 @@ namespace API_MiTienda.Controllers
             }
         }
 
+        [HttpPut("updateImporte/{idVenta:int}")]
+        public ActionResult<VentaDTO> UpdateImporteVenta(int idVenta)
+        {
+            try
+            {
+                var message = _manageService.UpdateImporteVenta(idVenta);
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+            }
+        }
+
 
         #endregion
 
         #region Parte 2 - VENTA
-       
+
 
         [HttpPost("postLineasEnDB")]
         public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasEnDB()

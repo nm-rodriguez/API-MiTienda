@@ -13,6 +13,6 @@ namespace MiTienda.Application.Contracts
         List<LineaDeVenta> GetLineas();
         string CrearLineasVenta(List<LineaDeVenta> lineasDeVenta);
         void CrearLineaVenta(LineaDeVenta lineaDeVenta);
-        
+        List<LineaDeVenta> GetLineasByVentaID(int idVenta);
     }
 }

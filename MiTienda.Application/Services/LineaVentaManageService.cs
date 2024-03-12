@@ -50,6 +50,12 @@ namespace MiTienda.Application.Services
             throw new NotImplementedException();
         }
 
-
+        public List<LineaDeVenta> GetLineasByVentaID(int idVenta)
+        {
+            return _lineaVentaRepo.GetBy(x => x.VentaID == idVenta).AsQueryable()
+                .Include(x => x.Stock)
+                .Include(x => x.Stock.Articulo)
+                .ToList();
+        }
     }
 }

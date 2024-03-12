@@ -24,8 +24,9 @@ namespace MiTienda.Application.Services
         private IRepository<LineaDeVenta> _lineaVentaRepo;//ver si es correcto que se cree aquí
         //private IRepository<Stock> _stockRepo;
         private IQueryService<Stock> _stockQuery;
+        private IManageLineasVentaService _manageServiceLinea;
 
-        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IQueryService<Stock> stockQuery)
+        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IQueryService<Stock> stockQuery, IManageLineasVentaService manageServiceLinea)
         {
             _ventaRepo = ventaRepo;
             _sucursalRepo = sucursalRepo;
@@ -36,6 +37,7 @@ namespace MiTienda.Application.Services
             _puntoDeVentaRepo = puntoDeVentaRepo;
             _lineaVentaRepo = lineaVentaRepo;
             _stockQuery = stockQuery;
+            _manageServiceLinea = manageServiceLinea;
         }
 
         public int CrearVenta(VentaPostDTO ventaPostDTO)
@@ -67,16 +69,19 @@ namespace MiTienda.Application.Services
             _ventaRepo.AddObject(venta);
             //if(venta.Id != 0)
             //{
-
             //}
             return (venta.Id);
             //return $"Venta creada correctamente ID: {venta.Id}";
         }
 
-        public VentaDTO GetVentaById(int id)
+        public Venta GetVentaById(int id)
         {
-            VentaDTO venta = new VentaDTO(_ventaRepo.GetBy(v => v.Id == id).AsQueryable().SingleOrDefault());
-            return (venta != null) ? venta : null;
+            Venta venta = _ventaRepo.GetByID(id).AsQueryable()
+                .Include(x => x.Vendedor)
+                .Include(x => x.Sucursal)
+                .Include(x => x.PuntoDeVenta)
+                .SingleOrDefault();
+            return venta;
         }
 
         public List<VentaDTO> GetVentas()
@@ -118,6 +123,13 @@ namespace MiTienda.Application.Services
             throw new NotImplementedException();
         }
 
-
+        public string UpdateImporteVenta(int idVenta)
+        {
+            Venta venta = GetVentaById(idVenta);
+            List<LineaDeVenta> detalleVenta = _manageServiceLinea.GetLineasByVentaID(idVenta);
+            venta.GetTotal(detalleVenta);
+            _ventaRepo.Update(venta);
+            return $"La venta {venta.Id} se actualizó correctamente.";
+        }
     }
 }

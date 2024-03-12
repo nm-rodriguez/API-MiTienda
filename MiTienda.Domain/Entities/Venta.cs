@@ -27,15 +27,14 @@ namespace MiTienda.Domain.Entities
         {
             if (detallesVenta is null)
             {
-                Importe = 0;
                 return;
             }
 
             foreach (LineaDeVenta item in detallesVenta)
             {
+                item.Stock.Articulo.CalcularValores();
                 Importe += (double)(item.Cantidad * item.Stock.Articulo.PrecioFinal);
             }
-
         }
 
         public void AgregarArticulos(List<LineaDeVenta> lineas)

@@ -84,6 +84,9 @@ INSERT INTO Inventario values
 (25,1,2)
 GO
 
+INSERT INTO Cliente VALUES
+(0,'20-00000000-0','DefaultUser','DefaultUser',5)
+
 INSERT INTO Cliente values
 (45000222,'20-45000222-5','Tomas','Wolf',2),
 (40555111,'20-40555111-7','Florencio','Chavez',1)

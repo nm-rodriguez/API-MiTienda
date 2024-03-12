@@ -11,7 +11,7 @@ namespace MiTienda.Application.Contracts
     public interface IManageVentaService
     {
         Venta GetVentaById(int id);
-        List<VentaDTO> GetVentas();
+        List<Venta> GetVentas();
         List<VentaDTO> GetVentasBySucursal(int idSucursal);
         List<VentaDTO> GetVentasByEmpleado(int idEmpleado);
         int CrearVenta(VentaPostDTO venta);

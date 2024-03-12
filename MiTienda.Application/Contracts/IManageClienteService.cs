@@ -15,8 +15,8 @@ namespace MiTienda.Application.Contracts
         ClienteDTO GetClienteByIdOrDni(int IdOrDni);
         List<ClienteDTO> GetClientesByNombreOrCuil(string NombreoCuil);
         string UpdateCliente(ClienteDTO cliente);
-        string CreateCliente(ClienteDTO cliente);
+        string CreateCliente(ClientePostDTO cliente);
         string DeleteCliente(int Id);
-
+        List<CondicionTributaria> GetCondicionesTributarias();
     }
 }

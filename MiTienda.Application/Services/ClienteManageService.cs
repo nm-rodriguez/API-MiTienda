@@ -11,7 +11,6 @@ namespace MiTienda.Application.Services
     {
         private IRepository<Cliente> _clienteRepo;
         private IRepository<CondicionTributaria> _condicionTributariaRepo;
-
         public ClienteManageService(IRepository<Cliente> clienteRepo, IRepository<CondicionTributaria> CondicionTributariaRepo)
         {
             _clienteRepo = clienteRepo;
@@ -50,24 +49,29 @@ namespace MiTienda.Application.Services
         }
 
 
-        public string CreateCliente(ClienteDTO NewCliente)
+        public string CreateCliente(ClientePostDTO cliente)
         {
             try
             {
-                if (NewCliente == null)
+                if (cliente == null)
                     throw new Exception("No se puede agregar un cliente vacio");
 
-                bool validateExistence = _clienteRepo.GetAll().Any(c => c.Dni == NewCliente.Dni);
+                bool validarExistencia = _clienteRepo.GetAll().Any(c => c.Dni == cliente.Dni);
 
-                if (validateExistence)
+                if (validarExistencia)
                 {
                     throw new Exception("El cliente que desea dar de alta ya existe");
                 }
                 else
                 {
-                    Cliente cliente = NewCliente.CastearACliente(_condicionTributariaRepo.GetByID(NewCliente.IdCondicionTrib).SingleOrDefault());
-                    _clienteRepo.AddObject(cliente);
-                    return $"Cliente creado correctamente ID: {cliente.Id} , NOMBRE COMPLETO: {cliente.Apellido}, {cliente.Nombre}";
+                    Cliente clienteNuevo = new Cliente();
+                    clienteNuevo.Dni = cliente.Dni;
+                    clienteNuevo.Cuil = cliente.Cuil;
+                    clienteNuevo.Apellido = cliente.Apellido;
+                    clienteNuevo.Nombre = cliente.Nombre;
+                    clienteNuevo.CondicionTributaria = _condicionTributariaRepo.GetBy(x => x.Descripcion == cliente.DescripcionCondTribu).SingleOrDefault();
+                    _clienteRepo.AddObject(clienteNuevo);
+                    return $"Cliente creado correctamente ID: {clienteNuevo.Id} , NOMBRE COMPLETO: {clienteNuevo.Apellido}, {clienteNuevo.Nombre} con condicion: {clienteNuevo.CondicionTributaria.Descripcion}";
                 }
             }
             catch (Exception ex)
@@ -75,6 +79,10 @@ namespace MiTienda.Application.Services
                 throw;
             }
 
+        }
+        public List<CondicionTributaria> GetCondicionesTributarias()
+        {
+            return _condicionTributariaRepo.GetAll().ToList();
         }
 
         public string UpdateCliente(ClienteDTO ClienteDTO)

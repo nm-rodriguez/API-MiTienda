@@ -13,7 +13,7 @@ namespace MiTienda.Domain.Entities
         public double? NetoGravado { get; set; }
         public double? PorcentajeIVA { get; set; }
         public bool? State { get; set; }
-        public Marca? Marca { get; set; }
+        public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }
 
         public Articulo()

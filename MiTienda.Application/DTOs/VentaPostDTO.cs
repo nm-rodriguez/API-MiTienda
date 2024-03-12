@@ -10,7 +10,7 @@ namespace MiTienda.Application.DTOs
     public class VentaPostDTO
     {
         public int SucursalID { get; set; }
-        public string FechaVenta { get; set; }
+        //public string FechaVenta { get; set; }
         public int VendedorID { get; set; }
         //public int PagoID { get; set; }
         //public int ClienteID { get; set; }
@@ -20,7 +20,7 @@ namespace MiTienda.Application.DTOs
 
         public VentaPostDTO()
         {
-            FechaVenta = DateTime.UtcNow.ToString();
+            //FechaVenta = DateTime.UtcNow.ToString();
         }
 
         //public Venta CastearAVenta(DateTime fechaVenta,Vendedor vendedor,Pago pago,Cliente cliente,TipoComprobante tipoComprobante,PuntoDeVenta puntoVenta, Sucursal sucursal)

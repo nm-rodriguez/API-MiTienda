@@ -72,11 +72,25 @@ namespace API_MiTienda.Controllers
 
         }
 
+        [HttpGet("condicionesTributarias")]
+        public ActionResult<IEnumerable<CondicionTributaria>> GetCondicionesTributarias()
+        {
+            try
+            {
+                var ctributarias = _manageService.GetCondicionesTributarias();
+                return Ok(ctributarias);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
+        }
+
         #endregion
 
 
         [HttpPost]
-        public ActionResult<ClienteDTO> PostCliente(ClienteDTO newCliente)
+        public ActionResult<ClientePostDTO> PostCliente(ClientePostDTO newCliente)
         {
             try
             {
@@ -89,6 +103,10 @@ namespace API_MiTienda.Controllers
             }
 
         }
+
+
+
+        
 
         [HttpPut]
         public ActionResult<ClienteDTO> UpdateCliente([FromBody] ClienteDTO cliente)

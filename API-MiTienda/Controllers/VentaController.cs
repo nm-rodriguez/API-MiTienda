@@ -29,26 +29,10 @@ namespace API_MiTienda.Controllers
             _lineaQuery = lineaQuery;
         }
 
-        [HttpGet("getVentaById")]
-        public ActionResult<ClienteDTO> GetVentaById(int id)
-        {
-            try
-            {
-                var venta = _manageService.GetVentaById(id);
-                if (venta == null)
-                    return NotFound($"No existe la venta buscada. Por favor reintente su busqueda con un valor diferente.");
-
-                return Ok(venta);
-            }
-            catch (Exception)
-            {
-                return StatusCode(400, "Algo salió mal. Verifica el id.");
-            }
-
-        }
+       
 
         #region Parte 1 - VENTA
-       
+
 
         [HttpPost("postVentaYLineas")]
         public ActionResult PostVentaYLineas([FromBody] VentaYLineasPostDTO ventayLineasDTO)
@@ -72,7 +56,7 @@ namespace API_MiTienda.Controllers
                     _manageServiceLinea.CrearLineaVenta(lineaVenta);
                 }
 
-                return Ok("Venta y líneas de venta agregadas correctamente en la base de datos.");
+                return Ok($"Venta: {ventaId} creada y se asociaron los productos en base de datos.");
             }
             catch (Exception ex)
             {
@@ -126,6 +110,40 @@ namespace API_MiTienda.Controllers
         #endregion
 
 
+        
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Venta>> GetAllVentas()
+        {
+            try
+            {
+                var ventas = _manageService.GetVentas();
+                return Ok(ventas);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
+        }
+      
+        [HttpGet("getVentaById/{idVenta:int}")]
+        public ActionResult<Venta> GetVentaById(int idVenta)
+        {
+            try
+            {
+                var venta = _manageService.GetVentaById(idVenta);
+                if (venta == null)
+                    return NotFound($"No existe la venta buscada. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(venta);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el id.");
+            }
+
+        }
+
         [HttpGet("lineas")]
         public ActionResult<IEnumerable<LineaVentaDTO>> GetAllLineasVentas()
         {
@@ -139,22 +157,6 @@ namespace API_MiTienda.Controllers
                 return StatusCode(400, "Algo salió mal.");
             }
         }
-
-        [HttpGet]
-        public ActionResult<IEnumerable<VentaDTO>> GetAllVentas()
-        {
-            try
-            {
-                var ventas = _manageService.GetVentas();
-                return Ok(ventas);
-            }
-            catch (Exception)
-            {
-                return StatusCode(400, "Algo salió mal.");
-            }
-        }
-
-
 
         [HttpPut]
         public ActionResult<ClienteDTO> UpdateVenta([FromBody] VentaDTO venta)

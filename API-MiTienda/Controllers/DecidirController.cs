@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MiTienda.Application.DTOs;
 using MiTienda.Domain.Entities;
+using Servicio_AFIP;
+
 
 namespace API_MiTienda.Controllers
 {
@@ -76,6 +78,41 @@ namespace API_MiTienda.Controllers
             {
                 return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
             }
+
         }
+        [HttpPost("conectarAfip")]
+        public async Task<ActionResult> ConectarAfip()
+        {
+            try
+            {
+                var servicio = new LoginServiceClient();
+                var autorizacion = servicio.SolicitarAutorizacionAsync("80594BA9-F102-4E0A-8B5D-B3A87383114A").Result;//llamar cuando iniciamos la venta
+                var comprobante = servicio.SolicitarUltimosComprobantesAsync(autorizacion.Token).Result;
+
+                var solicitudAutorizacion = new SolicitudAutorizacion();
+               
+                solicitudAutorizacion.Fecha = DateTime.Now;
+                solicitudAutorizacion.ImporteIva = 21;
+                solicitudAutorizacion.ImporteNeto = 100;
+                solicitudAutorizacion.ImporteTotal = 121;
+                solicitudAutorizacion.NumeroDocumento = 0;//23406669999;
+                solicitudAutorizacion.TipoComprobante = Servicio_AFIP.TipoComprobante.FacturaB;
+                solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
+               
+                
+                solicitudAutorizacion.Numero = solicitudAutorizacion.TipoComprobante == Servicio_AFIP.TipoComprobante.FacturaA ? comprobante.Comprobantes[0].Numero + 1 : comprobante.Comprobantes[1].Numero + 1;
+                var cae = servicio.SolicitarCaeAsync(autorizacion.Token, solicitudAutorizacion).Result;
+
+                //Console.WriteLine(autorizacion);
+                //Console.WriteLine(comprobante);
+                //Console.WriteLine(cae);
+                return Ok(cae);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
+            }
+        }
+
     }
 }

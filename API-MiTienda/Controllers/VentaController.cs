@@ -48,41 +48,7 @@ namespace API_MiTienda.Controllers
         }
 
         #region Parte 1 - VENTA
-        [HttpPost("postLineasLocal")]
-        public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasEnLocal(List<LineaVentaDTO> lineasVentaDTO)
-        {
-            try
-            {
-                LineaDeVenta lineaV;
-                Stock stock;
-                List<LineaDeVenta> lineaDeVenta = new List<LineaDeVenta>();
-
-                foreach (var linea in lineasVentaDTO)
-                {
-                    stock = _stockQuery.GetBy(s => s.Id == linea.StockID)
-                    .Include(c => c.Color)
-                    .Include(a => a.Articulo)
-                    .Include(t => t.Talle)
-                    .Include(tt => tt.Talle.TipoTalle)
-                    .Include(x => x.Articulo.Marca)
-                    .Include(x => x.Articulo.Categoria)
-                    .SingleOrDefault();
-
-                    lineaV = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock, VentaID = 0 };
-                    // no puedo agregar la linea porque no tiene venta creada para darle el id
-                    //_manageServiceLinea.CrearLineaVenta(lineaV);
-
-                    lineaDeVenta.Add(lineaV);
-                }
-                _ventaEnMemoria.AgregarArticulos(lineaDeVenta);
-
-                return Ok("Lineas de venta agregadas correctamente en memoria local.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
-            }
-        }
+       
 
         [HttpPost("postVentaYLineas")]
         public ActionResult PostVentaYLineas([FromBody] VentaYLineasPostDTO ventayLineasDTO)
@@ -118,19 +84,7 @@ namespace API_MiTienda.Controllers
         #endregion
 
         #region Parte 2 - VENTA
-        [HttpPost]
-        public ActionResult<VentaPostDTO> PostVenta(VentaPostDTO venta)
-        {
-            try
-            {
-                _ventaEnMemoria.SetID(_manageService.CrearVenta(venta));
-                return Ok($"Venta creada exitosamente,{_ventaEnMemoria.GetID()}");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
-            }
-        }
+       
 
         [HttpPost("postLineasEnDB")]
         public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasEnDB()
@@ -153,55 +107,9 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        //[HttpPost("postLineasManual")]
-        //public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasManual(List<LineaVentaDTO> lineasVentaDTO)
-        //{
-        //    try
-        //    {
-        //        LineaDeVenta lineaV;
-        //        Stock stock;
-        //        List<LineaDeVenta> lineaDeVenta = new List<LineaDeVenta>();
-
-        //        foreach (var linea in lineasVentaDTO)
-        //        {
-        //            stock = _stockQuery.GetBy(s => s.Id == linea.StockID)
-        //            .Include(c => c.Color)
-        //            .Include(a => a.Articulo)
-        //            .Include(t => t.Talle)
-        //            .Include(tt => tt.Talle.TipoTalle)
-        //            .Include(x => x.Articulo.Marca)
-        //            .Include(x => x.Articulo.Categoria)
-        //            .SingleOrDefault();
-
-        //            lineaV = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock };
-        //            // no puedo agregar la linea porque no tiene venta creada para darle el id
-        //            //_manageServiceLinea.CrearLineaVenta(lineaV);
-
-        //            lineaDeVenta.Add(lineaV);
-        //        }
-        //        _ventaEnMemoria.AgregarArticulos(lineaDeVenta);
-
-        //        return Ok("Lineas de venta agregadas correctamente en memoria local.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
-        //    }
-        //}
-
+        
 
         #endregion
-
-
-
-
-
-
-
-
-
-
-
 
 
         [HttpGet("lineas")]
@@ -217,6 +125,7 @@ namespace API_MiTienda.Controllers
                 return StatusCode(400, "Algo salió mal.");
             }
         }
+
         [HttpGet]
         public ActionResult<IEnumerable<VentaDTO>> GetAllVentas()
         {
@@ -230,12 +139,6 @@ namespace API_MiTienda.Controllers
                 return StatusCode(400, "Algo salió mal.");
             }
         }
-
-
-
-        
-
-
 
 
 

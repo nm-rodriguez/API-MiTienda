@@ -9,7 +9,8 @@ namespace MiTienda.Domain.Entities
         public string Moneda { get; set; }
         public TipoPago TipoPago { get; set; }
         public DateTime FechaPago { get; set; }
-        public DetallePagoTarjeta? DetallePagoTarjeta { get; set; }
+        public string? TipoTarjeta { get; set; }
+
 
 
         private void RealizarPago()

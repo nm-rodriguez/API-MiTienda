@@ -5,11 +5,11 @@ namespace MiTienda.Domain.Entities
 {
     public class Venta : EntidadPersistible, IVenta
     {
-        public Sucursal Sucursal { get; set; }
+        public Sucursal? Sucursal { get; set; }
 
         public DateTime FechaVenta { get; set; }
 
-        public Vendedor Vendedor { get; set; }
+        public Vendedor? Vendedor { get; set; }
 
         public Pago? Pago { get; set; }
 
@@ -17,7 +17,7 @@ namespace MiTienda.Domain.Entities
 
         public TipoComprobante? TipoComprobante { get; set; }
 
-        public PuntoDeVenta PuntoDeVenta { get; set; }
+        public PuntoDeVenta? PuntoDeVenta { get; set; }
 
         public List<LineaDeVenta> LineasDeVenta { get; set; }//sacar el nulleable despues que cree lineas de venta para probar
         public double? Importe { get; set; }

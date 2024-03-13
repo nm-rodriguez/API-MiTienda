@@ -9,9 +9,8 @@ namespace MiTienda.Domain.Entities
         public int Legajo { get; set; }
         public string Apellido { get; set; }
         public string Nombre { get; set; }
-        public string UsuarioId { get; set; }
-        public string Contrasenia { get; set; }
+        public PuntoDeVenta PuntoDeVenta { get; set; }
         public bool State { get; set; }
-        public Sucursal Sucursal { get; set; }
+        public string? userID { get; set; }
     }
 }

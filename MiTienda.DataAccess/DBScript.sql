@@ -91,7 +91,7 @@ INSERT INTO Inventario values
 (130,2,1),
 (24,4,2),
 (34,4,3),
-(14,5,2),
+(14,5,2)
 GO
 
 INSERT INTO Cliente VALUES
@@ -104,14 +104,18 @@ INSERT INTO Cliente values
 INSERT INTO PuntoDeVenta values
 (1,2),
 (2,2),
-(1,1),
-(2,1)
+(3,2),
+(4,2),
+(5,2),
+(6,1),
+(7,1),
+(8,1)
 
 INSERT INTO Vendedor values
-(1111,'Ramirez',' Nicolas','nramirez','admin123',1,2),
-(1112,'Villa','Nicolas','nvilla','admin123',1,1),
-(1113,'Chisi','Facundo','fchisi','admin123',1,1),
-(1114,'Yeyi','Agustin','ayeyi','admin123',1,3)
+(1111,'Ramirez',' Nicolas',1,1,null),
+(1112,'Villa','Nicolas',2,1,null),
+(1113,'Chisi','Facundo',6,1,null),
+(1114,'Yeyi','Agustin' ,8,1,null)
 
 
 INSERT INTO DetallePagoTarjeta VALUES ('Debito','5165165')

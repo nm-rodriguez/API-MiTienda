@@ -21,9 +21,10 @@ namespace API_MiTienda.Controllers
         private readonly HttpClient _clientWithTokenApi;
         private readonly HttpClient _clientWithPaymentsApi;
 
-        public PagoController(IManagePagoService manageService)
+        public PagoController(IManagePagoService manageService, IManageVentaService manageServiceVenta)
         {
             _manageService = manageService;
+            _manageServiceVenta = manageServiceVenta;
 
             _clientWithTokenApi = new HttpClient();
             _clientWithTokenApi.BaseAddress = new Uri("https://developers.decidir.com/api/v2/");
@@ -82,46 +83,43 @@ namespace API_MiTienda.Controllers
         public async Task<ActionResult<TarjetaDTO>> ObtenerToken([FromBody] TarjetaDTO tarjeta)
         {
 
-            //try
-            //{
-            //    HttpResponseMessage response = await _clientWithTokenApi.PostAsJsonAsync("tokens", tarjeta);
+            try
+            {
+                HttpResponseMessage response = await _clientWithTokenApi.PostAsJsonAsync("tokens", tarjeta);
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        string content = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
 
-            //        TarjetaWithTokenDTO responseDto = JsonSerializer.Deserialize<TarjetaWithTokenDTO>(content);
+                    TarjetaWithTokenDTO responseDto = JsonSerializer.Deserialize<TarjetaWithTokenDTO>(content);
 
-            //        string id = responseDto.id;
+                    string id = responseDto.id;
 
-            //        return Ok(new { id });
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Error Al obtener el Token");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
+                    return Ok(new { id });
+                }
+                else
+                {
+                    throw new Exception("Error Al obtener el Token");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
 
-            //}
+            }
             return StatusCode(500);
         }
 
         [HttpPost("Pagar")]
         public async Task<ActionResult> EfectuarPago([FromBody] PagoPostDTO newPago)
         {
-            Venta venta = new Venta();
-            if (newPago.IdVenta != 0)
-            {
-                venta = _manageServiceVenta.GetVentaById(newPago.IdVenta);
-            }
+            Venta venta = _manageServiceVenta.GetVentaById(newPago.IdVenta);
 
+            
             if (!string.IsNullOrEmpty(newPago.Token))
             {
                 PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO();
-                pagoTarjeta.site_transaction_id = "60000" + venta.Id;
+                pagoTarjeta.site_transaction_id = "90000" + venta.Id;
                 pagoTarjeta.payment_method_id = 1;
                 pagoTarjeta.token = newPago.Token;
                 pagoTarjeta.bin = "450799";

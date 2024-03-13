@@ -14,7 +14,7 @@ namespace MiTienda.Application.DTOs
         public int StockID { get; set; }
         public int VentaID { get; set; }
 
-        public LineaVentaDTO(int cantidad, int StockID, int VentaID)
+        public LineaVentaDTO(int cantidad, int StockID)
         {
             this.Cantidad = cantidad;
             this.StockID = StockID;

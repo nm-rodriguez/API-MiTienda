@@ -101,6 +101,7 @@ namespace MiTienda.Application.Services
                 .Include(x => x.PuntoDeVenta)
                 .Include(x => x.PuntoDeVenta.Sucursal)
                 .Include(x => x.PuntoDeVenta.Sucursal.Tienda)
+                .Include(x => x.PuntoDeVenta.Sucursal.Tienda.CondicionTributaria)
                 .SingleOrDefault();
 
             venta.LineasDeVenta = _lineaVentaRepo.GetBy(x => x.VentaID == venta.Id)
@@ -118,20 +119,6 @@ namespace MiTienda.Application.Services
 
         public List<Venta> GetVentas()
         {
-            //List<VentaDTO> ventas = new List<VentaDTO>();
-
-            //foreach (var venta in _ventaRepo.GetAll().AsQueryable()
-            //    .Include(x => x.Sucursal)
-            //    .Include(x => x.Vendedor)
-            //    .Include(x => x.Pago)
-            //    .Include(x => x.Pago.TipoPago)
-            //    .Include(x => x.Cliente)
-            //    .Include(x => x.TipoComprobante)
-            //    .Include(x => x.PuntoDeVenta)
-            //    .Include(x => x.PuntoDeVenta.Sucursal)
-            //    )
-            //{   ventas.Add(new VentaDTO(venta)); }
-
             return _ventaRepo.GetAll().AsQueryable()
                 .Include(x => x.Sucursal)
                 .Include(x => x.Vendedor)
@@ -162,5 +149,13 @@ namespace MiTienda.Application.Services
             throw new NotImplementedException();
         }
 
+        public string UpdateAfterAFIP(int idVenta,string cae, int tipoComprobanteID)
+        {
+            Venta venta = GetVentaById(idVenta);
+            venta.CAE = cae;
+            venta.TipoComprobante = _tipoComprobanteRepo.GetByID(tipoComprobanteID).SingleOrDefault();
+            _ventaRepo.Update(venta);
+            return $"La venta {venta.Id} se actualizó correctamente. El importe total es: {venta.Importe} ";
+        }
     }
 }

@@ -13,8 +13,8 @@ namespace MiTienda.Application.Contracts
     {
         List<ReturnInventarioDTO> GetInventarios(int IdSucursal);
         List<ReturnInventarioDTO> GetInventarioById(int IdInventario);
+        string UpdateInventario(int IdInventario, int cantidadResta);
         List<ReturnInventarioDTO> GetInventarioByCodigoBarra(int IdSucursal, string CodigoBarra);
-
         List<ReturnInventarioDTO> GetInventarioByParams(int IdSucursal, string CodigoBarra, int? IdTalle = null, int? IdTipoTalle = null, int? IdColor = null);
         //string UpdateCliente(ClienteDTO cliente);
         //string CreateCliente(ClienteDTO cliente);

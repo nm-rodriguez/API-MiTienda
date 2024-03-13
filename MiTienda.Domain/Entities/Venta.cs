@@ -21,6 +21,7 @@ namespace MiTienda.Domain.Entities
 
         public List<LineaDeVenta> LineasDeVenta { get; set; }//sacar el nulleable despues que cree lineas de venta para probar
         public double? Importe { get; set; }
+        public string? CAE { get; set; }
 
 
         public void GetTotal(List<LineaDeVenta> detallesVenta)

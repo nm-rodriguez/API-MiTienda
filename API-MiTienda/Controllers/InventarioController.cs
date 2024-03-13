@@ -19,7 +19,7 @@ namespace API_MiTienda.Controllers
             _manageService = manageService;
         }
 
-      
+
         [HttpGet]
         public ActionResult<ReturnInventarioDTO> GetAllInventarios(int idSucursal)
         {
@@ -58,6 +58,29 @@ namespace API_MiTienda.Controllers
             {
                 var inventario = _manageService.GetInventarioByCodigoBarra(idSucursal, codigoBarra);
 
+                if (inventario == null)
+                    return NotFound($"No existe combinaciones para el codigo buscado. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(inventario);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el Codigo de Barra.");
+            }
+
+        }
+
+        [HttpGet("getInventarioByParams")]
+        public ActionResult<ReturnInventarioDTO> GetInventarioByParams(int idSucursal, string codigoBarra, int? idTalle = null, int? idTipoTalle = null, int? idColor = null)
+        {
+            try
+            {
+                if (idTalle != null && idTipoTalle == null || idTalle == null && idTipoTalle != null)
+                {
+                    return NotFound($"Debe seleccionar primero un tipo talle y luego un talle");
+                }
+
+                var inventario = _manageService.GetInventarioByParams(idSucursal, codigoBarra, idTalle, idTipoTalle, idColor);
                 if (inventario == null)
                     return NotFound($"No existe combinaciones para el codigo buscado. Por favor reintente su busqueda con un valor diferente.");
 

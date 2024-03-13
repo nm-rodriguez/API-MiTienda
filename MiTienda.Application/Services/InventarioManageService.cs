@@ -26,7 +26,7 @@ namespace MiTienda.Application.Services
                 .AsQueryable()
                 .Include(x => x.Stock)
                 .Include(x => x.Sucursal)
-                .Include(x=>x.Stock.Color)
+                .Include(x => x.Stock.Color)
                 .Include(x => x.Stock.Talle)
                 .Include(x => x.Stock.Articulo)
                 .Include(x => x.Stock.Articulo.Marca)
@@ -51,7 +51,7 @@ namespace MiTienda.Application.Services
             return inventarios.Count > 0 ? inventarios : null;
         }
 
-        public List<ReturnInventarioDTO> GetInventarioByCodigoBarra(int IdSucursal , string CodigoBarra)
+        public List<ReturnInventarioDTO> GetInventarioByCodigoBarra(int IdSucursal, string CodigoBarra)
         {
             List<ReturnInventarioDTO> inventarios = new List<ReturnInventarioDTO>();
 
@@ -70,6 +70,53 @@ namespace MiTienda.Application.Services
                 ReturnInventarioDTO InventarioDTO = new ReturnInventarioDTO(inventario);
                 inventarios.Add(InventarioDTO);
             }
+            return inventarios.Count > 0 ? inventarios : null;
+        }
+
+        public List<ReturnInventarioDTO> GetInventarioByParams(int IdSucursal, string CodigoBarra, int? IdTalle = null, int? IdTipoTalle = null, int? IdColor = null)
+        {
+            IQueryable<Inventario> query = _inventarioRepo.GetBy(i => i.Sucursal.Id == IdSucursal)
+                .AsQueryable()
+               .Include(x => x.Stock)
+               .Include(x => x.Sucursal)
+               .Include(x => x.Stock.Color)
+               .Include(x => x.Stock.Talle)
+               .Include(x => x.Stock.Articulo)
+               .Include(x => x.Stock.Articulo.Marca)
+               .Include(x => x.Stock.Articulo.Categoria)
+               .Include(x => x.Stock.Talle.TipoTalle)
+               .Where(x => x.Stock.Articulo.CodigoBarras.Contains(CodigoBarra));
+
+
+            //if (IdTalle != null && IdTipoTalle != null)
+            //{
+            //    query = query.Where(x => x.Stock.Talle.TipoTalle.Id == IdTipoTalle && x.Stock.Talle.Id == IdTalle);
+
+            //}
+
+            //if (IdColor != null)
+            //{
+            //    query = query.Where(x => x.Stock.Color.Id == IdColor);
+            //}
+
+            //List<ReturnInventarioDTO> inventarios = query.Select(inventario => new ReturnInventarioDTO(inventario)).ToList();
+            //return inventarios.Count > 0 ? inventarios : null;
+            if (IdTalle != null)
+            {
+                query = query.Where(x => x.Stock.Talle.Id == IdTalle);
+            }
+
+            if (IdTipoTalle != null)
+            {
+                query = query.Where(x => x.Stock.Talle.TipoTalle.Id == IdTipoTalle);
+            }
+
+            if (IdColor != null)
+            {
+                query = query.Where(x => x.Stock.Color.Id == IdColor);
+            }
+
+            List<ReturnInventarioDTO> inventarios = query.Select(inventario => new ReturnInventarioDTO(inventario)).ToList();
             return inventarios.Count > 0 ? inventarios : null;
         }
 

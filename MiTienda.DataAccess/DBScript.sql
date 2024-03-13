@@ -74,14 +74,24 @@ INSERT INTO Sucursal values
 INSERT INTO Stock values
 (2,1,2),
 (3,2,1),
-(4,3,3)
+(4,3,3),
+(3,4,4),
+(2,2,2),
+(2,4,2)
 GO
 
 INSERT INTO Inventario values
 (50,1,2),
 (10,2,1),
 (15,3,2),
-(25,1,2)
+(25,6,2),
+(100,2,3),
+(200,3,3),
+(150,2,3),
+(130,2,1),
+(24,4,2),
+(34,4,3),
+(14,5,2),
 GO
 
 INSERT INTO Cliente VALUES

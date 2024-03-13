@@ -7,33 +7,33 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAn6TX9dxzoky6Ib2lpLv/mgAAAAACAAAAAAAQZgAAAAEAACAAAAAy/FXYL2Q99IR8rE4wp+LDiGXl+Lr4LwkzHX/eIXJXHwAAAAAOgAAAAAIAACAAAAA38NG1jlIgZhM1xVPX15CH+brezqY2YueSMkGci5KQKSAAAAAjespNPIBA2cuN6oteO+BFHbWlEBr+MRg8JJ05MQYsjkAAAADlJx7qteVLQqnqoTXFLoywQSguRdz+iGliBiWCO103eMTmqXifGQ8NTyZRAb46FzwM+qWcH61ZsaZRmsrVilEI</EncryptedPassword>
     <_PublishTargetUrl>ftp://155.254.244.39/www.tiendita.somee.com</_PublishTargetUrl>
-    <History>True|2024-03-07T00:43:52.1936465Z;True|2024-02-29T22:08:11.8816197-03:00;True|2024-02-27T08:30:49.7345003-03:00;</History>
+    <History>True|2024-03-13T01:36:33.6937621Z;True|2024-03-06T21:43:52.1936465-03:00;True|2024-02-29T22:08:11.8816197-03:00;True|2024-02-27T08:30:49.7345003-03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="API-MiTienda.deps.json">
-      <publishTime>03/06/2024 21:35:08</publishTime>
+      <publishTime>03/12/2024 22:28:33</publishTime>
     </File>
     <File Include="API-MiTienda.dll">
-      <publishTime>03/06/2024 21:35:01</publishTime>
+      <publishTime>03/12/2024 22:28:27</publishTime>
     </File>
     <File Include="API-MiTienda.exe">
-      <publishTime>03/06/2024 21:35:01</publishTime>
+      <publishTime>03/12/2024 22:28:27</publishTime>
     </File>
     <File Include="API-MiTienda.pdb">
-      <publishTime>03/06/2024 21:35:01</publishTime>
+      <publishTime>03/12/2024 22:28:27</publishTime>
     </File>
     <File Include="API-MiTienda.runtimeconfig.json">
-      <publishTime>02/25/2024 16:26:40</publishTime>
+      <publishTime>03/12/2024 22:28:27</publishTime>
     </File>
     <File Include="appsettings.Development.json">
-      <publishTime>01/31/2024 22:26:21</publishTime>
+      <publishTime>03/07/2024 16:07:18</publishTime>
     </File>
     <File Include="appsettings.json">
-      <publishTime>03/06/2024 16:47:47</publishTime>
+      <publishTime>03/12/2024 22:27:36</publishTime>
     </File>
     <File Include="Connected Services/Servicio_AFIP/ConnectedService.json">
-      <publishTime>02/25/2024 10:26:08</publishTime>
+      <publishTime>03/07/2024 16:07:18</publishTime>
     </File>
     <File Include="cs/System.Private.ServiceModel.resources.dll">
       <publishTime>10/11/2023 20:27:34</publishTime>
@@ -156,22 +156,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/15/2019 05:36:56</publishTime>
     </File>
     <File Include="MiTienda.Application.dll">
-      <publishTime>03/06/2024 21:34:59</publishTime>
+      <publishTime>03/12/2024 22:28:26</publishTime>
     </File>
     <File Include="MiTienda.Application.pdb">
-      <publishTime>03/06/2024 21:34:59</publishTime>
+      <publishTime>03/12/2024 22:28:26</publishTime>
     </File>
     <File Include="MiTienda.DataAccess.dll">
-      <publishTime>03/06/2024 16:43:45</publishTime>
+      <publishTime>03/12/2024 22:28:25</publishTime>
     </File>
     <File Include="MiTienda.DataAccess.pdb">
-      <publishTime>03/06/2024 16:43:45</publishTime>
+      <publishTime>03/12/2024 22:28:25</publishTime>
     </File>
     <File Include="MiTienda.Domain.dll">
-      <publishTime>03/06/2024 16:43:44</publishTime>
+      <publishTime>03/12/2024 22:28:23</publishTime>
     </File>
     <File Include="MiTienda.Domain.pdb">
-      <publishTime>03/06/2024 16:43:44</publishTime>
+      <publishTime>03/12/2024 22:28:23</publishTime>
     </File>
     <File Include="pl/System.Private.ServiceModel.resources.dll">
       <publishTime>10/11/2023 20:27:34</publishTime>
@@ -300,7 +300,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/11/2023 20:28:00</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>03/06/2024 21:35:08</publishTime>
+      <publishTime>03/12/2024 22:28:34</publishTime>
     </File>
     <File Include="zh-Hans/System.Private.ServiceModel.resources.dll">
       <publishTime>10/11/2023 20:27:34</publishTime>

@@ -17,6 +17,7 @@ namespace MiTienda.Application.Contracts
         int CrearVenta(VentaPostDTO venta);
         string UpdateImporteVenta(int idVenta);
         string UpdateClienteVenta(int idVenta, int idCliente);
+        string UpdatePagoVenta(int idVenta, Pago pago);
 
 
     }

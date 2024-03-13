@@ -21,10 +21,11 @@ namespace MiTienda.Application.Services
         private IRepository<TipoComprobante> _tipoComprobanteRepo;
         private IRepository<PuntoDeVenta> _puntoDeVentaRepo;
         private IRepository<LineaDeVenta> _lineaVentaRepo;//ver si es correcto que se cree aquí
+        private IRepository<Pago> _pagoRepo;
         private IQueryService<Stock> _stockQuery;
         private IManageLineasVentaService _manageServiceLinea;
         private IManageClienteService _manageServiceCliente;
-        //private IRepository<Pago> _pagoRepo;
+        //private IManagePagoService _manageServicePago;
         //private IRepository<Stock> _stockRepo;
 
 
@@ -40,6 +41,7 @@ namespace MiTienda.Application.Services
             _stockQuery = stockQuery;
             _manageServiceLinea = manageServiceLinea;
             _manageServiceCliente = manageServiceCliente;
+            //_manageServicePago = manageServicePago;
             //_pagoRepo = pagoRepo;
         }
 
@@ -86,7 +88,17 @@ namespace MiTienda.Application.Services
             venta.GetTotal(detalleVenta);
             venta.Cliente = _manageServiceCliente.GetClientByIdOrDni(idCliente);
             _ventaRepo.Update(venta);
+            
             return $"La venta {venta.Id} se actualizó correctamente. El importe total es: {venta.Importe} ";
+        } 
+        
+        public string UpdatePagoVenta(int idVenta, Pago pago)
+        {
+            Venta venta = GetVentaById(idVenta);
+            venta.Pago = pago;
+            _ventaRepo.Update(venta);
+            
+            return $"El pago de la venta {venta.Id} se realizó correctamente. ";
         }
 
         public Venta GetVentaById(int id)

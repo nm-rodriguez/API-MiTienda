@@ -43,6 +43,7 @@ namespace API_MiTienda.InitialSetup
             servicios.AddScoped<IManageInventarioService, InventarioManageService>();
             servicios.AddScoped<IManageVentaService, VentaManageService>();
             servicios.AddScoped<IManageLineasVentaService, LineaVentaManageService>();
+            servicios.AddScoped <IManagePagoService,PagoManageService>();
             servicios.AddSingleton <IVenta,Venta>();
 
 

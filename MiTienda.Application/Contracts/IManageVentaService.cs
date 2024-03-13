@@ -16,6 +16,7 @@ namespace MiTienda.Application.Contracts
         List<VentaDTO> GetVentasByEmpleado(int idEmpleado);
         int CrearVenta(VentaPostDTO venta);
         string UpdateImporteVenta(int idVenta);
+        string UpdateClienteVenta(int idVenta, int idCliente);
 
 
     }

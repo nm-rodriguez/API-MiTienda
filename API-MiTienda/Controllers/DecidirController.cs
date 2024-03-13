@@ -81,25 +81,51 @@ namespace API_MiTienda.Controllers
 
         }
         [HttpPost("conectarAfip")]
-        public async Task<ActionResult> ConectarAfip()
+        public async Task<ActionResult> ConectarAfip([FromBody] AfipDTO afipDTO)
         {
             try
             {
+
                 var servicio = new LoginServiceClient();
                 var autorizacion = servicio.SolicitarAutorizacionAsync("80594BA9-F102-4E0A-8B5D-B3A87383114A").Result;//llamar cuando iniciamos la venta
                 var comprobante = servicio.SolicitarUltimosComprobantesAsync(autorizacion.Token).Result;
 
+                Servicio_AFIP.TipoComprobante tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA;
+
+                switch (afipDTO.CondicionTributaria)
+                {
+                    case "RI":
+                    case "M":
+                        tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA;
+                        break;
+                    case "E":
+                    case "NR":
+                    case "CF":
+                        tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaB;
+                        break;
+                }
+
                 var solicitudAutorizacion = new SolicitudAutorizacion();
-               
+
                 solicitudAutorizacion.Fecha = DateTime.Now;
-                solicitudAutorizacion.ImporteIva = 21;
-                solicitudAutorizacion.ImporteNeto = 100;
-                solicitudAutorizacion.ImporteTotal = 121;
-                solicitudAutorizacion.NumeroDocumento = 0;//23406669999;
-                solicitudAutorizacion.TipoComprobante = Servicio_AFIP.TipoComprobante.FacturaB;
-                solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
-               
-                
+                solicitudAutorizacion.ImporteTotal = afipDTO.ImporteTotal;
+                solicitudAutorizacion.ImporteNeto = Math.Round(afipDTO.ImporteTotal / 1.21, 2); ;
+                solicitudAutorizacion.ImporteIva = Math.Round((afipDTO.ImporteTotal / 1.21) * 0.21,2);
+                solicitudAutorizacion.NumeroDocumento = afipDTO.numeroDocumento;
+                solicitudAutorizacion.TipoComprobante = tipoComprobante;
+                if (afipDTO.numeroDocumento == 0)
+                {
+                    solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
+                }
+                if (afipDTO.numeroDocumento < 99999999 && afipDTO.numeroDocumento > 1000000)
+                {
+                    solicitudAutorizacion.TipoDocumento = TipoDocumento.Dni;
+                }
+                else
+                {
+                    solicitudAutorizacion.TipoDocumento = TipoDocumento.Cuit;
+                }
+
                 solicitudAutorizacion.Numero = solicitudAutorizacion.TipoComprobante == Servicio_AFIP.TipoComprobante.FacturaA ? comprobante.Comprobantes[0].Numero + 1 : comprobante.Comprobantes[1].Numero + 1;
                 var cae = servicio.SolicitarCaeAsync(autorizacion.Token, solicitudAutorizacion).Result;
 

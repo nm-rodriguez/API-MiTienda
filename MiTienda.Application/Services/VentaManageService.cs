@@ -23,11 +23,12 @@ namespace MiTienda.Application.Services
         private IRepository<LineaDeVenta> _lineaVentaRepo;//ver si es correcto que se cree aquí
         private IQueryService<Stock> _stockQuery;
         private IManageLineasVentaService _manageServiceLinea;
+        private IManageClienteService _manageServiceCliente;
         //private IRepository<Pago> _pagoRepo;
         //private IRepository<Stock> _stockRepo;
 
 
-        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IQueryService<Stock> stockQuery, IManageLineasVentaService manageServiceLinea)
+        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IQueryService<Stock> stockQuery, IManageLineasVentaService manageServiceLinea, IManageClienteService manageServiceCliente)
         {
             _ventaRepo = ventaRepo;
             _sucursalRepo = sucursalRepo;
@@ -38,6 +39,7 @@ namespace MiTienda.Application.Services
             _lineaVentaRepo = lineaVentaRepo;
             _stockQuery = stockQuery;
             _manageServiceLinea = manageServiceLinea;
+            _manageServiceCliente = manageServiceCliente;
             //_pagoRepo = pagoRepo;
         }
 
@@ -74,6 +76,15 @@ namespace MiTienda.Application.Services
             Venta venta = GetVentaById(idVenta);
             List<LineaDeVenta> detalleVenta = _manageServiceLinea.GetLineasByVentaID(idVenta);
             venta.GetTotal(detalleVenta);
+            _ventaRepo.Update(venta);
+            return $"La venta {venta.Id} se actualizó correctamente. El importe total es: {venta.Importe} ";
+        }
+        public string UpdateClienteVenta(int idVenta, int idCliente)
+        {
+            Venta venta = GetVentaById(idVenta);
+            List<LineaDeVenta> detalleVenta = _manageServiceLinea.GetLineasByVentaID(idVenta);
+            venta.GetTotal(detalleVenta);
+            venta.Cliente = _manageServiceCliente.GetClientByIdOrDni(idCliente);
             _ventaRepo.Update(venta);
             return $"La venta {venta.Id} se actualizó correctamente. El importe total es: {venta.Importe} ";
         }

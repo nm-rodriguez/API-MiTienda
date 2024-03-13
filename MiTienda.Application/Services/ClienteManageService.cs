@@ -36,6 +36,13 @@ namespace MiTienda.Application.Services
 
         }
 
+        public Cliente GetClientByIdOrDni(int idordni)
+        {
+            Cliente cliente = _clienteRepo.GetBy(c => c.Id == idordni || c.Dni == idordni).AsQueryable().Include(x => x.CondicionTributaria).SingleOrDefault();
+            return (cliente == null) ? null : cliente;
+
+        }
+
         public List<ClienteDTO> GetClientesByNombreOrCuil(string NombreorCuil)
         {
             List<ClienteDTO> clientes = new List<ClienteDTO>();

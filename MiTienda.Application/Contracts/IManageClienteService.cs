@@ -13,6 +13,7 @@ namespace MiTienda.Application.Contracts
     {
         List<ClienteDTO> GetClientes();
         ClienteDTO GetClienteByIdOrDni(int IdOrDni);
+        Cliente GetClientByIdOrDni(int IdOrDni);
         List<ClienteDTO> GetClientesByNombreOrCuil(string NombreoCuil);
         string UpdateCliente(ClienteDTO cliente);
         string CreateCliente(ClientePostDTO cliente);

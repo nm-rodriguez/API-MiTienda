@@ -105,12 +105,24 @@ namespace API_MiTienda.Controllers
             }
         }
 
-        
 
+        [HttpPut("updateClienteVenta/")]
+        public ActionResult<String> UpdateClienteVenta(int idVenta, int IdCliente)
+        {
+            try
+            {
+                var message = _manageService.UpdateClienteVenta(idVenta, IdCliente);
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+            }
+        }
         #endregion
 
 
-        
+
 
         [HttpGet]
         public ActionResult<IEnumerable<Venta>> GetAllVentas()

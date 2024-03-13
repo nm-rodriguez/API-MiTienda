@@ -35,7 +35,7 @@ namespace API_MiTienda.Controllers
 
 
         [HttpPost("postVentaYLineas")]
-        public ActionResult PostVentaYLineas([FromBody] VentaYLineasPostDTO ventayLineasDTO)
+        public ActionResult<Venta> PostVentaYLineas([FromBody] VentaYLineasPostDTO ventayLineasDTO)
         {
             try
             {
@@ -55,8 +55,8 @@ namespace API_MiTienda.Controllers
                     LineaDeVenta lineaVenta = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock, VentaID = ventaId };
                     _manageServiceLinea.CrearLineaVenta(lineaVenta);
                 }
-
-                return Ok($"Venta: {ventaId} creada y se asociaron los productos en base de datos.");
+                _manageService.UpdateImporteVenta(ventaId);//ver
+                return Ok(_manageService.GetVentaById(ventaId));
             }
             catch (Exception ex)
             {

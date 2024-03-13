@@ -26,10 +26,8 @@ namespace MiTienda.Domain.Entities
         public void GetTotal(List<LineaDeVenta> detallesVenta)
         {
             if (detallesVenta is null)
-            {
                 return;
-            }
-
+            Importe = 0;
             foreach (LineaDeVenta item in detallesVenta)
             {
                 item.Stock.Articulo.CalcularValores();

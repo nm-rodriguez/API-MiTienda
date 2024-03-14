@@ -51,7 +51,7 @@ namespace MiTienda.Application.Services
                 throw new Exception("Venta nula.");
 
             Vendedor vendedor = _vendedorRepo.GetByID(ventaPostDTO.VendedorID).AsQueryable().Include(x => x.PuntoDeVenta).SingleOrDefault();
-            Cliente cliente = _clienteRepo.GetBy(x => x.Dni == 0 && x.Apellido == "DefaultUser").SingleOrDefault();
+            Cliente cliente = _clienteRepo.GetBy(x => x.Dni == 0 && x.Apellido == "DefaultUser").AsQueryable().Include(x => x.CondicionTributaria).SingleOrDefault();
             PuntoDeVenta ptoVenta = _puntoDeVentaRepo.GetByID(vendedor.PuntoDeVenta.Id).AsQueryable().Include(x => x.Sucursal).SingleOrDefault();
             Sucursal sucursal = _sucursalRepo.GetByID(ventaPostDTO.SucursalID).SingleOrDefault();
             //TipoComprobante tComprobante = _tipoComprobanteRepo.GetByID(ventaPostDTO.TipoComprobanteID).SingleOrDefault();

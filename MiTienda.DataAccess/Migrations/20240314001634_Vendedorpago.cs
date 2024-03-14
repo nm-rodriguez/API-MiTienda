@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MiTienda.DataAccess.Migrations
 {
-    public partial class vinculoVendedorUser : Migration
+    public partial class Vendedorpago : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,20 +86,6 @@ namespace MiTienda.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CondicionTributaria", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DetallePagoTarjeta",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ticket = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetallePagoTarjeta", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -347,16 +333,11 @@ namespace MiTienda.DataAccess.Migrations
                     Moneda = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TipoPagoId = table.Column<int>(type: "int", nullable: false),
                     FechaPago = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DetallePagoTarjetaId = table.Column<int>(type: "int", nullable: true)
+                    TipoTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pago", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Pago_DetallePagoTarjeta_DetallePagoTarjetaId",
-                        column: x => x.DetallePagoTarjetaId,
-                        principalTable: "DetallePagoTarjeta",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Pago_TipoPago_TipoPagoId",
                         column: x => x.TipoPagoId,
@@ -659,11 +640,6 @@ namespace MiTienda.DataAccess.Migrations
                 column: "VentaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pago_DetallePagoTarjetaId",
-                table: "Pago",
-                column: "DetallePagoTarjetaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pago_TipoPagoId",
                 table: "Pago",
                 column: "TipoPagoId");
@@ -803,9 +779,6 @@ namespace MiTienda.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoTalle");
-
-            migrationBuilder.DropTable(
-                name: "DetallePagoTarjeta");
 
             migrationBuilder.DropTable(
                 name: "TipoPago");

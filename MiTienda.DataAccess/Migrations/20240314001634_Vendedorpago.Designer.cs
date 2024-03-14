@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiTienda.DataAccess.Migrations
 {
     [DbContext(typeof(MiTiendaContexto))]
-    [Migration("20240313230905_vinculoVendedorUser")]
-    partial class vinculoVendedorUser
+    [Migration("20240314001634_Vendedorpago")]
+    partial class Vendedorpago
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -359,27 +359,6 @@ namespace MiTienda.DataAccess.Migrations
                     b.ToTable("CondicionTributaria", (string)null);
                 });
 
-            modelBuilder.Entity("MiTienda.Domain.Entities.DetallePagoTarjeta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Ticket")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TipoTarjeta")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DetallePagoTarjeta");
-                });
-
             modelBuilder.Entity("MiTienda.Domain.Entities.Inventario", b =>
                 {
                     b.Property<int>("Id")
@@ -457,9 +436,6 @@ namespace MiTienda.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("DetallePagoTarjetaId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("datetime2");
 
@@ -473,9 +449,10 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int>("TipoPagoId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("TipoTarjeta")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("DetallePagoTarjetaId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TipoPagoId");
 
@@ -855,17 +832,11 @@ namespace MiTienda.DataAccess.Migrations
 
             modelBuilder.Entity("MiTienda.Domain.Entities.Pago", b =>
                 {
-                    b.HasOne("MiTienda.Domain.Entities.DetallePagoTarjeta", "DetallePagoTarjeta")
-                        .WithMany()
-                        .HasForeignKey("DetallePagoTarjetaId");
-
                     b.HasOne("MiTienda.Domain.Entities.TipoPago", "TipoPago")
                         .WithMany()
                         .HasForeignKey("TipoPagoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DetallePagoTarjeta");
 
                     b.Navigation("TipoPago");
                 });

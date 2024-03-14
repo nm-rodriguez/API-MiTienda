@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiTienda.Application.DTOs;
 using MiTienda.DataAccess.Contexts;
+using MiTienda.Domain.Contracts;
+using MiTienda.Domain.Entities;
 using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -20,13 +22,15 @@ namespace API_MiTienda.Controllers
         private readonly IConfiguration _configuration;
         private readonly SignInManager<IdentityUser> _signIn;
         private readonly MiTiendaContexto _contexto;
+        private IRepository<Vendedor> _vendedorRepo;
 
-        public AccountsController(UserManager<IdentityUser> userManager,IConfiguration configuration, SignInManager<IdentityUser> signIn,MiTiendaContexto contexto)
+        public AccountsController(UserManager<IdentityUser> userManager, IConfiguration configuration, SignInManager<IdentityUser> signIn, MiTiendaContexto contexto, IRepository<Vendedor> vendedorRepo)
         {
-            this._userManager = userManager;
-            this._configuration = configuration;
-            this._signIn = signIn;
-            this._contexto = contexto;
+            _userManager = userManager;
+            _configuration = configuration;
+            _signIn = signIn;
+            _contexto = contexto;
+            _vendedorRepo = vendedorRepo;
         }
 
         [HttpPost("create")]
@@ -53,7 +57,8 @@ namespace API_MiTienda.Controllers
             {
                 var token =  await CreateToken(credentials);
                 var user  = await UserByEmail(credentials.Email);
-                return new AuthenticationResponseDTO() { Token = token.Token, Expiracion = token.Expiracion, Role = user.Value.Role, Username = user.Value.Email };
+                Vendedor vendedor = _vendedorRepo.GetBy(x => x.userID == user.Value.Id).AsQueryable().Include(x => x.PuntoDeVenta).Include(x => x.PuntoDeVenta.Sucursal).SingleOrDefault();
+                return new AuthenticationResponseDTO() { Token = token.Token, Expiracion = token.Expiracion, Role = user.Value.Role, Username = user.Value.Email, idVendedor = vendedor.Id, idPuntoDeVenta = vendedor.PuntoDeVenta.Id, idSucursal = vendedor.PuntoDeVenta.Sucursal.Id };
             }
             else
             {

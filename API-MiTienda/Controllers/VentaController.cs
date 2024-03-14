@@ -29,8 +29,6 @@ namespace API_MiTienda.Controllers
             _lineaQuery = lineaQuery;
         }
 
-       
-
         #region Parte 1 - VENTA
 
 
@@ -55,7 +53,7 @@ namespace API_MiTienda.Controllers
                     LineaDeVenta lineaVenta = new LineaDeVenta() { Cantidad = linea.Cantidad, Stock = stock, VentaID = ventaId };
                     _manageServiceLinea.CrearLineaVenta(lineaVenta);
                 }
-                _manageService.UpdateImporteVenta(ventaId);//ver
+                _manageService.UpdateImporteVenta(ventaId);
                 return Ok(_manageService.GetVentaById(ventaId));
             }
             catch (Exception ex)

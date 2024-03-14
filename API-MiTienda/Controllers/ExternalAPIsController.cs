@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
 using MiTienda.Domain.Entities;
 using Servicio_AFIP;
@@ -9,12 +10,13 @@ namespace API_MiTienda.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DecidirController : ControllerBase
+    public class ExternalAPIsController : ControllerBase
     {
         private readonly HttpClient _clientWithTokenApi;
         private readonly HttpClient _clientWithPaymentsApi;
+        private IManageVentaService _manageVentaService;
 
-        public DecidirController()
+        public ExternalAPIsController(IManageVentaService manageVentaService)
         {
             _clientWithTokenApi = new HttpClient();
             _clientWithTokenApi.BaseAddress = new Uri("https://developers.decidir.com/api/v2/");
@@ -23,8 +25,10 @@ namespace API_MiTienda.Controllers
             _clientWithPaymentsApi = new HttpClient();
             _clientWithPaymentsApi.BaseAddress = new Uri("https://developers.decidir.com/api/v2/");
             _clientWithPaymentsApi.DefaultRequestHeaders.Add("apikey", "566f2c897b5e4bfaa0ec2452f5d67f13");
+            _manageVentaService = manageVentaService;
         }
 
+        #region DECIDIR
         [HttpPost("token")]
         public async Task<ActionResult<TarjetaDTO>> ObtenerToken([FromBody] TarjetaDTO tarjeta)
         {
@@ -78,8 +82,10 @@ namespace API_MiTienda.Controllers
             {
                 return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
             }
-
+            #endregion
         }
+
+        #region AFIP
         [HttpPost("conectarAfip")]
         public async Task<ActionResult> ConectarAfip([FromBody] AfipDTO afipDTO)
         {
@@ -92,17 +98,23 @@ namespace API_MiTienda.Controllers
 
                 Servicio_AFIP.TipoComprobante tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA;
 
-                switch (afipDTO.CondicionTributaria)
+                var condTrib = afipDTO.CondicionTributaria;
+                int tComprobanteMiTienda = 0;
+                if (condTrib == "RI" || condTrib == "M")
                 {
-                    case "RI":
-                    case "M":
-                        tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA;
-                        break;
-                    case "E":
-                    case "NR":
-                    case "CF":
-                        tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaB;
-                        break;
+                    tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA;
+                    tComprobanteMiTienda = 1;
+                }
+                else if (condTrib == "E" || condTrib == "NR" || condTrib == "CF")
+                {
+                    tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaB;
+                    tComprobanteMiTienda = 2;
+                }
+                else
+                {
+                    tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA; //por defecto si no es ninguno
+                    tComprobanteMiTienda = 1;
+
                 }
 
                 var solicitudAutorizacion = new SolicitudAutorizacion();
@@ -113,25 +125,18 @@ namespace API_MiTienda.Controllers
                 solicitudAutorizacion.ImporteIva = Math.Round((afipDTO.ImporteTotal / 1.21) * 0.21,2);
                 solicitudAutorizacion.NumeroDocumento = afipDTO.numeroDocumento;
                 solicitudAutorizacion.TipoComprobante = tipoComprobante;
+                
                 if (afipDTO.numeroDocumento == 0)
-                {
                     solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
-                }
                 if (afipDTO.numeroDocumento < 99999999 && afipDTO.numeroDocumento > 1000000)
-                {
                     solicitudAutorizacion.TipoDocumento = TipoDocumento.Dni;
-                }
                 else
-                {
                     solicitudAutorizacion.TipoDocumento = TipoDocumento.Cuit;
-                }
 
                 solicitudAutorizacion.Numero = solicitudAutorizacion.TipoComprobante == Servicio_AFIP.TipoComprobante.FacturaA ? comprobante.Comprobantes[0].Numero + 1 : comprobante.Comprobantes[1].Numero + 1;
                 var cae = servicio.SolicitarCaeAsync(autorizacion.Token, solicitudAutorizacion).Result;
 
-                //Console.WriteLine(autorizacion);
-                //Console.WriteLine(comprobante);
-                //Console.WriteLine(cae);
+                _manageVentaService.UpdateAfterAFIP(afipDTO.idVenta, cae.Cae,tComprobanteMiTienda);
                 return Ok(cae);
             }
             catch (Exception ex)
@@ -139,6 +144,7 @@ namespace API_MiTienda.Controllers
                 return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
             }
         }
+        #endregion
 
     }
 }

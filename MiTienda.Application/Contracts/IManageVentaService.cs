@@ -18,6 +18,7 @@ namespace MiTienda.Application.Contracts
         string UpdateImporteVenta(int idVenta);
         string UpdateClienteVenta(int idVenta, int idCliente);
         string UpdatePagoVenta(int idVenta, Pago pago);
+        string UpdateAfterAFIP(int idVenta, string cae, int idCliente);
 
 
     }

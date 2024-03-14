@@ -638,10 +638,6 @@ namespace MiTienda.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Contrasenia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Legajo")
                         .HasColumnType("int");
 
@@ -649,19 +645,18 @@ namespace MiTienda.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PuntoDeVentaId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("State")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SucursalId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
+                    b.Property<string>("userID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SucursalId");
+                    b.HasIndex("PuntoDeVentaId");
 
                     b.ToTable("Vendedor", (string)null);
                 });
@@ -673,6 +668,9 @@ namespace MiTienda.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CAE")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ClienteId")
                         .HasColumnType("int");
@@ -686,16 +684,16 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int?>("PagoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PuntoDeVentaId")
+                    b.Property<int?>("PuntoDeVentaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SucursalId")
+                    b.Property<int?>("SucursalId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TipoComprobanteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendedorId")
+                    b.Property<int?>("VendedorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -908,13 +906,13 @@ namespace MiTienda.DataAccess.Migrations
 
             modelBuilder.Entity("MiTienda.Domain.Entities.Vendedor", b =>
                 {
-                    b.HasOne("MiTienda.Domain.Entities.Sucursal", "Sucursal")
+                    b.HasOne("MiTienda.Domain.Entities.PuntoDeVenta", "PuntoDeVenta")
                         .WithMany()
-                        .HasForeignKey("SucursalId")
+                        .HasForeignKey("PuntoDeVentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Sucursal");
+                    b.Navigation("PuntoDeVenta");
                 });
 
             modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
@@ -929,15 +927,11 @@ namespace MiTienda.DataAccess.Migrations
 
                     b.HasOne("MiTienda.Domain.Entities.PuntoDeVenta", "PuntoDeVenta")
                         .WithMany()
-                        .HasForeignKey("PuntoDeVentaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PuntoDeVentaId");
 
                     b.HasOne("MiTienda.Domain.Entities.Sucursal", "Sucursal")
                         .WithMany()
-                        .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SucursalId");
 
                     b.HasOne("MiTienda.Domain.Entities.TipoComprobante", "TipoComprobante")
                         .WithMany()
@@ -945,9 +939,7 @@ namespace MiTienda.DataAccess.Migrations
 
                     b.HasOne("MiTienda.Domain.Entities.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("VendedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VendedorId");
 
                     b.Navigation("Cliente");
 

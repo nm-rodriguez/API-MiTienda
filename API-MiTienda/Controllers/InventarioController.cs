@@ -93,6 +93,20 @@ namespace API_MiTienda.Controllers
 
         }
 
+        [HttpPut("actualizarStock")]
+        public ActionResult UpdateStockInventario(int inventario, int cantidad)
+        {
+            try
+            {
+                var message = _manageService.UpdateInventario(inventario,cantidad);
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+            }
+        }
+
         //[HttpGet("getInventarioByNombreOrCuil")]
         //public ActionResult<ReturnInventarioDTO> GetInventarioByNombreOrCuil(string nombreOrcuil)
         //{

@@ -18,6 +18,19 @@ namespace MiTienda.Application.Services
             _condicionTributariaRepo = CondicionTributariaRepo;
 
         }
+        public string UpdateInventario(int IdInventario, int cantidadARestar)
+        {
+            Inventario inventario = _inventarioRepo.GetByID(IdInventario)
+                .AsQueryable()
+                .Include(x => x.Stock)
+                .Include(x => x.Stock.Articulo)
+                .SingleOrDefault();
+
+            inventario.Cantidad -= cantidadARestar;
+            _inventarioRepo.Update(inventario);
+
+            return $"Se actulizó correctamente el inventario| Articulo: {inventario.Stock.Articulo.Descripcion}, Cantidad de stock: {inventario.Cantidad}";
+        }
         public List<ReturnInventarioDTO> GetInventarios(int idSucursal)
         {
             List<ReturnInventarioDTO> inventarios = new List<ReturnInventarioDTO>();
@@ -105,6 +118,8 @@ namespace MiTienda.Application.Services
             List<ReturnInventarioDTO> inventarios = query.Select(inventario => new ReturnInventarioDTO(inventario)).ToList();
             return inventarios.Count > 0 ? inventarios : null;
         }
+
+       
 
 
         //public List<InventarioDTO> GetInventariosByNombreOrCuil(string NombreorCuil)

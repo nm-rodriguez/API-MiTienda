@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiTienda.DataAccess.Migrations
 {
     [DbContext(typeof(MiTiendaContexto))]
-    [Migration("20240307195424_Prueba")]
-    partial class Prueba
+    [Migration("20240313230905_vinculoVendedorUser")]
+    partial class vinculoVendedorUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,19 +247,19 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int>("MarcaId")
                         .HasColumnType("int");
 
-                    b.Property<double>("MargenGanancia")
+                    b.Property<double?>("MargenGanancia")
                         .HasColumnType("float");
 
                     b.Property<double?>("NetoGravado")
                         .HasColumnType("float");
 
-                    b.Property<double>("PorcentajeIVA")
+                    b.Property<double?>("PorcentajeIVA")
                         .HasColumnType("float");
 
                     b.Property<double?>("PrecioFinal")
                         .HasColumnType("float");
 
-                    b.Property<bool>("State")
+                    b.Property<bool?>("State")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -420,14 +420,14 @@ namespace MiTienda.DataAccess.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VentaId")
+                    b.Property<int?>("VentaID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StockId");
 
-                    b.HasIndex("VentaId");
+                    b.HasIndex("VentaID");
 
                     b.ToTable("LineaDeVenta", (string)null);
                 });
@@ -511,13 +511,13 @@ namespace MiTienda.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ArticuloId")
+                    b.Property<int?>("ArticuloId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ColorId")
+                    b.Property<int?>("ColorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TalleId")
+                    b.Property<int?>("TalleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -663,10 +663,6 @@ namespace MiTienda.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Contrasenia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Legajo")
                         .HasColumnType("int");
 
@@ -674,19 +670,18 @@ namespace MiTienda.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PuntoDeVentaId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("State")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SucursalId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
+                    b.Property<string>("userID")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SucursalId");
+                    b.HasIndex("PuntoDeVentaId");
 
                     b.ToTable("Vendedor", (string)null);
                 });
@@ -699,28 +694,31 @@ namespace MiTienda.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
+                    b.Property<string>("CAE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaVenta")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("Importe")
+                    b.Property<double?>("Importe")
                         .HasColumnType("float");
 
-                    b.Property<int>("PagoId")
+                    b.Property<int?>("PagoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PuntoDeVentaId")
+                    b.Property<int?>("PuntoDeVentaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SucursalId")
+                    b.Property<int?>("SucursalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TipoComprobanteId")
+                    b.Property<int?>("TipoComprobanteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendedorId")
+                    b.Property<int?>("VendedorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -849,8 +847,8 @@ namespace MiTienda.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("MiTienda.Domain.Entities.Venta", null)
-                        .WithMany("LineaDeVenta")
-                        .HasForeignKey("VentaId");
+                        .WithMany("LineasDeVenta")
+                        .HasForeignKey("VentaID");
 
                     b.Navigation("Stock");
                 });
@@ -887,21 +885,15 @@ namespace MiTienda.DataAccess.Migrations
                 {
                     b.HasOne("MiTienda.Domain.Entities.Articulo", "Articulo")
                         .WithMany()
-                        .HasForeignKey("ArticuloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArticuloId");
 
                     b.HasOne("MiTienda.Domain.Entities.Color", "Color")
                         .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ColorId");
 
                     b.HasOne("MiTienda.Domain.Entities.Talle", "Talle")
                         .WithMany()
-                        .HasForeignKey("TalleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TalleId");
 
                     b.Navigation("Articulo");
 
@@ -945,52 +937,40 @@ namespace MiTienda.DataAccess.Migrations
 
             modelBuilder.Entity("MiTienda.Domain.Entities.Vendedor", b =>
                 {
-                    b.HasOne("MiTienda.Domain.Entities.Sucursal", "Sucursal")
-                        .WithMany()
-                        .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sucursal");
-                });
-
-            modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
-                {
-                    b.HasOne("MiTienda.Domain.Entities.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MiTienda.Domain.Entities.Pago", "Pago")
-                        .WithMany()
-                        .HasForeignKey("PagoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MiTienda.Domain.Entities.PuntoDeVenta", "PuntoDeVenta")
                         .WithMany()
                         .HasForeignKey("PuntoDeVentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("PuntoDeVenta");
+                });
+
+            modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
+                {
+                    b.HasOne("MiTienda.Domain.Entities.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId");
+
+                    b.HasOne("MiTienda.Domain.Entities.Pago", "Pago")
+                        .WithMany()
+                        .HasForeignKey("PagoId");
+
+                    b.HasOne("MiTienda.Domain.Entities.PuntoDeVenta", "PuntoDeVenta")
+                        .WithMany()
+                        .HasForeignKey("PuntoDeVentaId");
+
                     b.HasOne("MiTienda.Domain.Entities.Sucursal", "Sucursal")
                         .WithMany()
-                        .HasForeignKey("SucursalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SucursalId");
 
                     b.HasOne("MiTienda.Domain.Entities.TipoComprobante", "TipoComprobante")
                         .WithMany()
-                        .HasForeignKey("TipoComprobanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TipoComprobanteId");
 
                     b.HasOne("MiTienda.Domain.Entities.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("VendedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VendedorId");
 
                     b.Navigation("Cliente");
 
@@ -1007,7 +987,7 @@ namespace MiTienda.DataAccess.Migrations
 
             modelBuilder.Entity("MiTienda.Domain.Entities.Venta", b =>
                 {
-                    b.Navigation("LineaDeVenta");
+                    b.Navigation("LineasDeVenta");
                 });
 #pragma warning restore 612, 618
         }

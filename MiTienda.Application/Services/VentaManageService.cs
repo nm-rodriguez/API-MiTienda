@@ -25,11 +25,10 @@ namespace MiTienda.Application.Services
         private IQueryService<Stock> _stockQuery;
         private IManageLineasVentaService _manageServiceLinea;
         private IManageClienteService _manageServiceCliente;
-        //private IManagePagoService _manageServicePago;
-        //private IRepository<Stock> _stockRepo;
+        private IManageInventarioService _manageServiceInventario;
+        private IRepository<Inventario> _inventarioRepo;
 
-
-        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Pago> pagoRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IQueryService<Stock> stockQuery, IManageLineasVentaService manageServiceLinea, IManageClienteService manageServiceCliente)
+        public VentaManageService(IRepository<Venta> ventaRepo, IRepository<Sucursal> sucursalRepo, IRepository<Vendedor> vendedorRepo, IRepository<Cliente> clienteRepo, IRepository<TipoComprobante> tipoComprobanteRepo, IRepository<PuntoDeVenta> puntoDeVentaRepo, IRepository<LineaDeVenta> lineaVentaRepo, IRepository<Pago> pagoRepo, IQueryService<Stock> stockQuery, IManageLineasVentaService manageServiceLinea, IManageClienteService manageServiceCliente, IManageInventarioService manageServiceInventario, IRepository<Inventario> inventarioRepo)
         {
             _ventaRepo = ventaRepo;
             _sucursalRepo = sucursalRepo;
@@ -38,12 +37,20 @@ namespace MiTienda.Application.Services
             _tipoComprobanteRepo = tipoComprobanteRepo;
             _puntoDeVentaRepo = puntoDeVentaRepo;
             _lineaVentaRepo = lineaVentaRepo;
+            _pagoRepo = pagoRepo;
             _stockQuery = stockQuery;
             _manageServiceLinea = manageServiceLinea;
             _manageServiceCliente = manageServiceCliente;
-            //_manageServicePago = manageServicePago;
-            //_pagoRepo = pagoRepo;
+            _manageServiceInventario = manageServiceInventario;
+            _inventarioRepo = inventarioRepo;
         }
+
+
+
+        //private IManagePagoService _manageServicePago;
+        //private IRepository<Stock> _stockRepo;
+
+
 
         public int CrearVenta(VentaPostDTO ventaPostDTO)
         {
@@ -166,6 +173,11 @@ namespace MiTienda.Application.Services
             Venta venta = GetVentaById(idVenta);
             venta.CAE = cae;
             venta.TipoComprobante = _tipoComprobanteRepo.GetByID(tipoComprobanteID).SingleOrDefault();
+            foreach (var linea in venta.LineasDeVenta)
+            {
+                Inventario inventario = _inventarioRepo.GetBy(x => x.Stock == linea.Stock && x.Sucursal.Id == venta.Sucursal.Id).SingleOrDefault();
+                _manageServiceInventario.UpdateInventario(inventario.Id,linea.Cantidad);
+            }
             _ventaRepo.Update(venta);
             return $"La venta {venta.Id} se actualizó correctamente. El importe total es: {venta.Importe} ";
         }

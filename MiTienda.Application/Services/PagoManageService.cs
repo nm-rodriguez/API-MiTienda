@@ -29,7 +29,7 @@ namespace MiTienda.Application.Services
             pagoDTO.Monto = pago.Monto;
             pagoDTO.Moneda = pago.Moneda;
             pagoDTO.FechaPago = pago.FechaPago;
-            pagoDTO.TipoTarjeta = pago.TipoPago.Id != 1 ? pago.TipoTarjeta: "";
+            pagoDTO.TipoTarjeta = pago.TipoPago.Id != 7 ? pago.TipoTarjeta: "";//ver
 
             return (pago == null) ? null : pagoDTO;
         }

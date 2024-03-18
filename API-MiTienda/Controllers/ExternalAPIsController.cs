@@ -103,17 +103,17 @@ namespace API_MiTienda.Controllers
                 if (condTrib == "RI" || condTrib == "M")
                 {
                     tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA;
-                    tComprobanteMiTienda = 1;
+                    tComprobanteMiTienda = 9;
                 }
                 else if (condTrib == "E" || condTrib == "NR" || condTrib == "CF")
                 {
                     tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaB;
-                    tComprobanteMiTienda = 2;
+                    tComprobanteMiTienda = 10;
                 }
                 else
                 {
                     tipoComprobante = Servicio_AFIP.TipoComprobante.FacturaA; //por defecto si no es ninguno
-                    tComprobanteMiTienda = 1;
+                    tComprobanteMiTienda = 9;
 
                 }
 

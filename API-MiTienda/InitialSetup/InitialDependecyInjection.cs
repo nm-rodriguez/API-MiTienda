@@ -24,7 +24,7 @@ namespace API_MiTienda.InitialSetup
 
             servicios.AddDbContext<ITiendaEF, MiTiendaContexto>(
                 options => options.UseSqlServer(conectionString),
-                ServiceLifetime.Scoped
+                ServiceLifetime.Singleton
                 );
 
             servicios.AddScoped(typeof(IRepository<>), typeof(Repository<>));

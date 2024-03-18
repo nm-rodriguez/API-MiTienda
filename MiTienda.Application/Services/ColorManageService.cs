@@ -16,6 +16,8 @@ namespace MiTienda.Application.Services
             _colorRepo = colorRepo;
 
         }
+
+
         public List<ColorDTO> GetColors()
         {
             List<ColorDTO> colores = new List<ColorDTO>();

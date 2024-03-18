@@ -116,6 +116,7 @@ namespace MiTienda.Application.Services
                 .Include(x => x.Pago)
                 .Include(x => x.Pago.TipoPago)
                 .Include(x => x.Cliente)
+                .Include(x => x.Cliente.CondicionTributaria)
                 .Include(x => x.TipoComprobante)
                 .Include(x => x.PuntoDeVenta)
                 .Include(x => x.PuntoDeVenta.Sucursal)
@@ -175,8 +176,8 @@ namespace MiTienda.Application.Services
             venta.TipoComprobante = _tipoComprobanteRepo.GetByID(tipoComprobanteID).SingleOrDefault();
             foreach (var linea in venta.LineasDeVenta)
             {
-                Inventario inventario = _inventarioRepo.GetBy(x => x.Stock == linea.Stock && x.Sucursal.Id == venta.Sucursal.Id).SingleOrDefault();
-                _manageServiceInventario.UpdateInventario(inventario.Id,linea.Cantidad);
+                Inventario inventario = _inventarioRepo.GetBy(x => x.Stock.Id == linea.Stock.Id && x.Sucursal.Id == venta.Sucursal.Id).SingleOrDefault();
+                _manageServiceInventario.UpdateInventario(inventario.Id, linea.Cantidad);
             }
             _ventaRepo.Update(venta);
             return $"La venta {venta.Id} se actualizó correctamente. El importe total es: {venta.Importe} ";

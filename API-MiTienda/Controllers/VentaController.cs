@@ -82,26 +82,26 @@ namespace API_MiTienda.Controllers
         #region Parte 2 - VENTA
 
 
-        [HttpPost("postLineasEnDB")]
-        public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasEnDB()
-        {
-            try
-            {
-                foreach (var linea in _ventaEnMemoria.GetLineas())
-                {
-                    linea.VentaID = _ventaEnMemoria.GetID();
-                    _manageServiceLinea.CrearLineaVenta(linea);
-                }
-                //var message = _manageServiceLinea.CrearLineasVenta(_ventaEnMemoria.GetLineas());
-                //return Ok(message);
-                return Ok();
+        //[HttpPost("postLineasEnDB")]
+        //public ActionResult<IEnumerable<List<LineaDeVenta>>> PostLineasEnDB()
+        //{
+        //    try
+        //    {
+        //        foreach (var linea in _ventaEnMemoria.GetLineas())
+        //        {
+        //            linea.VentaID = _ventaEnMemoria.GetID();
+        //            _manageServiceLinea.CrearLineaVenta(linea);
+        //        }
+        //        //var message = _manageServiceLinea.CrearLineasVenta(_ventaEnMemoria.GetLineas());
+        //        //return Ok(message);
+        //        return Ok();
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(400, $"Algo salió mal. Detalles: {ex.Message}");
+        //    }
+        //}
 
 
         [HttpPut("updateClienteVenta/")]

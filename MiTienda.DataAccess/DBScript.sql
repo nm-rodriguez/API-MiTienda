@@ -1,33 +1,33 @@
 --create database MiTienda
 --go
-use MiTienda
+use TiendaDB2
 go
 
 
 --INSERTS---------------------------------------------------------------
-INSERT INTO Categoria values
-('Remeras'),
-('Pantalones'),
-('Accesorios'),
-('Camperas'),
-('Ropa Interior'),
-('Zapatillas'),
-('Shorts')
+--INSERT INTO Categoria values
+--('Remeras'),
+--('Pantalones'),
+--('Accesorios'),
+--('Camperas'),
+--('Ropa Interior'),
+--('Zapatillas'),
+--('Shorts')
 
 
-INSERT INTO Marca values
-('Adidas'),
-('Nike'),
-('UnderArmor'),
-('Reebook'),
-('Umbro'),
-('Puma'),
-('Fila')
+--INSERT INTO Marca values
+--('Adidas'),
+--('Nike'),
+--('UnderArmor'),
+--('Reebook'),
+--('Umbro'),
+--('Puma'),
+--('Fila')
 
-INSERT INTO TipoTalle values
-('Americano'),
-('Europeo'),
-('Brasilero')
+--INSERT INTO TipoTalle values
+--('Americano'),
+--('Europeo'),
+--('Brasilero')
 
 INSERT INTO Talle values
 ('42',(select top 1 id from TipoTalle tt where tt.Descripcion = 'Europeo')),

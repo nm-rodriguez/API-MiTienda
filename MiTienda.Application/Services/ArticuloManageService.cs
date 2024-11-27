@@ -9,7 +9,7 @@ namespace MiTienda.Application.Services
 {
     public class ArticuloManageService : IManageArticuloService
     {
-        private  IRepository<Articulo> _articuloRepo;
+        private IRepository<Articulo> _articuloRepo;
         private IRepository<Marca> _marcaRepo;
         private IRepository<Categoria> _categoriaRepo;
 
@@ -36,7 +36,7 @@ namespace MiTienda.Application.Services
                     );
 
                 _articuloRepo.AddObject(articulo);
-               
+
                 return $"Articulo creado correctamente ID: {articulo.Id} , CODIGO: {articulo.CodigoBarras}, DESCRIPCION: {articulo.Descripcion}";
             }
             catch (Exception e)
@@ -103,10 +103,93 @@ namespace MiTienda.Application.Services
         }
         public ArticuloDTO GetArticuloByCodigoBarras(string codigo)
         {
-                ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetBy(x => x.CodigoBarras == codigo).AsQueryable().Include(x => x.Marca).Include(x => x.Categoria).SingleOrDefault());
+            ArticuloDTO articulo = new ArticuloDTO(_articuloRepo.GetBy(x => x.CodigoBarras == codigo).AsQueryable().Include(x => x.Marca).Include(x => x.Categoria).SingleOrDefault());
             return articulo;
         }
 
-        
+        public List<ArticuloDTO> GetArticulosByCodigoBarras(string CodigoBarra)
+        {
+            List<ArticuloDTO> articulos = new List<ArticuloDTO>();
+
+            foreach (Articulo articulo in _articuloRepo.GetAll()
+               .AsQueryable()
+               .Include(x => x.Marca)
+               .Include(x => x.Categoria)
+               .Where(x => x.CodigoBarras.Contains(CodigoBarra)))
+            {
+                ArticuloDTO ArticuloDTO = new ArticuloDTO(articulo);
+                articulos.Add(ArticuloDTO);
+            }
+            return articulos.Count > 0 ? articulos : GetArticulos();
+        }
+        public List<ArticuloDTO> GetArticulosByMarca(string? Marca)
+        {
+            List<ArticuloDTO> articulos = new List<ArticuloDTO>();
+
+            foreach (Articulo articulo in _articuloRepo.GetAll()
+               .AsQueryable()
+               .Include(x => x.Marca)
+               .Include(x => x.Categoria)
+               .Where(x => x.Marca.Nombre.Contains(Marca)))
+            {
+                ArticuloDTO ArticuloDTO = new ArticuloDTO(articulo);
+                articulos.Add(ArticuloDTO);
+            }
+            return articulos.Count > 0 ? articulos : GetArticulos();
+        }
+
+        public List<ArticuloDTO> GetArticulosByCategoria(string? Categoria)
+        {
+            List<ArticuloDTO> articulos = new List<ArticuloDTO>();
+
+            foreach (Articulo articulo in _articuloRepo.GetAll()
+               .AsQueryable()
+               .Include(x => x.Marca)
+               .Include(x => x.Categoria)
+               .Where(x => x.Categoria.Descripcion.Contains(Categoria)))
+            {
+                ArticuloDTO ArticuloDTO = new ArticuloDTO(articulo);
+                articulos.Add(ArticuloDTO);
+            }
+            return articulos.Count > 0 ? articulos : GetArticulos();
+        }
+
+        public List<ArticuloDTO> GetArticulosFiltrados(string? codigoBarra = null, string? marca = null, string? categoria = null)
+        {
+
+            IQueryable<Articulo> query = _articuloRepo.GetAll()
+                .AsQueryable()
+                .Include(x => x.Marca)
+                .Include(x => x.Categoria);
+
+            if (!string.IsNullOrWhiteSpace(codigoBarra))
+            {
+                query = query.Where(x => x.CodigoBarras.Contains(codigoBarra));
+            }
+
+            if (!string.IsNullOrWhiteSpace(marca))
+            {
+                query = query.Where(x => x.Marca.Nombre.Contains(marca));
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                query = query.Where(x => x.Categoria.Descripcion.Contains(categoria));
+            }
+
+            if(string.IsNullOrWhiteSpace(codigoBarra) && string.IsNullOrWhiteSpace(marca) && string.IsNullOrWhiteSpace(categoria))
+            {
+                return new List<ArticuloDTO>();
+            }
+
+
+            List<ArticuloDTO> articulos = query
+                .Select(articulo => new ArticuloDTO(articulo))
+                .ToList();
+
+            return articulos;
+        }
+
+
     }
 }

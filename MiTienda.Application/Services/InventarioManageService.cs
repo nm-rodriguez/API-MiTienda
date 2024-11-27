@@ -64,7 +64,7 @@ namespace MiTienda.Application.Services
             return inventarios.Count > 0 ? inventarios : null;
         }
 
-        public List<ReturnInventarioDTO> GetInventarioByCodigoBarra(int IdSucursal, string CodigoBarra)
+        public List<ReturnInventarioDTO> GetInventarioByCodigoBarra(int IdSucursal, string? CodigoBarra)
         {
             List<ReturnInventarioDTO> inventarios = new List<ReturnInventarioDTO>();
 
@@ -83,7 +83,7 @@ namespace MiTienda.Application.Services
                 ReturnInventarioDTO InventarioDTO = new ReturnInventarioDTO(inventario);
                 inventarios.Add(InventarioDTO);
             }
-            return inventarios.Count > 0 ? inventarios : null;
+            return inventarios.Count > 0 ? inventarios : new List<ReturnInventarioDTO>();
         }
 
         public List<ReturnInventarioDTO> GetInventarioByParams(int IdSucursal, string CodigoBarra, int? IdTalle = null, int? IdTipoTalle = null, int? IdColor = null)

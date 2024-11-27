@@ -52,7 +52,7 @@ namespace API_MiTienda.Controllers
         }
 
         [HttpGet("getInventarioByCodigoBarra")]
-        public ActionResult<ReturnInventarioDTO> GetInventarioByIdorDni(int idSucursal, string codigoBarra)
+        public ActionResult<ReturnInventarioDTO> GetInventarioByCodigoBarra(int idSucursal, string? codigoBarra)
         {
             try
             {

@@ -14,7 +14,7 @@ namespace API_MiTienda.Controllers
     public class ArticuloController : ControllerBase
     {
         private readonly IQueryService<Articulo> _queryServiceArticulo;
-        private  IManageArticuloService _manageService;
+        private IManageArticuloService _manageService;
 
         public ArticuloController(IQueryService<Articulo> queryServiceArticulo, IQueryService<Marca> queryServiceMarca, IQueryService<Categoria> queryServiceCategoria, IManageArticuloService manageService)
         {
@@ -46,7 +46,7 @@ namespace API_MiTienda.Controllers
             try
             {
                 var articulo = _manageService.GetArticuloById(id);
-            
+
                 if (articulo == null)
                     return NotFound($"No existe el articulo con el id: {id}. Por favor ingrese un id valido.");
 
@@ -74,12 +74,88 @@ namespace API_MiTienda.Controllers
             catch (Exception)
             {
 
-                return StatusCode(400,"Algo salió mal. Verifica el código.");
+                return StatusCode(400, "Algo salió mal. Verifica el código.");
             }
         }
 
 
-      
+        [HttpGet("getArticulosByCodigoBarra")]
+        public ActionResult<Articulo> GetArticulosByCodigoBarra(string codigoBarra)
+        {
+            try
+            {
+                var articulos = _manageService.GetArticulosByCodigoBarras(codigoBarra);
+
+                if (articulos == null)
+                    return NotFound($"No existe combinaciones para el codigo buscado. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(articulos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el Codigo de Barra.");
+            }
+
+        }
+
+        [HttpGet("getArticulosByMarca")]
+        public ActionResult<Articulo> GetArticulosByMarca(string? Marca)
+        {
+            try
+            {
+                var articulos = _manageService.GetArticulosByMarca(Marca);
+
+                if (articulos == null)
+                    return NotFound($"No existen articulos para la marca buscada. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(articulos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el Codigo de Barra.");
+            }
+
+        }
+
+        [HttpGet("getArticulosByCategoria")]
+        public ActionResult<Articulo> GetArticulosByCategoria(string? Categoria)
+        {
+            try
+            {
+                var articulos = _manageService.GetArticulosByCategoria(Categoria);
+
+                if (articulos == null)
+                    return NotFound($"No existen articulos para la Categoria buscada. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(articulos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el Codigo de Barra.");
+            }
+
+        }
+
+        [HttpGet("getArticulosByFiltros")]
+        public ActionResult<Articulo> GetArticulosFiltrados(string? codigoBarra = null, string? marca = null, string? categoria = null)
+        {
+            try
+            {
+                var articulos = _manageService.GetArticulosFiltrados(codigoBarra, marca, categoria);
+
+                if (articulos == null)
+                    return NotFound($"No existen articulos para la combinacion buscada. Por favor reintente su busqueda con un valor diferente.");
+
+                return Ok(articulos);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal. Verifica el Codigo de Barra.");
+            }
+
+        }
+
+
         #endregion
 
 
@@ -115,19 +191,5 @@ namespace API_MiTienda.Controllers
         }
 
 
-
-        //[HttpGet("Marcas")]
-        //public ActionResult<IEnumerable<Marca>> GetMarcas()
-        //{
-        //    var marcas = a.GetAllWithRelatedData();
-
-        //    return Ok(marcas);
-        //}
-        //[HttpGet("Categorias")]
-        //public ActionResult<IEnumerable<Categoria>> GetCategorias()
-        //{
-        //    var categorias = _queryServiceArticulo.GetAllWithRelatedData();
-        //    return Ok(categorias);
-        //}
     }
 }

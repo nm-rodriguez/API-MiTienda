@@ -9,10 +9,41 @@ namespace MiTienda.Application.DTOs
 {
     public class UserCredentialsDTO
     {
-        [EmailAddress]
-        [Required]
         public string Email { get; set; }
-        [Required]
+        public string Password { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public int Legajo { get; set; }
+        public int SucursalId { get; set; }
+    }
+
+    public class UserLoginDTO
+    {
+        public string Email { get; set; }
         public string Password { get; set; }
     }
+
+    public class UserWithTokenDTO
+    {
+        public string Token { get; set; }
+
+        public string Expiracion { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public int Legajo { get; set; }
+        public string UserID { get; set; }
+        public int SucursalId { get; set; }
+    }
+
+    public class UserLogged
+    {
+        public string Token { get; set; }
+        public string Expiracion { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public int Legajo { get; set; }
+        public int Sucursal { get; set; }
+        public string NombreSucursal { get; set; }
+    }
+
 }

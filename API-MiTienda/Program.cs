@@ -37,32 +37,32 @@ namespace API_MiTienda
                 ClockSkew = TimeSpan.Zero
             });
 
-            builder.Services.AddAuthorization(opciones =>
-            {
-                opciones.AddPolicy("IsADMIN", policy => policy.RequireClaim("role", "admin"));
-                opciones.AddPolicy("IsVendedor", policy => policy.RequireClaim("role", "vendedor"));
-            });
+            //builder.Services.AddAuthorization(opciones =>
+            //{
+            //    opciones.AddPolicy("IsADMIN", policy => policy.RequireClaim("role", "admin"));
+            //    opciones.AddPolicy("IsVendedor", policy => policy.RequireClaim("role", "vendedor"));
+            //});
 
             var app = builder.Build();
 
 
-            //LOG en consola
-            app.Use(async (context, next) =>
-            { using (var swapStream = new MemoryStream())
-                {
-                    var respuestaOriginal = context.Response.Body;
-                    context.Response.Body = swapStream;
-                    await next.Invoke();
+            ////LOG en consola
+            //app.Use(async (context, next) =>
+            //{ using (var swapStream = new MemoryStream())
+            //    {
+            //        var respuestaOriginal = context.Response.Body;
+            //        context.Response.Body = swapStream;
+            //        await next.Invoke();
 
-                    swapStream.Seek(0, SeekOrigin.Begin);
-                    string respuesta = new StreamReader(swapStream).ReadToEnd();
-                    swapStream.Seek(0, SeekOrigin.Begin);
+            //        swapStream.Seek(0, SeekOrigin.Begin);
+            //        string respuesta = new StreamReader(swapStream).ReadToEnd();
+            //        swapStream.Seek(0, SeekOrigin.Begin);
 
-                    await swapStream.CopyToAsync(respuestaOriginal);
-                    context.Response.Body = respuestaOriginal;
-                    app.Logger.LogInformation(respuesta);
-                }
-            });
+            //        await swapStream.CopyToAsync(respuestaOriginal);
+            //        context.Response.Body = respuestaOriginal;
+            //        app.Logger.LogInformation(respuesta);
+            //    }
+            //});
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -86,28 +86,6 @@ namespace API_MiTienda
 
 
             app.MapControllers();
-
-
-
-            //afip
-            //var servicio = new LoginServiceClient();
-            //var autorizacion = servicio.SolicitarAutorizacionAsync("80594BA9-F102-4E0A-8B5D-B3A87383114A").Result;//llamar cuando iniciamos la venta
-            //var comprobante = servicio.SolicitarUltimosComprobantesAsync(autorizacion.Token).Result;
-
-            //var solicitudAutorizacion = new SolicitudAutorizacion();
-            //solicitudAutorizacion.Fecha = DateTime.Now;
-            //solicitudAutorizacion.ImporteIva = 21;
-            //solicitudAutorizacion.ImporteNeto = 100;
-            //solicitudAutorizacion.ImporteTotal = 121;
-            //solicitudAutorizacion.NumeroDocumento = 0;//23406669999;
-            //solicitudAutorizacion.TipoComprobante = TipoComprobante.FacturaB;
-            //solicitudAutorizacion.TipoDocumento = TipoDocumento.ConsumidorFinal;
-            //solicitudAutorizacion.Numero = solicitudAutorizacion.TipoComprobante == TipoComprobante.FacturaA ? comprobante.Comprobantes[0].Numero + 1 : comprobante.Comprobantes[1].Numero + 1;
-            //var cae = servicio.SolicitarCaeAsync(autorizacion.Token, solicitudAutorizacion).Result;
-
-            //Console.WriteLine(autorizacion);
-            //Console.WriteLine(comprobante);
-            //Console.WriteLine(cae);
 
             app.Run();
 

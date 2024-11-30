@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiTienda.Application.Contracts;
 using MiTienda.Application.DTOs;
@@ -21,11 +23,30 @@ namespace API_MiTienda.Controllers
 
 
         [HttpGet]
+       
+
         public ActionResult<ReturnInventarioDTO> GetAllInventarios(int idSucursal)
         {
             try
             {
                 var inventarios = _manageService.GetInventarios(idSucursal);
+                return Ok(inventarios);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
+        }
+
+
+        [HttpGet("getInventariosWithToken")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+        public ActionResult<ReturnInventarioDTO> GetAllInventariosWithToken(int idSucursal)
+        {
+            try
+            {
+                var inventarios = _manageService.GetInventariosDeSeguridad(idSucursal);
                 return Ok(inventarios);
             }
             catch (Exception)

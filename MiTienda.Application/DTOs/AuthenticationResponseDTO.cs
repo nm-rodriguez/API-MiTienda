@@ -9,7 +9,7 @@ namespace MiTienda.Application.DTOs
     public class AuthenticationResponseDTO
     {
         public string Token { get; set; }
-        public DateTime Expiracion { get; set; }
+        public string Expiracion { get; set; }
         public string Username { get; set; }
         public string Role { get; set; }
         public int idVendedor { get; set; }
@@ -17,4 +17,6 @@ namespace MiTienda.Application.DTOs
         public int idPuntoDeVenta { get; set; }
 
     }
+
+
 }

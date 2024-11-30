@@ -52,6 +52,28 @@ namespace MiTienda.Application.Services
             return inventarios;
         }
 
+        public List<ReturnInventarioDTO> GetInventariosDeSeguridad(int idSucursal)
+        {
+            List<ReturnInventarioDTO> inventarios = new List<ReturnInventarioDTO>();
+
+            foreach (Inventario inventario in _inventarioRepo.GetBy(i => i.Sucursal.Id == idSucursal)
+                .AsQueryable()
+                .Include(x => x.Stock)
+                .Include(x => x.Sucursal)
+                .Include(x => x.Stock.Color)
+                .Include(x => x.Stock.Talle)
+                .Include(x => x.Stock.Articulo)
+                .Include(x => x.Stock.Articulo.Marca)
+                .Include(x => x.Stock.Articulo.Categoria)
+                .Include(x => x.Stock.Talle.TipoTalle)
+                .Where(y => y.Cantidad < 10))
+            {
+                ReturnInventarioDTO InventarioDTO = new ReturnInventarioDTO(inventario);
+                inventarios.Add(InventarioDTO);
+            }
+            return inventarios;
+        }
+
         public List<ReturnInventarioDTO> GetInventarioById(int idInventario)
         {
             List<ReturnInventarioDTO> inventarios = new List<ReturnInventarioDTO>();

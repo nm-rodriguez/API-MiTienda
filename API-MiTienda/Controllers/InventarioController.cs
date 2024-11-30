@@ -39,14 +39,30 @@ namespace API_MiTienda.Controllers
         }
 
 
-        [HttpGet("getInventariosWithToken")]
+        [HttpGet("getInventarioWithToken")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         public ActionResult<ReturnInventarioDTO> GetAllInventariosWithToken(int idSucursal)
         {
             try
             {
-                var inventarios = _manageService.GetInventariosDeSeguridad(idSucursal);
+                var inventarios = _manageService.GetInventarios(idSucursal);
+                return Ok(inventarios);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "Algo salió mal.");
+            }
+        }
+
+        [HttpGet("getInventarioMinimoWithToken")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+        public ActionResult<ReturnInventarioDTO> getInventarioMinimoWithToken(int idSucursal)
+        {
+            try
+            {
+                var inventarios = _manageService.getInventarioMinimoWithToken(idSucursal);
                 return Ok(inventarios);
             }
             catch (Exception)

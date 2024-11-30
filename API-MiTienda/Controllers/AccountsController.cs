@@ -177,7 +177,7 @@ namespace API_MiTienda.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["llaveJWT"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            DateTime? expiration = DateTime.Now.AddMinutes(1);
+            DateTime? expiration = DateTime.Now.AddMinutes(182);
 
             var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiration, signingCredentials: creds);
 

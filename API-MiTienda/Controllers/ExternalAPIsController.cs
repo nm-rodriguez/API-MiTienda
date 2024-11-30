@@ -28,42 +28,42 @@ namespace API_MiTienda.Controllers
             //_manageVentaService = manageVentaService;
         }
 
-        #region DECIDIR
-        [HttpPost("token")]
-        public ActionResult<string> ObtenerToken([FromBody] TarjetaDTO tarjeta)
-        {
-            try
-            {
+        //#region DECIDIR
+        //[HttpPost("token")]
+        //public ActionResult<string> ObtenerToken([FromBody] TarjetaDTO tarjeta)
+        //{
+        //    try
+        //    {
 
-                string token = GenerarTokenPago(10);
+        //        string token = GenerarTokenPago(10);
 
-                return Ok(new { token });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
-            }
-        }
-
-
-
-        [HttpPost("PayWithCard")]
-        public async Task<ActionResult> EfectuarPago([FromBody] PagoTarjetaDTO Pago)
-        {
-            try
-            {
-
-                string pagoTarjetaRespuesta = "Pago Aceptado";
-                return Ok(pagoTarjetaRespuesta);
+        //        return Ok(new { token });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
+        //    }
+        //}
 
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
-            }
-            #endregion
-        }
+
+        //[HttpPost("PayWithCard")]
+        //public async Task<ActionResult> EfectuarPago([FromBody] PagoTarjetaDTO Pago)
+        //{
+        //    try
+        //    {
+
+        //        string pagoTarjetaRespuesta = "Pago Aceptado";
+        //        return Ok(pagoTarjetaRespuesta);
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Error al conectar con el servicio externo. Detalles: {ex.Message}");
+        //    }
+        //    #endregion
+        //}
 
         //#region AFIP
         //[HttpPost("conectarAfip")]

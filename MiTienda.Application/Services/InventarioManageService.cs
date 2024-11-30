@@ -52,7 +52,7 @@ namespace MiTienda.Application.Services
             return inventarios;
         }
 
-        public List<ReturnInventarioDTO> GetInventariosDeSeguridad(int idSucursal)
+        public List<ReturnInventarioDTO> getInventarioMinimoWithToken(int idSucursal)
         {
             List<ReturnInventarioDTO> inventarios = new List<ReturnInventarioDTO>();
 

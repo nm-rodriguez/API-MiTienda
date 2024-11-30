@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MiTienda.DataAccess.Contexts;
 using Servicio_AFIP;
 using System.ComponentModel.Design;
@@ -37,34 +38,38 @@ namespace API_MiTienda
                 ClockSkew = TimeSpan.Zero
             });
 
-            //builder.Services.AddAuthorization(opciones =>
-            //{
-            //    opciones.AddPolicy("IsADMIN", policy => policy.RequireClaim("role", "admin"));
-            //    opciones.AddPolicy("IsVendedor", policy => policy.RequireClaim("role", "vendedor"));
-            //});
+            // Configuración de Swagger para requerir autorización
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    BearerFormat = "JWT",
+                    Description = "Por favor ingrese el token JWT con el prefijo 'Bearer ' en el campo de texto"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+            });
+
 
             var app = builder.Build();
 
 
-            ////LOG en consola
-            //app.Use(async (context, next) =>
-            //{ using (var swapStream = new MemoryStream())
-            //    {
-            //        var respuestaOriginal = context.Response.Body;
-            //        context.Response.Body = swapStream;
-            //        await next.Invoke();
-
-            //        swapStream.Seek(0, SeekOrigin.Begin);
-            //        string respuesta = new StreamReader(swapStream).ReadToEnd();
-            //        swapStream.Seek(0, SeekOrigin.Begin);
-
-            //        await swapStream.CopyToAsync(respuestaOriginal);
-            //        context.Response.Body = respuestaOriginal;
-            //        app.Logger.LogInformation(respuesta);
-            //    }
-            //});
-
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
             {
                 app.UseSwagger();

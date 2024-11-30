@@ -12,7 +12,7 @@ namespace MiTienda.Application.Contracts
     public interface IManageInventarioService
     {
         List<ReturnInventarioDTO> GetInventarios(int IdSucursal);
-        List<ReturnInventarioDTO> GetInventariosDeSeguridad(int IdSucursal);
+        List<ReturnInventarioDTO> getInventarioMinimoWithToken(int IdSucursal);
         List<ReturnInventarioDTO> GetInventarioById(int IdInventario);
         string UpdateInventario(int IdInventario, int cantidadResta);
         List<ReturnInventarioDTO> GetInventarioByCodigoBarra(int IdSucursal, string? CodigoBarra);
